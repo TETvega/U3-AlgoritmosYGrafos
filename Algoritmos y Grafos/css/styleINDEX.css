@@ -1,0 +1,18 @@
+
+
+.wrap{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:  linear-gradient(to right, rgb(0 0 0 / .5), rgb( 0 0 0 / .8)),url(https://i.pinimg.com/originals/7b/1a/db/7b1adb511fa3c5af1fe2d7d7e2488afc.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.wrap-texto{
+    color: white;
+    text-align: center;
+    width: 50%;
+}
