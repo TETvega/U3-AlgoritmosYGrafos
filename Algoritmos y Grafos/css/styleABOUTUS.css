@@ -3,6 +3,18 @@ h3{
     padding-block-start: 30px;
 }
 
+.tituloSobreProyecto{
+  text-align: center;
+}
+
+.custom-hr {
+  height: 2px; 
+  background-color: #333; 
+  margin: 20px 0; 
+  border: none; 
+}
+
+
 /* estilos para las tarjetas de los estudiantes */
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -30,10 +42,28 @@ h3{
   #sobreClaseDIVS {
     text-align: center;
     display: flex;
-    justify-content: space-evenly;
-    padding-bottom: 30px;
-    padding-top: 30px;
-  }
+    justify-content:space-around;
+    }
+
+
+#sobreProyecto{
+  padding-left: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.infoClase{
+  padding-top: 30px;
+  padding-right: 40px;
+
+}
+.logoCUROC{
+  
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  margin-top: 30px;
+}
 
     .tabcontent {  /* estilos generales a las dos pestañas con la clase 'tabcontent' */
         display: none;
@@ -49,8 +79,14 @@ h3{
 .tab { /* estilos a la barra de pestañas */
     overflow: hidden;
     border: 1px solid #ccc;
-    background-color: #ffc108c1;
+    background-color: #333;
+    
+  }
 
+  .tablinks{
+    color: #fff;
+    font-family: var(--bs-body-font-family);
+    font-weight: bolder;
   }
   
 /* estilos a los botones del tab */
@@ -65,12 +101,13 @@ h3{
   }
   
   .tab button:hover { /* cambia el color de fondo de los botones al pasar el mouse */
-    background-color: #ddd;
+    background-color: #a79869a1;
   }
   
 /* Crear una clase de 'tablink' active (activa) */
   .tab button.active {
-    background-color: #ffc108;
+    background-color: #a79769;
+    color: #0a0101;
   }
   
   @keyframes fadeEffect {  /* ir de cero a full opacidad */
