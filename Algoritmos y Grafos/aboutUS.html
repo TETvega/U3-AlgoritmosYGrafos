@@ -8,7 +8,7 @@
 
 
     <!-- enlace a scc puro -->
-    <link rel="stylesheet" href="css/styleINDEX.css">
+    <link rel="stylesheet" href="css/styleABOUTUS.css">
 
     <!-- Enlaces a Bootstrap  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -34,7 +34,7 @@
                         <a class="nav-link " aria-current="page" href="index.html">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link active" href="aboutUS.html">About us</a>
+                        <a class="nav-link active" href="aboutUS.html">Sobre Nosotros</a>
                       </li>
                        <!-- menu despegable del los distintos algoritmos de busqueda  -->
                       <li class="nav-item dropdown">
@@ -83,7 +83,106 @@
     <!-- Termina Codigo del Nav  -->
 
 
-    <!-- inbicio del Footer  -->
+    <!-- Inicia Codigo de las Cards de los estudiantes -->
+    <h3>Colaboradores</h3>
+    <br><br>
+    <main class="main">
+      <div class="card">
+        <img src="recursos/img_avatar.png" alt="Avatar" style="width:100%">
+        <div class="container">
+          <h4><b>Anner Josue Henriquez Reyes</b></h4>
+          <p>Estudiante</p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <img src="recursos/img_avatar.png" alt="Avatar" style="width:100%">
+        <div class="container">
+          <h4><b>Delis Alexander</b></h4>
+          <p>Estudiante</p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <img src="recursos/img_avatar.png" alt="Avatar" style="width:100%">
+        <div class="container">
+          <h4><b>Héctor René Martínez Vega</b></h4>
+          <p>Estudiante</p>
+        </div>
+      </div>
+    </main>
+  <!-- Termina Codigo de las Cards de los estudiantes -->
+
+
+  <!-- Inicia Codigo de las Tabs -->
+<div class="tab"> <!-- Botones para navegar entre pestañas. aqui se ejecuta una funcion en Javascript -->
+  <button class="tablinks" onclick="abrirTab(event, 'sobreProyecto')" id="defaultOpen"> Sobre el Proyecto</button>
+  <button class="tablinks" onclick="abrirTab(event, 'sobreClase')">Sobre la Clase</button>
+</div>
+
+<div id="sobreProyecto" class="tabcontent" style="background-image: url(recursos/fondo2.jpg);">
+  <h4 class="tituloSobreProyecto">Proyecto #2 - Desarrollo de una Aplicación de búsqueda y grafos</h4>
+      <p>Crear una aplicación web interactiva que permita a los usuarios entender y probar los diferentes algoritmos de búsqueda y grafos mediante una interfaz amigable.</p>Herramientas a utilizar:
+      <ul>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+      </ul>
+      <div class="custom-hr"></div>
+
+      <h5>Descripción del Proyecto</h5>
+      <p>En este proyecto, el equipo desarrollará una aplicación web que incluirá:</p>
+      <ol>
+
+          <li type="a">Página de Inicio:</li>
+            <ul>
+              <li >Bienvenida al usuario y breve introducción al propósito de la aplicación.</li>
+              <li>Menú con opciones para acceder a los diferentes tipos de algoritmos de búsqueda y de grafos.</li>
+            </ul>
+
+          <li type="a">Páginas de Algoritmos:</li>
+            <ul>
+              <li>Cada algoritmo de búsqueda (por ejemplo: búsqueda lineal, búsqueda binaria, etc.) tendrá su propia página.</li>
+              <li>Cada algoritmo de Grafos(por ejemplo: Dijkstra, Prim, Kruskal, etc.) tendrá su propia página.</li>
+              <li> En cada página, se presentará una explicación del algoritmo seleccionado</li>
+              <li>Habrá un área donde se podrán ingresar los datos para probar el algoritmo.</li>
+              <li>Una sección que muestre el resultado después de aplicar el algoritmo seleccionado a los datos proporcionados</li>
+            </ul>
+
+          <li type="a">Requisitos Técnicos:</li>
+            <ul>
+              <li>Se utilizará HTML para la estructura básica de la página</li>
+              <li>El diseño será estilizado con CSS para hacer la aplicación más amigable visualmente.</li>
+              <li>JavaScript será utilizado para implementar los algoritmos de ordenamiento y la funcionalidad interactiva de la aplicación.</li>
+            </ul>
+      </ol> 
+</div>
+
+<section id="sobreClase" class="tabcontent" style="background-image: url(recursos/fondo2.jpg);">
+    <div id="sobreClaseDIVS" class="sobreClaseDIVS">
+
+        <div >
+          <img src="recursos/UNAH-CUROC-horz-color.png" alt="Logo UNAH-CUROC-horz-color"  width = "290px" height="150px" class="logoCUROC" >
+        </div>
+      
+        <div class="infoClase">
+          IS310-2000 Algoritmos y Estructura de Datos<br>
+          Ing. Jose Isabel Lopez Palencia<br><br>
+          Universidad Nacional Autónoma de Honduras<br>
+          Centro Universitario Regional de Occidente<br>
+          Año Lectivo 2024 - I PAC<br><br>
+        </div>
+      
+        <div>
+            <img src="recursos/Ingenieria-en-Sistemas-Color.png" alt="Logo Ingenieria-en-Sistemas-Color"  width = "190px" height="190px" >
+        </div>
+
+    </div>
+</section>
+  <!-- Termina Codigo de las Tabs -->
+
+
+    <!-- inicio del Footer  -->
     <footer class="bg-dark text-white pt-5 pb-4">
         <div class="container text-center text-md-left">
             <div class="row text-center text-md-left">
@@ -144,7 +243,7 @@
     </footer>
     <!-- final del Footer  -->
 
-
+    <script src="js/aboutUS.js"></script>
     <!-- scripts de bootstrap 5  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
