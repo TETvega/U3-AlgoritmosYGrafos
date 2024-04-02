@@ -70,7 +70,7 @@ h3{
         padding: 6px 12px;
         border: 1px solid #ccc;
         border-top: none;
-        background-image: url(/recursos/fondo2.jpg);
+        background: url(/recursos/fondo2.jpg);
         font-family: monospace;
         animation: fadeEffect 1s;
     }
