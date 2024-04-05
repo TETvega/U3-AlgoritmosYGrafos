@@ -19,3 +19,5 @@ function abrirTab(evt, nombreTab) {
     document.getElementById(nombreTab).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+// codigo proviniente de: https://www.w3schools.com/howto/howto_js_tabs.asp
