@@ -1,13 +1,4 @@
 
-document.querySelectorAll('.lick-EstaSeccion').forEach(enlace => {
-    enlace.addEventListener('click', function(evento) {
-      // Prevenir el comportamiento predeterminado del enlace
-      evento.preventDefault();
-      window.scrollBy(0, -1100 ); 
-    });
-  });
-
-
 // BOTONES -------------------
 
 
