@@ -181,11 +181,15 @@
                                 pocision 3 y 6 correspondientemente
                             </p>
                         </section>
-                        
+                        <!-- Empieza la secion del formulario y funcion lineal ----------------------   -->
                         <section>
                             <h2 class="mb-2 mt-4 lick-EstaSeccion" id="Algoritmo_BusquedaLineal_enAccion">Algoritmo de Busqueda Lineal</h2>
                             <hr>
-                            
+                            <p>Puede Probar los algoritmos en esta seccion. </p>
+                            <p>Solo son validos numeros enteros</p>
+                            <br>
+                            <br>
+                            <hr>
                             <div class="container mt-4">
                                 <div class="row mt-4 col-md-12">
                                     <div class="input-group mb-3">
@@ -227,9 +231,84 @@
                                       </div>
                             </div>
 
-
+                            <!-- Termina la secion del formulario y funcion lineal ----------------------   -->
+                            <!-- Empieza la secion del muestra de codigo ----------------------   -->
                         </section>
+                        <hr>
+                        <section class="mt-4 mb-4 ">
+                            <h2 class="mb-4 lick-EstaSeccion" id="CodigoAlgoritmos" >Código de la función de búsqueda lineal única para JS</h2>
+                            <p>Codigo utilizado para  <span class="text-warning">JS</span></p>
+                            <p>Recibe un numero entero y una lista de numeros enteroos: ( 3 , [4 , 6, 8, 3, 9 , 0] )</p>
+                            <p>Se detiene en el momento que encuentra el numero buscado.</p>
+                            <div class="row justify-content-end mx-2">
+                                <div class="col-1">
+                                    <button type="button" id="btn_CopiarLinealUnica" class="btn btn-outline-primary mb-2">Copy</button>
+                                </div>
+                            </div>
+                            <pre class="bg-dark mb-4" style="border-radius: 5px;">
+                                <code class="text-white" id="codigoBusquedaUnica">
+    function busquedaLinealUnica(numeroBuscado, listaNumeros) {
+        let bandera = false;
+        for (let i = 0; i < listaNumeros.length; i++) {
+            if (numeroBuscado === listaNumeros[i]) {
+                bandera = true;
+                mandarResultado(`Se encontró el número buscado: "${numeroBuscado}. En la posición #${i + 1}`);
+                break;
+            }
+        }
+
+        if (!bandera) {
+            mandarResultado(`No se encontró el número buscado: "${numeroBuscado}" en la lista proporcionada`);
+        }
+    }
+                                </code>
+                            </pre>
+                        </section>
+                        <section class="mt-4">
                             
+                            <h2 class="mb-4 mt-4">Código de la función de búsqueda Multiple para JS</h2>
+                            <p>Codigo utilizado para  <span class="text-warning">JS</span></p>
+                            <p>Recibe un numero entero y una lista de numeros enteroos: ( 3 , [4 , 6, 8, 3, 9 , 0] )</p>
+                            <p>Se hasta recorrer completamente toda la lista de numeros</p>
+                            <p>Almacena todos los indices en un arreglo </p>
+                            <div class="row justify-content-end mx-2">
+                                <div class="col-1">
+                                    <button type="button" id="btn_CopiarLinealMultiple" class="btn btn-outline-primary mb-2">Copy</button>
+                                </div>
+                            </div>
+                            
+                            <pre class="bg-dark" style="border-radius: 5px;">
+                                <code class="text-white" id="codigoBusquedaMultiple">
+    function busquedaLinealMultiple( numeroBuscado , listaNumeros) {
+        let bandera = false
+    
+        let numerosEncontrados= []
+        for (let i = 0; i < listaNumeros.length; i++) {
+            if (numeroBuscado === listaNumeros[i]) {
+                bandera=true
+                numerosEncontrados.push(i)
+            }
+        }
+    
+        if (!bandera) {
+            mandarResultado(`No se encontro el numero buscado: "${numeroBuscado}" en la lista proporcionada`)
+        }else if(bandera){
+    
+            let indicesLetras = ''
+            numerosEncontrados.forEach( indice => {
+                indicesLetras+= indice+1 +", "
+            });
+            mandarResultado(`Se encontro el Numero Buscado: "${numeroBuscado}".
+            \nEn la posicion #${indicesLetras}`)
+            
+        }
+    }
+                                </code>
+                            </pre>
+                            
+                            
+                        </section>
+                        <!-- Termina la secion del muestra de codigo ----------------------   -->
                     </div>
         
                     <!-- Aside en el lado derecho -->
@@ -242,6 +321,7 @@
                                 <li> <a href="#Unica_Coincidencia" class="text-decoration-none text-dark">Unica Coincidencia</a></li>
                                 <li> <a href="#Multiple_Coincidencia" class="text-decoration-none text-dark">Multiple Coincidencia</a></li>
                                 <li> <a href="#Algoritmo_BusquedaLineal_enAccion" class="text-decoration-none text-dark">Probar Algoritmo</a></li>
+                                <li> <a href="#CodigoAlgoritmos" class="text-decoration-none text-dark">Ver Codigo</a></li>
                             </ul>
                         </aside>
                     </div>

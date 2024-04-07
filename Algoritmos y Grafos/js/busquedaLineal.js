@@ -4,9 +4,11 @@
 
 const bntBuscar = document.getElementById('btn_buscarNumero')  
 const btnLimpiar = btn_limpiarTextos 
-
+const btnCopiarLinalUnica = document.getElementById("btn_CopiarLinealUnica")
+const btnCopiarMultiple = document.getElementById("btn_CopiarLinealMultiple")
 
 const impt_ArrayNumeros = document.getElementById('lista_Numeros')
+
 
 cargarListeners()
 
@@ -16,9 +18,32 @@ function cargarListeners() {
     impt_ArrayNumeros.addEventListener('keypress' , verificarNumeros)
     bntBuscar.addEventListener('click' , buscarNumero)
     btnLimpiar.addEventListener('click' , limpiarTextos)
+    btnCopiarLinalUnica.addEventListener('click' , copiarUnica)
+    btnCopiarMultiple.addEventListener('click' ,copiarMultiple)
 }
 
 // ------------- FUNCION PARA BUSCAR LOS NUMEROS -----
+
+// Funcion para mandar codigo al portapapeles 
+// https://www.youtube.com/watch?v=8tQQqVuUDjg&ab_channel=WikiTutoriales
+function copiarUnica(e) {
+    e.preventDefault()
+
+    const codigo = document.getElementById("codigoBusquedaUnica").textContent
+    navigator.clipboard.writeText(codigo)
+    // console.log(codigo);
+    alert('Codigo copiado al Portapapeles')
+    
+}
+
+function copiarMultiple(e) {
+    e.preventDefault()
+    const codigo = document.getElementById("codigoBusquedaMultiple").textContent
+    navigator.clipboard.writeText(codigo)
+    // console.log(codigo);
+    alert('Codigo copiado al Portapapeles')
+}
+
 function buscarNumero(e) {
     e.preventDefault()
     // console.log('Hola');
@@ -33,6 +58,11 @@ function buscarNumero(e) {
 
     const arrayNumeros = leerArrayNumeros()
 
+    if (arrayNumeros.length == 0) {
+        mandarResultado('ERROR : Imposible la lista no contiene ningun numero valido!!!!')
+        return
+
+    }
 
     switch (true) {
         case tipoBuqueda === 'Unica':
