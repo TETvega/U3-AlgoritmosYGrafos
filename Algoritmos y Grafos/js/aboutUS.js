@@ -1,5 +1,5 @@
 document.getElementById("defaultOpen").click();
-
+alert('AGREGADO DESDE ORDENADOR DE ANNER')
 function abrirTab(evt, nombreTab) {
     let i, tabcontent, tablinks;
   
