@@ -11,12 +11,12 @@ const posicionCirculos = [
         {
             nombre: 'grafo1',
             circulos: [
-                { nombre: 'A', left: 50, top: 100, LINEAS: [
+                { nombre: 'A', left: 50, top: 50, LINEAS: [
                     { goTo: 'B', peso: 10 },
                     { goTo: 'E', peso: 2 }
                 ]},
                 { nombre: 'B', left: 200, top: 150, LINEAS: [
-                    { goTo: 'C', peso: 5 },
+                    { goTo: 'G', peso: 5 },
                 ]},
                 { nombre: 'C', left: 300, top: 50, LINEAS: [
                     { goTo: 'D', peso: 1 },
@@ -98,7 +98,7 @@ function mostrarGrafo(e) {
 function cargarGrafo( grafo) {
 
     const circulos1 = posicionCirculos.find(item => item.nombre === grafo);
-
+    grafo = circulos1.circulos
     circulos1.circulos.forEach(circulo => {
         const circle = document.createElement('div');
         circle.classList.add('circle');
@@ -155,26 +155,22 @@ function mostrarTabla(grafo) {
     const grafoEncontrado = posicionCirculos.find(item => item.nombre === grafo);
     
     // hacer un fix despues y hacer m,ejor la tabla luego 
-    let tablaHTML = '<table>';
-    tablaHTML += `<tr><th>NODO</th><th>PESO</th><th>NODO DESTINO</th></tr>`;
-
-    grafoEncontrado.circulos.forEach(circulo => {
+    let tablaHTML = '';
+    grafoEncontrado.circulos.forEach((circulo , index) => {
         circulo.LINEAS.forEach(linea => {
             const nodo = circulo.nombre;
             const peso = linea.peso;
             const nodoDestino = linea.goTo;
             tablaHTML += `
             <tr>
-            <td>${nodo}</td>
-            <td>${peso}</td>
-            <td>${nodoDestino}</td>
+            <td class="text-center">${nodo}</td>
+            <td class="text-center">${nodoDestino}</td>
+            <td class="text-center">${peso}</td>
             </tr>`;
         });
     });
 
-    tablaHTML += '</table>';
-
-    document.getElementById('tabla-container').innerHTML = tablaHTML;
+    tableBody_nodos.innerHTML = tablaHTML;
 }
 
 
