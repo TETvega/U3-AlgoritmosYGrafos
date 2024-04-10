@@ -6,7 +6,7 @@ const btnSelecionarGrafo = document.getElementById("seleccionarGrafo")
 
 
 // Variables Globales -------------    
-
+// un array que grada los nodos de los grafos y sus pociciones si se quiere modificar es en esta parte 
 const posicionCirculos = [
         {
             nombre: 'grafo1',
@@ -100,18 +100,17 @@ const posicionCirculos = [
 
 ];
 
+let grafoIsInicializate = false // variable que sirve en el inicianilazor al cargar la pagina 
 // ========================= FUNCION PARA CARGAR EL GRAFO INICIAL ===========
-let grafoIsInicializate = false
+// garga el grafo incial solo si lavarible es falsa esto cuando la pag se ha cargado solamente
 const cargarGrafoInicial = async() => {
     if (!grafoIsInicializate) {
-        cargarGrafo('grafo1')
-        mostrarTabla('grafo1')
+        cargarGrafo('grafo1') // mandamos a cargar los grafos sirectamente 
+        mostrarTabla('grafo1') //mostramos la tabla
         grafoIsInicializate=true
-    }
-        
+    }    
 }
-
-
+// cuando se carga la pagina manda a llamar el grafo inicial por default
 window.addEventListener("load", async () => {
     await cargarGrafoInicial()
 });
@@ -119,17 +118,19 @@ window.addEventListener("load", async () => {
 
 // ==================== CARGANDO TODOS LOS ADD EVEN LISTENERS ================
 cargarListeners()
+
+
 function cargarListeners() {
     
     
-    btnSelecionarGrafo.addEventListener('change' , mostrarGrafo)
+    btnSelecionarGrafo.addEventListener('change' , mostrarGrafo) // captura cuando se seleciona otro grafo y lo manda a cargar 
 
 }
 
 
 
 // ------ FUNCIONES PRIMARIAS -------===========
-
+// funcion que evalua el valor de la selecion y segun manda a cargar los datos 
 function mostrarGrafo(e) {
     e.preventDefault()
 
@@ -159,11 +160,6 @@ function mostrarGrafo(e) {
             mostrarTabla('grafo3')
         
         break;
-        // Caso 4 Grafo creado 
-        case seleccion === 'Grafo4':
-            mandarResultado('Se cargara el Grafo #4')
-            break;
-
             // ERROR O NO ENCOINTRADO
         default:
             mandarResultado('ERROR : Algun error al cargar los GRAFOS!!!')
@@ -175,66 +171,26 @@ function mostrarGrafo(e) {
 
 // ------- FUNCIONES SECUNDARIAS =====
 
+// recibe el grafo que tiene que cargar 
 function cargarGrafo( grafo) {
-
+    // limpiamos el contenido por si ante sestava otro grafo cargado 
     contenidoCanvas.innerHTML = ''
     tableBody_nodos.innerHTML = ''
-    const circulos1 = posicionCirculos.find(item => item.nombre === grafo);
-    grafo = circulos1.circulos
-    circulos1.circulos.forEach(circulo => {
-        const circle = document.createElement('div');
-        circle.classList.add('circle');
-        circle.classList.add('text-center' , 'aling-items-center');
-        circle.style.left = `${circulo.left}px`;
-        circle.style.top = `${circulo.top}px`;
-        circle.textContent = circulo.nombre; 
-        contenidoCanvas.appendChild(circle);
-    });
+    // mapeamos el contenido segun el grafo que ocupamos
+    const grafoRecibido = posicionCirculos.find(item => item.nombre === grafo);
+    // cambiamos el valor del parametro de string al array 
+    grafo = grafoRecibido.circulos
 
-    // Crear líneas que conecten los círculos
-    circulos1.circulos.forEach(circulo => {
-        // para cada linea de go to 
-
-
-        // Esta funcion fue creada con CHATGPT
-        // BASICAMENTE TIRA LAS LINEAS DE UN PUNTO A OTRO
-        circulo.LINEAS.forEach(linea => {
-            const lineaElement = document.createElement('div');
-            lineaElement.classList.add('linea');
-
-            const desde = circulos1.circulos.find(c => c.nombre === circulo.nombre);
-            const hacia = circulos1.circulos.find(c => c.nombre === linea.goTo);
-
-            if (desde && hacia) {
-                // se agrega +15 para centrar correctamente la linea por el radio de los circulos 
-                const x1 = desde.left + 15; 
-                const y1 = desde.top + 15;
-                const x2 = hacia.left + 15;
-                const y2 = hacia.top + 15;
-
-                    // largo de la linea o camino que necesita recorrer 
-                    // UTILIZA la formula de la Hipotenusa 
-
-                    // Si pasaron 110 y 111 con rajo le entienden
-                    // es la de la Hipotenusa basicamente 
-                    // pero los puntos son mediante funciones lineales y usa ** ta la potencia 
-                lineaElement.style.width = `${Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)}px`;
-
-                // /Punto de partida de la linea 
-                lineaElement.style.left = `${x1}px`;
-                lineaElement.style.top = `${y1}px`;
-
-                // angulo de la linea 
-                const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
-                lineaElement.style.transform = `rotate(${angle}deg)`;
-
-                contenidoCanvas.appendChild(lineaElement);
-            }
-        });
-    });
-
+    if (!grafo) {
+        mandarResultado(`ERROR el grafo no se encontro`)
+        return
+    }
+    crearCirculo(grafo)
+    crearLineasNodales(grafo)
+   
 }
 
+// funcion para cargar los datos de la tabla segun el grafo 
 function mostrarTabla(grafo) {
     const grafoEncontrado = posicionCirculos.find(item => item.nombre === grafo);
     
@@ -258,6 +214,88 @@ function mostrarTabla(grafo) {
 }
 
 
+
+
+// ========================= FUNCIONES TERCIARIAS =============
+// crea los circulos de cada grafo
+function crearCirculo(grafo) {
+    grafo.forEach(circulo => {
+        const circle = document.createElement('div');
+
+        circle.classList.add('circle' , 'text-center' , 'aling-items-center');
+        // circle.classList.add();
+        // agrgando los stilos de cada circulo segun los px que indicamos en el array global 
+        circle.style.left = `${circulo.left}px`;
+        circle.style.top = `${circulo.top}px`;
+        circle.textContent = circulo.nombre; 
+        // agragmos el circulo 
+        contenidoCanvas.appendChild(circle);
+    });
+}
+
+function crearLineasNodales(grafo) {
+ // Crear las lineas de recorrido en el canvas  ----- APOYO DE CHAT GPT/ GEMENNI Y COPILOT
+ grafo.forEach(circulo => {
+    // Esta funcion fue creada con CHATGPT
+    // BASICAMENTE TIRA LAS LINEAS DE UN PUNTO A OTRO
+    circulo.LINEAS.forEach(linea => {
+        // obtiene los valores de donde tiene que ir hasta donde tiene que llegar el Nombre del NODO 
+        const puntoPartida = grafo.find(nodo => nodo.nombre === circulo.nombre);
+        const puntoFinalizacion = grafo.find(nodo => nodo.nombre === linea.goTo);
+
+        
+        // evalua si existen los nodos 
+        if (!puntoPartida || !puntoFinalizacion) {
+           mandarResultado('ERROR al cargar una Linea Nodal')
+           return
+        }
+        crearLineasPorNodo(puntoPartida , puntoFinalizacion)
+    });
+});
+}
+
+
+
+
+
+// ------------- FUNCIONES DE 4 NIVEL --------------------
+// crea las lineas por el nodo y las une al canvas
+function crearLineasPorNodo( puntoPartida , puntoFinalizacion) {
+    const lineaElement = document.createElement('div');
+    lineaElement.classList.add('linea');
+
+    // Aporte de Geminy para centrar correctamente las lineas
+            // se agrega +15 para centrar correctamente la linea por el radio de los circulos que es R=15
+            const posicionCirculox1 = puntoPartida.left + 15; 
+            const posicionCirculoy1 = puntoPartida.top + 15;
+            const posicionCirculox2 = puntoFinalizacion.left + 15;
+            const posicionCirculoy2 = puntoFinalizacion.top + 15;
+
+                // largo de la linea o camino que necesita recorrer 
+                // UTILIZA la formula de la Hipotenusa 
+
+                // Si pasaron 110 y 111 con rajo le entienden
+                // es la de la Hipotenusa basicamente 
+                // obtenemos la disferencias de los puntos en X y en Y para obtener el resultante que tiene que recorrer el nodo 
+                // https://www.delftstack.com/es/howto/java/distance-between-two-points-java/ 
+                lineaElement.style.width = `${Math.sqrt(Math.pow( (posicionCirculox2 - posicionCirculox1),2 )  + Math.pow((posicionCirculoy2 - posicionCirculoy1) ,2))}px`;
+
+            // /Punto de partida de la linea 
+            lineaElement.style.left = `${posicionCirculox1}px`;
+            lineaElement.style.top = `${posicionCirculoy1}px`;
+
+            // angulo de la linea 
+            // resumidas cuentas es esta formula simplificada
+                // A(x1, y1)
+                // B(x2, y2)
+                // cos(θ) = (x1 * x2 + y1 * y2) / (√(x1^2 + y1^2) * √(x2^2 + y2^2))
+                // θ (radianes) = acos(cos(θ))
+                // θ (grados) = θ (radianes) * 180/π
+            const angle = Math.atan2(posicionCirculoy2 - posicionCirculoy1, posicionCirculox2 - posicionCirculox1) * 180 / Math.PI;
+            lineaElement.style.transform = `rotate(${angle}deg)`;
+
+            contenidoCanvas.appendChild(lineaElement);
+}
 
 // -------------- Funcion que  escribve el resultado o los errores ocurridos duramnte la Ejecucion 
 function mandarResultado( resultado) {
