@@ -4,12 +4,11 @@
 const btnSelecionarGrafo = document.getElementById("seleccionarGrafo")
 
 
-
 // Variables Globales -------------    
 // un array que grada los nodos de los grafos y sus pociciones si se quiere modificar es en esta parte 
 const posicionCirculos = [
         {
-            nombre: 'grafo1',
+            nombre: 'Grafo1',
             circulos: [
                 { nombre: 'A', left: 50, top: 50, LINEAS: [
                     { goTo: 'B', peso: 10 },
@@ -38,7 +37,7 @@ const posicionCirculos = [
             ]
         },
         {
-            nombre: 'grafo2',
+            nombre: 'Grafo2',
             circulos: [
                 { nombre: 'A', left: 100, top: 150, LINEAS: [
                     { goTo: 'B', peso: 1 },
@@ -69,7 +68,7 @@ const posicionCirculos = [
             ]
         },
         {
-            nombre: 'grafo3',
+            nombre: 'Grafo3',
             circulos: [
                 { nombre: 'A', left: 300, top: 250, LINEAS: [
                     { goTo: 'G', peso: 1 },
@@ -105,8 +104,8 @@ let grafoIsInicializate = false // variable que sirve en el inicianilazor al car
 // garga el grafo incial solo si lavarible es falsa esto cuando la pag se ha cargado solamente
 const cargarGrafoInicial = async() => {
     if (!grafoIsInicializate) {
-        cargarGrafo('grafo1') // mandamos a cargar los grafos sirectamente 
-        mostrarTabla('grafo1') //mostramos la tabla
+        cargarGrafo('Grafo1') // mandamos a cargar los grafos sirectamente 
+        mostrarTabla('Grafo1') //mostramos la tabla
         grafoIsInicializate=true
     }    
 }
@@ -124,52 +123,87 @@ function cargarListeners() {
     
     
     btnSelecionarGrafo.addEventListener('change' , mostrarGrafo) // captura cuando se seleciona otro grafo y lo manda a cargar 
-
+    addEventListener('click' , mostrarInformacionNodal)
 }
 
 
 
+
 // ------ FUNCIONES PRIMARIAS -------===========
+function mostrarInformacionNodal(e) {
+    e.preventDefault()
+    if (e.target.classList.contains('circle')) {
+
+        // limpia los colores por si estaba algun circulo selecionado
+        limpiarcirculos()
+
+        const seleccion = document.getElementById("seleccionarGrafo").value
+        const nodoPrimario = e.target
+
+        const grafo = posicionCirculos.find( item => item.nombre === seleccion) 
+        
+        if (!grafo) {
+            mandarResultado(`No se encontro el Nodo buscado en el grafo`)
+            return
+        }
+            const nodoDirigidos = encontarNodosDirigidos(nodoPrimario , grafo)
+            // console.log(nodoDirigidos);
+            pintarNodos(nodoPrimario , nodoDirigidos)
+    }
+}
+
 // funcion que evalua el valor de la selecion y segun manda a cargar los datos 
 function mostrarGrafo(e) {
     e.preventDefault()
 
     const seleccion = document.getElementById("seleccionarGrafo").value
-    switch (true) {
-
-        // caso 1 Grafo#1
-        case seleccion === 'Grafo1':
-
-            mandarResultado('Se cargara el Grafo #1')
-            cargarGrafo('grafo1')
-            mostrarTabla('grafo1')
-            
-            break;
-        // Caso 2 grafo #2
-        case seleccion === 'Grafo2':
-
-             mandarResultado('Se cargara el Grafo #2')
-             cargarGrafo('grafo2')
-             mostrarTabla('grafo2')
-        break;
-
-        // caso 3 Grafo #3
-        case seleccion === 'Grafo3':
-            mandarResultado('Se cargara el Grafo #3')
-            cargarGrafo('grafo3')
-            mostrarTabla('grafo3')
-        
-        break;
-            // ERROR O NO ENCOINTRADO
-        default:
-            mandarResultado('ERROR : Algun error al cargar los GRAFOS!!!')
-            break;
+    if (seleccion === '') {
+        mandarResultado(`ERROR al no encontrar la selecion`)
     }
+    mandarResultado(`Se cargara el ${seleccion}`)
+    cargarGrafo(seleccion)
+    mostrarTabla(seleccion)
 }
 
 
 
 // ------- FUNCIONES SECUNDARIAS =====
+function limpiarcirculos() {
+    
+    const arrayCirculos = document.querySelectorAll('.circle')
+    arrayCirculos.forEach( elemeto => {
+        if (elemeto.classList.contains('bg-success') || elemeto.classList.contains('bg-primary') ) {
+            elemeto.classList.remove('bg-success') || elemeto.classList.remove('bg-primary')
+            elemeto.classList.add('bg-warning')
+        }
+    });
+    // console.log(arrayCirculos);
+}
+
+
+// funcion que pinta los nodos adyacentes de colores y el primario de otro 
+function pintarNodos(nodoPrimario, nodoDirigidos) {
+    
+    pintarNodoPrimario(nodoPrimario)
+    pintarNodosSecundarios(nodoDirigidos)
+
+}
+
+// funcion que retorna a donde se dirige los nodos 
+function encontarNodosDirigidos(nodoPrimario, grafo) {
+    const nodosEncontrados=[]
+    grafo.circulos.forEach(nodo => {
+        // console.log(nodo);
+        if (nodo.nombre === nodoPrimario.textContent) {
+            // console.log(nodo.LINEAS);
+            nodo.LINEAS.forEach(linea => {
+                nodosEncontrados.push(linea)
+            });
+        }
+    });
+
+    return nodosEncontrados
+}
 
 // recibe el grafo que tiene que cargar 
 function cargarGrafo( grafo) {
@@ -217,12 +251,34 @@ function mostrarTabla(grafo) {
 
 
 // ========================= FUNCIONES TERCIARIAS =============
+
+function pintarNodoPrimario(nodo) {
+    nodo.classList.remove('bg-warning')
+    nodo.classList.add('bg-success')
+}
+
+function pintarNodosSecundarios( arrayNodos) {
+    
+    arrayNodos.forEach(nodo => {
+        // Buscar el primer elemento cuyo texto coincida con el valor de goTo
+        const elementoCoincidente = document.querySelector(`.${nodo.goTo}`);
+        
+        // Verificar si se encontró un elemento y pintarlo
+        if (elementoCoincidente) {
+            elementoCoincidente.classList.remove('bg-warning');
+            elementoCoincidente.classList.add('bg-primary');
+        } else {
+            console.log(`No se encontró un elemento con texto "${nodo.goTo}"`);
+        }
+    });
+}
+
 // crea los circulos de cada grafo
 function crearCirculo(grafo) {
     grafo.forEach(circulo => {
         const circle = document.createElement('div');
 
-        circle.classList.add('circle' , 'text-center' , 'aling-items-center');
+        circle.classList.add('circle' , 'bg-warning', 'text-center' , 'aling-items-center' , `${circulo.nombre}`);
         // circle.classList.add();
         // agrgando los stilos de cada circulo segun los px que indicamos en el array global 
         circle.style.left = `${circulo.left}px`;
@@ -302,3 +358,6 @@ function mandarResultado( resultado) {
     
     ResultadoEscritoGrafo.innerHTML = `${resultado}`
 }
+
+
+
