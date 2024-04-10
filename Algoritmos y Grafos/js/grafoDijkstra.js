@@ -101,10 +101,10 @@ const posicionCirculos = [
 
 let grafoIsInicializate = false // variable que sirve en el inicianilazor al cargar la pagina 
 // ========================= FUNCION PARA CARGAR EL GRAFO INICIAL ===========
-// garga el grafo incial solo si lavarible es falsa esto cuando la pag se ha cargado solamente
+// carga el grafo incial solo si la varible es falsa esto cuando la pagina se ha cargado solamente
 const cargarGrafoInicial = async() => {
     if (!grafoIsInicializate) {
-        cargarGrafo('Grafo1') // mandamos a cargar los grafos sirectamente 
+        cargarGrafo('Grafo1') // mandamos a cargar los grafos directamente 
         mostrarTabla('Grafo1') //mostramos la tabla
         grafoIsInicializate=true
     }    
@@ -207,7 +207,7 @@ function encontarNodosDirigidos(nodoPrimario, grafo) {
 
 // recibe el grafo que tiene que cargar 
 function cargarGrafo( grafo) {
-    // limpiamos el contenido por si ante sestava otro grafo cargado 
+    // limpiamos el contenido por si antes estaba otro grafo cargado 
     contenidoCanvas.innerHTML = ''
     tableBody_nodos.innerHTML = ''
     // mapeamos el contenido segun el grafo que ocupamos
@@ -358,6 +358,3 @@ function mandarResultado( resultado) {
     
     ResultadoEscritoGrafo.innerHTML = `${resultado}`
 }
-
-
-
