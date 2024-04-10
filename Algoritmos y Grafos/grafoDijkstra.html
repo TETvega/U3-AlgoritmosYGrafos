@@ -83,7 +83,7 @@
     <div class="container">
         <!-- Bloque izquierdo del menú de algoritmos -->
         <div class="row mt-3 mb-4">
-            <aside class="col-2" style="border-right: solid 2px gray;">
+            <aside class="col-sm-12 col-md-2 " style="border-right: solid 2px gray;">
                 <h3 class="fs-5 text-gray fw-light">Formas de Busqueda</h3>
                 <hr>
                 <ul class="nav flex-column">
@@ -113,7 +113,7 @@
             <!-- Fin del bloque izquierdo -->
         
             <!-- Contenido del main -->
-            <main class="container col-10">
+            <main class="container col-sm-12 col-md-10">
                 <!-- Contenido en el lado izquierdo -->
                 <div class="row">
                     <div class="col-10 p-4 ">
@@ -253,6 +253,39 @@
                                                         <option value="Grafo3">Grafo 3</option>
                                                         <!-- <option value="Grafo4">Crear Grafo</option> -->
                                                     </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p>
+                                                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#FormularioColapsable" aria-expanded="false" aria-controls="collapseExample">
+                                                          Desplegar Formulario
+                                                        </button>
+                                                      </p>
+                                                </div>
+                                            
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <div class="collapse" id="FormularioColapsable">
+                                                        <div class="card card-body">
+                                                            <div class="container mb-3 mt-2 col-12">
+                                                                <form action="" class="col-md-6 col-sm-12">
+                                                                        <div >
+                                                                            <label for="exampleDataList" class="form-label">Ingrese en Numero Buscado </label>
+                                                                            <input class="form-control" autocomplete="off" id="numero_Buscado" type="number" placeholder="Ingrese un numero entero" aria-label="default input example">
+                                                                            
+                                                                            <label for="exampleDataList" class="form-label">Ingrese en Numero Buscado </label>
+                                                                            <input class="form-control" autocomplete="off" id="numero_Buscado" type="number" placeholder="Ingrese un numero entero" aria-label="default input example">
+                                                                        </div>
+                                                                    </form>
+                                                                <div class="col-sm-12 col-md-6 align-items-center">
+                                                                
+                                                                    <button type="button" class="btn btn-success">Ejecutar</button>
+                                                                    <button type="button" class="btn btn-info">Limpiar</button>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -402,7 +435,7 @@
                     
         
                     <!-- Aside en el lado derecho -->
-                    <div class="col-2 fw-light " style="color: rgb(90, 90, 90);">
+                    <div class="col-sm-12 col-md-2 fw-light " style="color: rgb(90, 90, 90);">
                         <aside>
                             <h3 class="fs-5 text-gray fw-light">En esta Seccion</h3>
                             <hr>
