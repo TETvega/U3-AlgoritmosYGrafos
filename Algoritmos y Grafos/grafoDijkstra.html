@@ -252,7 +252,7 @@
                                                         <option selected value="Grafo1">Grafo 1</option>
                                                         <option value="Grafo2">Grafo 2</option>
                                                         <option value="Grafo3">Grafo 3</option>
-                                                        <option value="Grafo4">Crear Grafo</option>
+                                                        <!-- <option value="Grafo4">Crear Grafo</option> -->
                                                     </select>
                                                 </div>
                                             </div>
@@ -267,31 +267,46 @@
 
                                         </div>
                                         <br>
-                                        <div class="row mb-4 col-12">
-                                            <div class="container">
-                                                <div id="tabla-container">
-                                                    <table class="table" id="dataTable_ListasNodos">
-                                                        <!-- nombre de la tabla  -->
-                                                        <caption>
-                                                          Tabla de Productos
-                                                        </caption>
-                                                        <thead>
-                                                          <!-- Fila de los encabezados  -->
-                                                            <tr>
-                                                              <th class="text-center">Nd de Partida</th>
-                                                              <th class="text-center">Nd de Finalizacion</th>
-                                                              <th class="text-center">Peso Camino</th>
-
-                                                          </tr>
-                                                        </thead>
-                                                        <tbody id="tableBody_nodos">
-                                            
-                                                        </tbody>
-                                                    </table>
-
+                                        <br>
+                                        <div class="row col-12">
+                                            <p>
+                                                <button class="btn btn-primary mt-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                  Ver la tabla de pesos
+                                                </button>
+                                              </p>
+                                              <div class="collapse" id="collapseExample">
+                                                <div class="card card-body">
+                                                    <div class="row mb-4 col-12">
+                                                        <div class="container">
+            
+                                                            <div id="tabla-container">
+                                                                <table class="table" id="dataTable_ListasNodos">
+                                                                    <!-- nombre de la tabla  -->
+                                                                    <caption>
+                                                                      Tabla de Productos
+                                                                    </caption>
+                                                                    <thead>
+                                                                      <!-- Fila de los encabezados  -->
+                                                                        <tr>
+                                                                          <th class="text-center">Nd de Partida</th>
+                                                                          <th class="text-center">Nd de Finalizacion</th>
+                                                                          <th class="text-center">Peso Camino</th>
+            
+                                                                      </tr>
+                                                                    </thead>
+                                                                    <tbody id="tableBody_nodos">
+                                                        
+                                                                    </tbody>
+                                                                </table>
+            
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                              </div>
+    
                                         </div>
+                                        
                                         <br>
                                         <br>
                                         <div class="row">
