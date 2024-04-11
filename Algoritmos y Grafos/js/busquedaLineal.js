@@ -56,14 +56,15 @@ function buscarNumero(e) {
         return
     }
 
+    
     const arrayNumeros = leerArrayNumeros()
-
     if (arrayNumeros.length == 0) {
         mandarResultado('ERROR : Imposible la lista no contiene ningun numero valido!!!!')
         return
 
     }
-
+    escribirArray(arrayNumeros)
+    
     switch (true) {
         case tipoBuqueda === 'Unica':
                 busquedaLinealUnica( numeroABuscar , arrayNumeros )
@@ -146,32 +147,79 @@ function leerArrayNumeros() {
 }
 
 // busqueda de forma lineal unica donde solo se busca uun numero
-function busquedaLinealUnica( numeroBuscado , listaNumeros) {
+async function busquedaLinealUnica( numeroBuscado , listaNumeros) {
 
+    await esperar(1000)
+    document.getElementById('animacionAlgoritmo').innerHTML =''
     let bandera = false
     for (let i = 0; i < listaNumeros.length; i++) {
+        
+        const elemento = document.createElement('span');
+        if (i===0) {
+            elemento.textContent = `[ ${listaNumeros[i]} ]`;
+        }else{
+            elemento.textContent = `, [ ${listaNumeros[i]} ]`;
+        }
+        animacionAlgoritmo.appendChild(elemento);
+        if (!bandera) {
+            elemento.classList.add('text-primary')
+            await esperar(1000)
+            
+        }
         if (numeroBuscado === listaNumeros[i]) {
             bandera=true
+            await esperar(500)
             mandarResultado(`Se encontro el Numero Buscado: "${numeroBuscado}".\nEn la posicion #${i+1}`)
-            break;
+            aplicarEstilo(elemento, true);
+        }
+        if (!bandera) {
+            aplicarEstilo(elemento, false);
         }
     }
-
     if (!bandera) {
         mandarResultado(`No se encontro el numero buscado: "${numeroBuscado}" en la lista proporcionada`)
     }
 }
 
+function esperar(tiempo) {
+    return new Promise( esperar => setTimeout(esperar, tiempo));
+}
+// Funcion para aplicar estilos al elemento delos numeros
+function aplicarEstilo(elemento, esNumeroBuscado) {
+    elemento.classList.remove('text-primary');
+    if (esNumeroBuscado) {
+        
+        elemento.classList.add('text-success');
+    } else {
+        elemento.classList.add('text-danger');
+    }
+}
+
 
 // / funqueda lineal Multiple// se tiene que rcorrer todo el array para encontar el o los numeros 
-function busquedaLinealMultiple( numeroBuscado , listaNumeros) {
+async function busquedaLinealMultiple( numeroBuscado , listaNumeros) {
     let bandera = false
-
+    await esperar(1000)
+    document.getElementById('animacionAlgoritmo').innerHTML =''
     let numerosEncontrados= []
     for (let i = 0; i < listaNumeros.length; i++) {
+
+
+        const elemento = document.createElement('span');
+        if (i===0) {
+            elemento.textContent = `[ ${listaNumeros[i]} ]`;
+        }else{
+            elemento.textContent = `, [ ${listaNumeros[i]} ]`;
+        }
+        animacionAlgoritmo.appendChild(elemento);
+        elemento.classList.add('text-primary')
+        await esperar(1000)
         if (numeroBuscado === listaNumeros[i]) {
-            bandera=true
+            await esperar(500)
             numerosEncontrados.push(i)
+            aplicarEstilo(elemento, true);
+        }else{
+            aplicarEstilo(elemento, false);
         }
     }
 
@@ -193,4 +241,14 @@ function busquedaLinealMultiple( numeroBuscado , listaNumeros) {
 function mandarResultado( resultado) {
     
     ResultadoLineal.innerHTML = `${resultado}`
+}
+
+function escribirArray( array) {
+    let contenido =``
+    array.forEach( numero =>{
+
+        contenido+=`[ ${numero} ], `
+
+    })
+    document.getElementById('animacionAlgoritmo').innerHTML = contenido
 }
