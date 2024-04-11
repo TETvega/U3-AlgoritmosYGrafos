@@ -59,22 +59,7 @@ function limpiarTodo(e) {
     limpiarcirculos()
 }
 
-function verificarNodos(e) {
-    // uso de las expresiones regiulares donde se hace por medio de /[ valores  que quiero ]/
-    // url del video visto : https://www.youtube.com/watch?v=0V3rIrSBzTU&ab_channel=Funnycode
 
-    const expresionRegular = /^[A-Za-z ]+$/  //https://es.stackoverflow.com/questions/359350/cual-es-la-expresion-regular-para-aceptar-solo-letras-espacios-y-caracteres-es#:~:text=Simplemente%20agregas%20los%20caracteres%20que%20quieres%20que%20acepte,prefieres%20%C3%BAnicamente%20espacios%20en%20vez%20de%20cualquier%20blanco
-    //  e.key obtiene el valor de la tecla presionada 
-    // y el test vasicamentre que valide que sea parte de la expresion regular 
-    if ( !expresionRegular.test(e.key)) {
-        e.preventDefault()
-        // console.log("se presiono un caracter no permitido" );
-        mandarErrorFormulario('ERROR : Imposible Ingresar caracter no permitido!!!!')
-        // limpiando despues de 2000
-        setTimeout( () => mandarErrorFormulario('...') , 3000 )
-    }
-
-}
 
 
 
@@ -97,7 +82,9 @@ function ejecutarGrafo(e) {
     if (error) return
 
 
+    const grafico = ajustargrafico(grafoSeleccionado)
 
+    algoritmoDijkstra(grafico , nodoInicial , nodoFinal)
     
 }
 
@@ -142,19 +129,97 @@ function mostrarGrafo(e) {
 
 
 // ------- FUNCIONES SECUNDARIAS =========================================================================
+function dijkstra(grafo, nodoInicial, nodoFinal) {
+    const nodos = Object.keys(grafo)// los nodos que tenemos A , B , C . D , E , F 
 
 
-// funcion que limpia los cuirculos y los vieve de color amarrillo 
-function limpiarcirculos() {
+    const distancias = {}
+    const visitados = {}
+    const camino = {}
+
+    // inicializamos todos los valores con nulos y distancias infinitas(no la conocemos aun)
+    for (let nodo of nodos) {
+        distancias[nodo] = Infinity;
+        camino[nodo] = null;
+    }
+
     
-    const arrayCirculos = document.querySelectorAll('.circle')
-    arrayCirculos.forEach( elemeto => {
-        if (elemeto.classList.contains('bg-success') || elemeto.classList.contains('bg-primary') ) {
-            elemeto.classList.remove('bg-success') || elemeto.classList.remove('bg-primary')
-            elemeto.classList.add('bg-warning')
+    distancias[nodoInicial] = 0;
+
+    while (true) {
+        let nodoActual = null;
+        let distanciaMinima = Infinity;
+
+        // Encontrar el nodo no visitado con la distancia minima
+        for (let nodo in distancias) {
+            // para cada nodo en distancias 
+            // hace una comparacion si el nodo existe en visitados y si la distamncia del nodo es menor 
+            if (!visitados[nodo] && distancias[nodo] < distanciaMinima){
+                marcarNodoActual(nodo)
+                nodoActual = nodo;
+                distanciaMinima = distancias[nodo];
+            }
         }
-    });
-    // console.log(arrayCirculos);
+
+        if (nodoActual === null) break //no hay mas nodos que visitar
+
+        // marca el nodo actual como visitadop
+        visitados[nodoActual] = true;
+        marcarNodoVisitado(nodoActual)
+
+        // actualiza las distancias del nodo para cada nodo adyacente
+        for (let vecino in grafo[nodoActual]){
+            let distancia = distanciaMinima + grafo[nodoActual][vecino]
+            if (distancia < distancias[vecino]) {
+                // actualizamos los valores si la distancia es mas corta 
+                distancias[vecino] = distancia
+                camino[vecino] = nodoActual
+            }
+        }
+    }
+
+    // constructor de la ruta final
+    let nodo = nodoFinal
+    // se constrye desde el nodo final al nodo inicial 
+    const caminoMasCorto = []
+    while (nodo !== null) {
+        // agregando al inicio el nodo 
+        caminoMasCorto.unshift(nodo)
+        nodo = camino[nodo]
+    }
+    const distaciaFinal = distancias[nodoFinal]
+    const resultado = {caminoMasCorto , peso: distaciaFinal}
+    return resultado
+}
+
+
+
+
+// ajusta los parametros del grafo para que sea mas facil leer y ejecutar el codigo
+function ajustargrafico(grafoSelecionado) {
+    
+    const grafo = posicionCirculos.find( grafo => grafo.nombre === grafoSelecionado) 
+    const grafico = {}
+    grafo.circulos.forEach( nodo => {
+
+        const conexion={}
+
+        nodo.LINEAS.forEach( linea => {
+
+            const nodoDestino = linea.goTo
+            const pesoTramo = linea.peso
+            // incerta la infomacion de la conexion actual del nodo actual 
+            conexion[nodoDestino]=pesoTramo
+        })
+        // incerta el nodo y las conexiones 
+        grafico[nodo.nombre]=conexion
+    })
+    // console.log(grafico);
+    // resultado es asi 
+    // {a:{b:2,c:4}, b:{h:6,e:2}, c:{d:3,g:1}} 
+    // se constituye de 
+    // { nodo{nodoApuntado:PesoDelTrayecto} , }
+    return grafico
 }
 
 
@@ -286,11 +351,6 @@ function crearLineasNodales(grafo) {
     });
 });
 }
-
-
-
-
-
 // ------------- FUNCIONES DE 4 NIVEL --------------------
 // crea las lineas por el nodo y las une al canvas
 function crearLineasPorNodo( puntoPartida , puntoFinalizacion) {
@@ -330,17 +390,7 @@ function crearLineasPorNodo( puntoPartida , puntoFinalizacion) {
             contenidoCanvas.appendChild(lineaElement);
 }
 
-// -------------- Funcion que  escribve el resultado o los errores ocurridos duramnte la Ejecucion 
-function mandarResultado( resultado) {
-    
-    ResultadoEscritoGrafo.innerHTML = `${resultado}`
-}
 
-// funcion que manda mensajes de error en el formulario
-function mandarErrorFormulario( resultado) {
-    
-    capturaErrores.innerHTML = `${resultado}`
-}
 
 // funcion que valida los campos del Nodo
 function verErrores(nodo , grafoSelecionado) {
@@ -372,4 +422,52 @@ function verErrores(nodo , grafoSelecionado) {
         return      
     }
 
+}
+
+
+
+// -- verifica si el nodo ingresado en el formulario,ulario existye 
+function verificarNodos(e) {
+    // uso de las expresiones regiulares donde se hace por medio de /[ valores  que quiero ]/
+    // url del video visto : https://www.youtube.com/watch?v=0V3rIrSBzTU&ab_channel=Funnycode
+
+    const expresionRegular = /^[A-Za-z ]+$/  //https://es.stackoverflow.com/questions/359350/cual-es-la-expresion-regular-para-aceptar-solo-letras-espacios-y-caracteres-es#:~:text=Simplemente%20agregas%20los%20caracteres%20que%20quieres%20que%20acepte,prefieres%20%C3%BAnicamente%20espacios%20en%20vez%20de%20cualquier%20blanco
+    //  e.key obtiene el valor de la tecla presionada 
+    // y el test vasicamentre que valide que sea parte de la expresion regular 
+    if ( !expresionRegular.test(e.key)) {
+        e.preventDefault()
+        // console.log("se presiono un caracter no permitido" );
+        mandarErrorFormulario('ERROR : Imposible Ingresar caracter no permitido!!!!')
+        // limpiando despues de 2000
+        setTimeout( () => mandarErrorFormulario('...') , 3000 )
+    }
+
+}
+
+
+
+
+// -------------- Funcion que  escribve el resultado o los errores ocurridos duramnte la Ejecucion 
+function mandarResultado( resultado) {
+    
+    ResultadoEscritoGrafo.innerHTML = `${resultado}`
+}
+
+// funcion que manda mensajes de error en el formulario
+function mandarErrorFormulario( resultado) {
+    
+    capturaErrores.innerHTML = `${resultado}`
+}
+
+// funcion que limpia los cuirculos y los vieve de color amarrillo 
+function limpiarcirculos() {
+    
+    const arrayCirculos = document.querySelectorAll('.circle')
+    arrayCirculos.forEach( elemeto => {
+        if (elemeto.classList.contains('bg-success') || elemeto.classList.contains('bg-primary') ) {
+            elemeto.classList.remove('bg-success') || elemeto.classList.remove('bg-primary')
+            elemeto.classList.add('bg-warning')
+        }
+    });
+    // console.log(arrayCirculos);
 }
