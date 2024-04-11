@@ -267,21 +267,28 @@
                                                 <div class="col-12">
                                                     <div class="collapse" id="FormularioColapsable">
                                                         <div class="card card-body">
-                                                            <div class="container mb-3 mt-2 col-12">
-                                                                <form action="" class="col-md-6 col-sm-12">
+                                                            <div class="container mb-3 mt-2 col-12 ">
+                                                                <form action="" class="col-md-6 col-sm-12" id="formularioDatosGrafos">
                                                                         <div >
-                                                                            <label for="exampleDataList" class="form-label">Ingrese en Numero Buscado </label>
-                                                                            <input class="form-control" autocomplete="off" id="numero_Buscado" type="number" placeholder="Ingrese un numero entero" aria-label="default input example">
+                                                                            <label for="exampleDataList" class="form-label">Ingrese en Nodo de Partida </label>
+                                                                            <input class="form-control" autocomplete="off" id="nodo-Inicial" type="text" placeholder="A" aria-label="default input example">
                                                                             
-                                                                            <label for="exampleDataList" class="form-label">Ingrese en Numero Buscado </label>
-                                                                            <input class="form-control" autocomplete="off" id="numero_Buscado" type="number" placeholder="Ingrese un numero entero" aria-label="default input example">
+                                                                            <label for="exampleDataList" class="form-label">Ingrese en Nodo Final </label>
+                                                                            <input class="form-control" autocomplete="off" id="nodo-Final" type="text" placeholder="E" aria-label="default input example">
+                                                                            <div class="mt-1" id="capturaErrores">
+
+                                                                            </div>
                                                                         </div>
-                                                                    </form>
-                                                                <div class="col-sm-12 col-md-6 align-items-center">
-                                                                
-                                                                    <button type="button" class="btn btn-success">Ejecutar</button>
-                                                                    <button type="button" class="btn btn-info">Limpiar</button>
-                                                                    
+                                                                </form>
+                                                                <div class="container col-sm-12 col-md-6  px-4 justify-content-center align-items-center" >
+                                                                    <div class="row align-items-center px-4">
+                                                                        <div class="col mt-3">
+                                                                            <button type="button" class="btn btn-success" id="ejecutarAlgoritmo">Ejecutar</button>
+                                                                        </div>
+                                                                        <div class="col mt-3">
+                                                                            <button type="button" class="btn btn-info" id="limpiarContenido">Limpiar</button>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>

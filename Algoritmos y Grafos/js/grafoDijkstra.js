@@ -2,102 +2,21 @@
 
 
 const btnSelecionarGrafo = document.getElementById("seleccionarGrafo")
+const btnEjecutarGrafo = document.getElementById('ejecutarAlgoritmo')
+const btnLimpiarContenido = document.getElementById('limpiarContenido')
 
+
+const casillaNodoInicial =document.getElementById('nodo-Inicial')
+const casillaNodoFinal =document.getElementById('nodo-Final')
+
+
+const formulario = document.getElementById('formularioDatosGrafos')
 
 // Variables Globales -------------    
 // un array que grada los nodos de los grafos y sus pociciones si se quiere modificar es en esta parte 
-const posicionCirculos = [
-        {
-            nombre: 'Grafo1',
-            circulos: [
-                { nombre: 'A', left: 50, top: 50, LINEAS: [
-                    { goTo: 'B', peso: 10 },
-                    { goTo: 'E', peso: 2 }
-                ]},
-                { nombre: 'B', left: 200, top: 150, LINEAS: [
-                    { goTo: 'G', peso: 5 },
-                ]},
-                { nombre: 'C', left: 300, top: 50, LINEAS: [
-                    { goTo: 'D', peso: 1 },
-                    { goTo: 'G', peso: 2 }
-                ]},
-                { nombre: 'D', left: 400, top: 200, LINEAS: [
-                    { goTo: 'A', peso: 3 },
-                    { goTo: 'E', peso: 2 }
-                ]},
-                { nombre: 'E', left: 500, top: 100, LINEAS: [
-                    { goTo: 'G', peso: 4 },
-                ]},
-                { nombre: 'F', left: 600, top: 300, LINEAS: [
-                    { goTo: 'G', peso: 1 },
-                    { goTo: 'E', peso: 2 }
-                ]},
-                { nombre: 'G', left: 250, top: 300, LINEAS: [
-                ]}
-            ]
-        },
-        {
-            nombre: 'Grafo2',
-            circulos: [
-                { nombre: 'A', left: 100, top: 150, LINEAS: [
-                    { goTo: 'B', peso: 1 },
-                    { goTo: 'E', peso: 2 }
-                ]},
-                { nombre: 'B', left: 290, top: 350, LINEAS: [
-                    { goTo: 'G', peso: 2 },
-                ]},
-                { nombre: 'C', left: 300, top: 220, LINEAS: [
-                    { goTo: 'D', peso: 1 },
-                    { goTo: 'G', peso: 1 }
-                ]},
-                { nombre: 'D', left: 310, top: 258, LINEAS: [
-                    { goTo: 'A', peso: 7 },
-                    { goTo: 'E', peso: 1 }
-                ]},
-                { nombre: 'E', left: 40, top: 300, LINEAS: [
-                    { goTo: 'C', peso: 4 },
-                ]},
-                { nombre: 'F', left: 600, top: 40, LINEAS: [
-                    { goTo: 'A', peso: 3 },
-                    { goTo: 'E', peso: 2 }
-                ]},
-                { nombre: 'G', left: 250, top: 100, LINEAS: [
-                    { goTo: 'A', peso: 4 },
-                    { goTo: 'E', peso: 2 }
-                ]}
-            ]
-        },
-        {
-            nombre: 'Grafo3',
-            circulos: [
-                { nombre: 'A', left: 300, top: 250, LINEAS: [
-                    { goTo: 'G', peso: 1 },
-                    { goTo: 'F', peso: 3 }
-                ]},
-                { nombre: 'B', left: 390, top: 359, LINEAS: [
-                    { goTo: 'C', peso: 4 },
-                    { goTo: 'E', peso: 6 },
-                ]},
-                { nombre: 'C', left: 40, top: 20, LINEAS: [
-                    { goTo: 'D', peso: 9 },
-                ]},
-                { nombre: 'D', left: 100, top: 100, LINEAS: [
-                    { goTo: 'F', peso: 1 },
-                    { goTo: 'E', peso: 3 }
-                ]},
-                { nombre: 'E', left: 40, top: 300, LINEAS: [
-                    { goTo: 'C', peso: 4 },
-                ]},
-                { nombre: 'F', left: 600, top: 40, LINEAS: [
-                    { goTo: 'E', peso: 2 }
-                ]},
-                { nombre: 'G', left: 280, top: 170, LINEAS: [
-                    { goTo: 'E', peso: 2 }
-                ]}
-            ]
-        }
+// Esta en min 
+const posicionCirculos=[{nombre:'Grafo1',circulos:[{nombre:'A',left:50,top:50,LINEAS:[{goTo:'B',peso:10},{goTo:'E',peso:2}]},{nombre:'B',left:200,top:150,LINEAS:[{goTo:'G',peso:5}]},{nombre:'C',left:300,top:50,LINEAS:[{goTo:'D',peso:1},{goTo:'G',peso:2}]},{nombre:'D',left:400,top:200,LINEAS:[{goTo:'A',peso:3},{goTo:'E',peso:2}]},{nombre:'E',left:500,top:100,LINEAS:[{goTo:'G',peso:4}]},{nombre:'F',left:600,top:300,LINEAS:[{goTo:'G',peso:1},{goTo:'E',peso:2}]},{nombre:'G',left:250,top:300,LINEAS:[]}]},{nombre:'Grafo2',circulos:[{nombre:'A',left:100,top:150,LINEAS:[{goTo:'B',peso:1},{goTo:'E',peso:2}]},{nombre:'B',left:290,top:350,LINEAS:[{goTo:'G',peso:2}]},{nombre:'C',left:300,top:220,LINEAS:[{goTo:'D',peso:1},{goTo:'G',peso:1}]},{nombre:'D',left:310,top:258,LINEAS:[{goTo:'A',peso:7},{goTo:'E',peso:1}]},{nombre:'E',left:40,top:300,LINEAS:[{goTo:'C',peso:4}]},{nombre:'F',left:600,top:40,LINEAS:[{goTo:'A',peso:3},{goTo:'E',peso:2}]},{nombre:'G',left:250,top:100,LINEAS:[{goTo:'A',peso:4},{goTo:'E',peso:2}]}]},{nombre:'Grafo3',circulos:[{nombre:'A',left:300,top:250,LINEAS:[{goTo:'G',peso:1},{goTo:'F',peso:3}]},{nombre:'B',left:390,top:359,LINEAS:[{goTo:'C',peso:4},{goTo:'E',peso:6}]},{nombre:'C',left:40,top:20,LINEAS:[{goTo:'D',peso:9}]},{nombre:'D',left:100,top:100,LINEAS:[{goTo:'F',peso:1},{goTo:'E',peso:3}]},{nombre:'E',left:40,top:300,LINEAS:[{goTo:'C',peso:4}]},{nombre:'F',left:600,top:40,LINEAS:[{goTo:'E',peso:2}]},{nombre:'G',left:280,top:170,LINEAS:[{goTo:'E',peso:2}]}]}];
 
-];
 
 let grafoIsInicializate = false // variable que sirve en el inicianilazor al cargar la pagina 
 // ========================= FUNCION PARA CARGAR EL GRAFO INICIAL ===========
@@ -120,9 +39,13 @@ cargarListeners()
 
 
 function cargarListeners() {
-    
-    
+
+
+    casillaNodoInicial.addEventListener('keypress' , verificarNodos)
+    casillaNodoFinal.addEventListener('keypress' , verificarNodos)
+    btnEjecutarGrafo.addEventListener('click' , ejecutarGrafo) // obtiene los datos y ejecuta el grafo
     btnSelecionarGrafo.addEventListener('change' , mostrarGrafo) // captura cuando se seleciona otro grafo y lo manda a cargar 
+    btnLimpiarContenido.addEventListener('click' , limpiarTodo)
     addEventListener('click' , mostrarInformacionNodal)
 }
 
@@ -130,6 +53,57 @@ function cargarListeners() {
 
 
 // ------ FUNCIONES PRIMARIAS -------===========
+function limpiarTodo(e) {
+    e.preventDefault()
+    formularioDatosGrafos.reset()
+    limpiarcirculos()
+}
+
+function verificarNodos(e) {
+    // uso de las expresiones regiulares donde se hace por medio de /[ valores  que quiero ]/
+    // url del video visto : https://www.youtube.com/watch?v=0V3rIrSBzTU&ab_channel=Funnycode
+
+    const expresionRegular = /^[A-Za-z ]+$/  //https://es.stackoverflow.com/questions/359350/cual-es-la-expresion-regular-para-aceptar-solo-letras-espacios-y-caracteres-es#:~:text=Simplemente%20agregas%20los%20caracteres%20que%20quieres%20que%20acepte,prefieres%20%C3%BAnicamente%20espacios%20en%20vez%20de%20cualquier%20blanco
+    //  e.key obtiene el valor de la tecla presionada 
+    // y el test vasicamentre que valide que sea parte de la expresion regular 
+    if ( !expresionRegular.test(e.key)) {
+        e.preventDefault()
+        // console.log("se presiono un caracter no permitido" );
+        mandarErrorFormulario('ERROR : Imposible Ingresar caracter no permitido!!!!')
+        // limpiando despues de 2000
+        setTimeout( () => mandarErrorFormulario('...') , 3000 )
+    }
+
+}
+
+
+
+
+// ejecuta el grafo 
+function ejecutarGrafo(e) {
+    e.preventDefault()
+    
+    const nodoInicial = document.getElementById("nodo-Inicial").value.toUpperCase()
+    const nodoFinal = document.getElementById("nodo-Final").value.toUpperCase()
+    const grafoSeleccionado = document.getElementById('seleccionarGrafo').value
+
+    let error = false
+
+    // console.log(nodoInicial);
+    error = verErrores(nodoInicial , grafoSeleccionado)
+    if (error) return
+    
+    error = verErrores(nodoFinal , grafoSeleccionado)
+    if (error) return
+
+
+
+    
+}
+
+
+
+// funcion para ver y mostrar la informcaion de los nodos
 function mostrarInformacionNodal(e) {
     e.preventDefault()
     if (e.target.classList.contains('circle')) {
@@ -167,7 +141,10 @@ function mostrarGrafo(e) {
 
 
 
-// ------- FUNCIONES SECUNDARIAS =====
+// ------- FUNCIONES SECUNDARIAS =========================================================================
+
+
+// funcion que limpia los cuirculos y los vieve de color amarrillo 
 function limpiarcirculos() {
     
     const arrayCirculos = document.querySelectorAll('.circle')
@@ -357,4 +334,42 @@ function crearLineasPorNodo( puntoPartida , puntoFinalizacion) {
 function mandarResultado( resultado) {
     
     ResultadoEscritoGrafo.innerHTML = `${resultado}`
+}
+
+// funcion que manda mensajes de error en el formulario
+function mandarErrorFormulario( resultado) {
+    
+    capturaErrores.innerHTML = `${resultado}`
+}
+
+// funcion que valida los campos del Nodo
+function verErrores(nodo , grafoSelecionado) {
+    // console.log(nodo.length);
+    if (nodo.trim() === '') {
+        mandarErrorFormulario(`ERROR : Imposible Ingresar un caracter vacio en `)
+        // limpiando despues de 3000
+        setTimeout( () => mandarErrorFormulario('...') , 3000 )
+        return true
+    }
+    if (nodo.length > 1 ) {
+        mandarErrorFormulario(`ERROR : Imposible Ingresar un nodo con mas de 1 caracter`)
+        // limpiando despues de 3000
+        setTimeout( () => mandarErrorFormulario('...') , 3000 )
+        return true
+    }
+
+    const grafoRecibido = posicionCirculos.find(item => item.nombre === grafoSelecionado);
+    const grafo = grafoRecibido.circulos
+
+    if (!grafo) {
+        mandarErrorFormulario(`ERROR el grafo no se encontro`)
+        return
+    }
+    const r =grafo.find( circulo => circulo.nombre===nodo)
+    // console.log(r);
+    if (!grafo.find( circulo => circulo.nombre===nodo)) {
+        mandarErrorFormulario(`ERROR el nodo ${nodo} no se encontro`)
+        return      
+    }
+
 }
