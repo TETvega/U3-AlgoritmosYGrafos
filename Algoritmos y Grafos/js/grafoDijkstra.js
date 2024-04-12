@@ -15,7 +15,7 @@ const formulario = document.getElementById('formularioDatosGrafos')
 // Variables Globales -------------    
 // un array que grada los nodos de los grafos y sus pociciones si se quiere modificar es en esta parte 
 // Esta en min 
-const posicionCirculos=[{nombre:'Grafo1',circulos:[{nombre:'A',left:50,top:50,LINEAS:[{goTo:'B',peso:10},{goTo:'E',peso:2}]},{nombre:'B',left:200,top:150,LINEAS:[{goTo:'G',peso:5}]},{nombre:'C',left:300,top:50,LINEAS:[{goTo:'D',peso:1},{goTo:'G',peso:2}]},{nombre:'D',left:400,top:200,LINEAS:[{goTo:'A',peso:3},{goTo:'E',peso:2}]},{nombre:'E',left:500,top:100,LINEAS:[{goTo:'G',peso:4}]},{nombre:'F',left:600,top:300,LINEAS:[{goTo:'G',peso:1},{goTo:'E',peso:2}]},{nombre:'G',left:250,top:300,LINEAS:[]}]},{nombre:'Grafo2',circulos:[{nombre:'A',left:100,top:150,LINEAS:[{goTo:'B',peso:1},{goTo:'E',peso:2}]},{nombre:'B',left:290,top:350,LINEAS:[{goTo:'G',peso:2}]},{nombre:'C',left:300,top:220,LINEAS:[{goTo:'D',peso:1},{goTo:'G',peso:1}]},{nombre:'D',left:310,top:258,LINEAS:[{goTo:'A',peso:7},{goTo:'E',peso:1}]},{nombre:'E',left:40,top:300,LINEAS:[{goTo:'C',peso:4}]},{nombre:'F',left:600,top:40,LINEAS:[{goTo:'A',peso:3},{goTo:'E',peso:2}]},{nombre:'G',left:250,top:100,LINEAS:[{goTo:'A',peso:4},{goTo:'E',peso:2}]}]},{nombre:'Grafo3',circulos:[{nombre:'A',left:300,top:250,LINEAS:[{goTo:'G',peso:1},{goTo:'F',peso:3}]},{nombre:'B',left:390,top:359,LINEAS:[{goTo:'C',peso:4},{goTo:'E',peso:6}]},{nombre:'C',left:40,top:20,LINEAS:[{goTo:'D',peso:9}]},{nombre:'D',left:100,top:100,LINEAS:[{goTo:'F',peso:1},{goTo:'E',peso:3}]},{nombre:'E',left:40,top:300,LINEAS:[{goTo:'C',peso:4}]},{nombre:'F',left:600,top:40,LINEAS:[{goTo:'E',peso:2}]},{nombre:'G',left:280,top:170,LINEAS:[{goTo:'E',peso:2}]}]}];
+const posicionCirculos=[{nombre:'Grafo1',circulos:[{nombre:'A',left:50,top:50,LINEAS:[{goTo:'B',peso:10},{goTo:'E',peso:2},{goTo:'F',peso:15}]},{nombre:'B',left:200,top:150,LINEAS:[{goTo:'G',peso:5}]},{nombre:'C',left:300,top:50,LINEAS:[{goTo:'D',peso:1},{goTo:'G',peso:2}]},{nombre:'D',left:400,top:200,LINEAS:[{goTo:'A',peso:3},{goTo:'E',peso:2}]},{nombre:'E',left:500,top:100,LINEAS:[{goTo:'G',peso:4}]},{nombre:'F',left:600,top:300,LINEAS:[{goTo:'G',peso:1},{goTo:'E',peso:2},{goTo:'B',peso:1}]},{nombre:'G',left:250,top:300,LINEAS:[]}]},{nombre:'Grafo2',circulos:[{nombre:'A',left:100,top:150,LINEAS:[{goTo:'B',peso:1},{goTo:'E',peso:2}]},{nombre:'B',left:290,top:350,LINEAS:[{goTo:'G',peso:2}]},{nombre:'C',left:300,top:220,LINEAS:[{goTo:'D',peso:1},{goTo:'G',peso:1}]},{nombre:'D',left:310,top:258,LINEAS:[{goTo:'A',peso:7},{goTo:'E',peso:1}]},{nombre:'E',left:40,top:300,LINEAS:[{goTo:'C',peso:4}]},{nombre:'F',left:600,top:40,LINEAS:[{goTo:'A',peso:3},{goTo:'E',peso:2}]},{nombre:'G',left:250,top:100,LINEAS:[{goTo:'A',peso:4},{goTo:'E',peso:2}]}]},{nombre:'Grafo3',circulos:[{nombre:'A',left:300,top:250,LINEAS:[{goTo:'G',peso:1},{goTo:'F',peso:3}]},{nombre:'B',left:390,top:359,LINEAS:[{goTo:'C',peso:4},{goTo:'E',peso:6}]},{nombre:'C',left:40,top:20,LINEAS:[{goTo:'D',peso:9}]},{nombre:'D',left:100,top:100,LINEAS:[{goTo:'F',peso:1},{goTo:'E',peso:3}]},{nombre:'E',left:40,top:300,LINEAS:[{goTo:'C',peso:4}]},{nombre:'F',left:600,top:40,LINEAS:[{goTo:'E',peso:2}]},{nombre:'G',left:280,top:170,LINEAS:[{goTo:'E',peso:2}]}]}];
 
 
 let grafoIsInicializate = false // variable que sirve en el inicianilazor al cargar la pagina 
@@ -67,7 +67,8 @@ function limpiarTodo(e) {
 // ejecuta el grafo 
 function ejecutarGrafo(e) {
     e.preventDefault()
-    
+
+    limpiarcirculos()
     const nodoInicial = document.getElementById("nodo-Inicial").value.toUpperCase()
     const nodoFinal = document.getElementById("nodo-Final").value.toUpperCase()
     const grafoSeleccionado = document.getElementById('seleccionarGrafo').value
@@ -84,11 +85,49 @@ function ejecutarGrafo(e) {
 
     const grafico = ajustargrafico(grafoSeleccionado)
 
-    algoritmoDijkstra(grafico , nodoInicial , nodoFinal)
+    algoritmoDijkstra(grafico , nodoInicial , nodoFinal).then( resultado=> {
+        if (resultado.peso === Infinity) {
+            document.getElementById('ResultadoEscritoGrafo').innerHTML = `No hay un camino desde el nodo ${nodoInicial} al nodo ${nodoFinal}. Mira la tabla de apuntadores y pesos`
+            return
+        }
+        console.log(resultado);
+        pintarResultado(resultado.caminoMasCorto)
+        escribirResultadoGrafo(resultado.caminoMasCorto , resultado.peso)
+    })
     
 }
+function escribirResultadoGrafo(camino , peso) {
+    let contenido =``
 
+    camino.forEach( (nodo, index) =>{
+        console.log(index);
+        if (camino.length-1 == index) {
+            contenido+=nodo
+        }else{
+            contenido+= `${nodo} ==> `
+        }
+        
+    })
+    contenido+= `Con un peso de ${peso}`
+    console.log(contenido)
+    document.getElementById('ResultadoEscritoGrafo').innerHTML = contenido
+}
 
+function pintarResultado( camino) {
+    
+    camino.forEach(nodo =>{
+        
+        const nodoElemento =document.getElementById(`${nodo}`)
+        console.log(nodoElemento);
+        if (nodoElemento.classList.contains('bg-warning')) {
+            nodoElemento.classList.remove('bg-warning')   
+        }
+        nodoElemento.classList.add('bg-danger')
+    })
+    // for (const nodo in camino) {
+        
+    // }
+}
 
 // funcion para ver y mostrar la informcaion de los nodos
 function mostrarInformacionNodal(e) {
@@ -129,7 +168,7 @@ function mostrarGrafo(e) {
 
 
 // ------- FUNCIONES SECUNDARIAS =========================================================================
-function dijkstra(grafo, nodoInicial, nodoFinal) {
+async function algoritmoDijkstra(grafo, nodoInicial, nodoFinal) {
     const nodos = Object.keys(grafo)// los nodos que tenemos A , B , C . D , E , F 
 
 
@@ -156,16 +195,19 @@ function dijkstra(grafo, nodoInicial, nodoFinal) {
             // hace una comparacion si el nodo existe en visitados y si la distamncia del nodo es menor 
             if (!visitados[nodo] && distancias[nodo] < distanciaMinima){
                 marcarNodoActual(nodo)
+                await esperar(800)
                 nodoActual = nodo;
                 distanciaMinima = distancias[nodo];
             }
         }
-
+        
         if (nodoActual === null) break //no hay mas nodos que visitar
 
         // marca el nodo actual como visitadop
         visitados[nodoActual] = true;
         marcarNodoVisitado(nodoActual)
+        await esperar(500)
+        
 
         // actualiza las distancias del nodo para cada nodo adyacente
         for (let vecino in grafo[nodoActual]){
@@ -189,10 +231,31 @@ function dijkstra(grafo, nodoInicial, nodoFinal) {
     }
     const distaciaFinal = distancias[nodoFinal]
     const resultado = {caminoMasCorto , peso: distaciaFinal}
+    limpiarcirculos()
+    await esperar(500)
     return resultado
 }
 
+ function marcarNodoActual(nodo) {
+    // const nodo = document.()
+    // console.log(nodo);
+    const structuraNodo= document.getElementById(nodo)
+    // console.log(structuraNodo);
+    if (structuraNodo.classList.contains('bg-warning') ||structuraNodo.classList.contains('bg-success')) {
+        structuraNodo.classList.remove('bg-warning') ||structuraNodo.classList.remove('bg-success')
+    }
+    structuraNodo.classList.add('bg-primary')
+ }
 
+ function marcarNodoVisitado(nodo) {
+    const structuraNodo= document.getElementById(nodo)
+    // console.log(structuraNodo);
+    if (structuraNodo.classList.contains('bg-warning') || structuraNodo.classList.contains('bg-primary')) {
+        structuraNodo.classList.remove('bg-warning') || structuraNodo.classList.remove('bg-primary')
+    }
+    
+    structuraNodo.classList.add('bg-success')
+ }
 
 
 // ajusta los parametros del grafo para que sea mas facil leer y ejecutar el codigo
@@ -321,6 +384,7 @@ function crearCirculo(grafo) {
         const circle = document.createElement('div');
 
         circle.classList.add('circle' , 'bg-warning', 'text-center' , 'aling-items-center' , `${circulo.nombre}`);
+        circle.setAttribute( 'id' , `${circulo.nombre}`)
         // circle.classList.add();
         // agrgando los stilos de cada circulo segun los px que indicamos en el array global 
         circle.style.left = `${circulo.left}px`;
@@ -464,10 +528,17 @@ function limpiarcirculos() {
     
     const arrayCirculos = document.querySelectorAll('.circle')
     arrayCirculos.forEach( elemeto => {
-        if (elemeto.classList.contains('bg-success') || elemeto.classList.contains('bg-primary') ) {
-            elemeto.classList.remove('bg-success') || elemeto.classList.remove('bg-primary')
+        if (elemeto.classList.contains('bg-success') || elemeto.classList.contains('bg-primary') || elemeto.classList.contains('bg-danger')) {
+            elemeto.classList.remove('bg-success') || elemeto.classList.remove('bg-primary') || elemeto.classList.remove('bg-danger')
             elemeto.classList.add('bg-warning')
         }
     });
     // console.log(arrayCirculos);
+}
+
+
+function esperar(tiempoMs) {
+    return new Promise(resolve => {
+        setTimeout(resolve, tiempoMs)
+    })
 }

@@ -88,7 +88,7 @@
                 <hr>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link text-black active" aria-current="page" href="grafos.html">Inicio</a>
+                        <a class="nav-link text-body-secondary" aria-current="page" href="grafos.html">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-body-secondary" href="grafoProfundidad.html">Profundidad</a>
@@ -97,7 +97,7 @@
                         <a class="nav-link text-body-secondary" href="grafoAnchura.html">Anchura</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoDijkstra.html"><strong>Dijkstral</strong></a>
+                        <a class="nav-link text-black active" href="grafoDijkstra.html"><strong>Dijkstral</strong></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-body-secondary" href="grafoKruskal.html">Kruskal</a>
@@ -235,6 +235,7 @@
                         <section>
                             <h2 class="mb-2 mt-4 lick-EstaSeccion" id="Algoritmo_BusquedaLineal_enAccion">Algoritmo de grafos DIJKSTRAL</h2>
                             <hr>
+                            <p>Cuenta con nodos Apuntado, puedes ver la tabla</p>
                             <p>Puede Probar los algoritmos en esta seccion. </p>
                             <p>Solo son validos numeros enteros</p>
                             <p>Solo son validos los pesos Positivos para los caminos</p>
@@ -366,8 +367,15 @@
                         <section class="mt-4 mb-4 ">
                             <h2 class="mb-4 lick-EstaSeccion" id="CodigoAlgoritmos" >Código de la función de búsqueda lineal única para JS</h2>
                             <p>Codigo utilizado para  <span class="text-warning">JS</span></p>
-                            <p>Recibe un numero entero y una lista de numeros enteroos: ( 3 , [4 , 6, 8, 3, 9 , 0] )</p>
-                            <p>Se detiene en el momento que encuentra el numero buscado.</p>
+                            <p>Recibe un grafo de esta manera 
+                                const Grafo:
+                                {
+                                    A: { B: 3, C: 5 },
+                                    B: { C: 2, D: 6 },
+                                    C: { D: 1 },
+                                    D: {}
+                                }</p>
+                            <p>Se detiene en el momento que encuentra el nodo con el camino mas corto buscado.</p>
                             <div class="row justify-content-end mx-2">
                                 <div class="col-1">
                                     <button type="button" id="btn_CopiarLinealUnica" class="btn btn-outline-primary mb-2">Copy</button>
@@ -375,67 +383,60 @@
                             </div>
                             <pre class="bg-dark mb-4" style="border-radius: 5px;">
                                 <code class="text-white" id="codigoBusquedaUnica">
-    function busquedaLinealUnica(numeroBuscado, listaNumeros) {
-        let bandera = false;
-        for (let i = 0; i < listaNumeros.length; i++) {
-            if (numeroBuscado === listaNumeros[i]) {
-                bandera = true;
-                mandarResultado(`Se encontró el número buscado: "${numeroBuscado}. En la posición #${i + 1}`);
-                break;
+    async function algoritmoDijkstra(grafo, nodoInicial, nodoFinal) {
+        const nodos = Object.keys(grafo)
+        const distancias = {}
+        const visitados = {}
+        const camino = {}
+
+        for (let nodo of nodos) {
+            distancias[nodo] = Infinity;
+            camino[nodo] = null;
+        }
+
+        
+        distancias[nodoInicial] = 0;
+
+        while (true) {
+            let nodoActual = null;
+            let distanciaMinima = Infinity;
+
+            // Encontrar el nodo no visitado con la distancia minima
+            for (let nodo in distancias) {
+                if (!visitados[nodo] && distancias[nodo] < distanciaMinima){
+                    nodoActual = nodo;
+                    distanciaMinima = distancias[nodo];
+                }
+            }
+            
+            if (nodoActual === null) break //no hay mas nodos que visitar
+
+            visitados[nodoActual] = true;
+
+            for (let vecino in grafo[nodoActual]){
+                let distancia = distanciaMinima + grafo[nodoActual][vecino]
+                if (distancia < distancias[vecino]) {
+                    distancias[vecino] = distancia
+                    camino[vecino] = nodoActual
+                }
             }
         }
 
-        if (!bandera) {
-            mandarResultado(`No se encontró el número buscado: "${numeroBuscado}" en la lista proporcionada`);
+
+        let nodo = nodoFinal
+        const caminoMasCorto = []
+        while (nodo !== null) {
+            caminoMasCorto.unshift(nodo)
+            nodo = camino[nodo]
         }
+        const distaciaFinal = distancias[nodoFinal]
+        const resultado = {caminoMasCorto , peso: distaciaFinal}
+        return resultado
     }
                                 </code>
                             </pre>
                         </section>
-                        <section class="mt-4">
-                            
-                            <h2 class="mb-4 mt-4">Código de la función de búsqueda Multiple para JS</h2>
-                            <p>Codigo utilizado para  <span class="text-warning">JS</span></p>
-                            <p>Recibe un numero entero y una lista de numeros enteroos: ( 3 , [4 , 6, 8, 3, 9 , 0] )</p>
-                            <p>Se hasta recorrer completamente toda la lista de numeros</p>
-                            <p>Almacena todos los indices en un arreglo </p>
-                            <div class="row justify-content-end mx-2">
-                                <div class="col-1">
-                                    <button type="button" id="btn_CopiarLinealMultiple" class="btn btn-outline-primary mb-2">Copy</button>
-                                </div>
-                            </div>
-                            
-                            <pre class="bg-dark" style="border-radius: 5px;">
-                                <code class="text-white" id="codigoBusquedaMultiple">
-    function busquedaLinealMultiple( numeroBuscado , listaNumeros) {
-        let bandera = false
-    
-        let numerosEncontrados= []
-        for (let i = 0; i < listaNumeros.length; i++) {
-            if (numeroBuscado === listaNumeros[i]) {
-                bandera=true
-                numerosEncontrados.push(i)
-            }
-        }
-    
-        if (!bandera) {
-            mandarResultado(`No se encontro el numero buscado: "${numeroBuscado}" en la lista proporcionada`)
-        }else if(bandera){
-    
-            let indicesLetras = ''
-            numerosEncontrados.forEach( indice => {
-                indicesLetras+= indice+1 +", "
-            });
-            mandarResultado(`Se encontro el Numero Buscado: "${numeroBuscado}".
-            \nEn la posicion #${indicesLetras}`)
-            
-        }
-    }
-                                </code>
-                            </pre>
-                            
-                            
-                        </section>
+
                         <!-- Termina la secion del muestra de codigo ----------------------   -->
                     </div>
 
