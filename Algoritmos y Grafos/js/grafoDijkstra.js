@@ -4,7 +4,7 @@
 const btnSelecionarGrafo = document.getElementById("seleccionarGrafo")
 const btnEjecutarGrafo = document.getElementById('ejecutarAlgoritmo')
 const btnLimpiarContenido = document.getElementById('limpiarContenido')
-
+const btnCopy = document.getElementById('btn_CopiarAlgoritmo')
 
 const casillaNodoInicial =document.getElementById('nodo-Inicial')
 const casillaNodoFinal =document.getElementById('nodo-Final')
@@ -19,6 +19,11 @@ const posicionCirculos=[{nombre:'Grafo1',circulos:[{nombre:'A',left:50,top:50,LI
 
 
 let grafoIsInicializate = false // variable que sirve en el inicianilazor al cargar la pagina 
+
+
+
+
+
 // ========================= FUNCION PARA CARGAR EL GRAFO INICIAL ===========
 // carga el grafo incial solo si la varible es falsa esto cuando la pagina se ha cargado solamente
 const cargarGrafoInicial = async() => {
@@ -46,6 +51,7 @@ function cargarListeners() {
     btnEjecutarGrafo.addEventListener('click' , ejecutarGrafo) // obtiene los datos y ejecuta el grafo
     btnSelecionarGrafo.addEventListener('change' , mostrarGrafo) // captura cuando se seleciona otro grafo y lo manda a cargar 
     btnLimpiarContenido.addEventListener('click' , limpiarTodo)
+    btnCopy.addEventListener('click' , copiarAlgoritmo)
     addEventListener('click' , mostrarInformacionNodal)
 }
 
@@ -53,6 +59,7 @@ function cargarListeners() {
 
 
 // ------ FUNCIONES PRIMARIAS -------===========
+// Funcion para limpiar los colores y el formulario 
 function limpiarTodo(e) {
     e.preventDefault()
     formularioDatosGrafos.reset()
@@ -60,19 +67,28 @@ function limpiarTodo(e) {
 }
 
 
+function copiarAlgoritmo(e) {
+    e.preventDefault()
+
+    const codigo = document.getElementById("algoritmoDijkstraCopy").textContent
+    navigator.clipboard.writeText(codigo)
+    // console.log(codigo);
+    alert('Codigo copiado al Portapapeles')
+}
 
 
 
-
-// ejecuta el grafo 
+// ejecuta el grafo  Funcion que trae los datos verifica y ejecuta Dijkstra
 function ejecutarGrafo(e) {
     e.preventDefault()
 
     limpiarcirculos()
+    // traendo los datos 
     const nodoInicial = document.getElementById("nodo-Inicial").value.toUpperCase()
     const nodoFinal = document.getElementById("nodo-Final").value.toUpperCase()
     const grafoSeleccionado = document.getElementById('seleccionarGrafo').value
 
+    // para verificar que no hay errores
     let error = false
 
     // console.log(nodoInicial);
@@ -82,25 +98,28 @@ function ejecutarGrafo(e) {
     error = verErrores(nodoFinal , grafoSeleccionado)
     if (error) return
 
-
+    // ajusta los datos para traer el grafico completo de la siguiente forma {a:{b:3,c:4},b{e:3}}
     const grafico = ajustargrafico(grafoSeleccionado)
 
+    // ejecuta el algoritmo y desempaqueta el resultado --- Esto por que es asyncrona 
     algoritmoDijkstra(grafico , nodoInicial , nodoFinal).then( resultado=> {
         if (resultado.peso === Infinity) {
             document.getElementById('ResultadoEscritoGrafo').innerHTML = `No hay un camino desde el nodo ${nodoInicial} al nodo ${nodoFinal}. Mira la tabla de apuntadores y pesos`
             return
         }
-        console.log(resultado);
+        // console.log(resultado);
         pintarResultado(resultado.caminoMasCorto)
         escribirResultadoGrafo(resultado.caminoMasCorto , resultado.peso)
     })
     
 }
+
+// Funcion que escribe el resultado en resultados de la siguiente forma A ==> B ==> E 
 function escribirResultadoGrafo(camino , peso) {
     let contenido =``
 
     camino.forEach( (nodo, index) =>{
-        console.log(index);
+        // console.log(index)
         if (camino.length-1 == index) {
             contenido+=nodo
         }else{
@@ -108,30 +127,28 @@ function escribirResultadoGrafo(camino , peso) {
         }
         
     })
-    contenido+= `Con un peso de ${peso}`
-    console.log(contenido)
+    contenido+= `<br>Con un peso de ${peso}`
+    // console.log(contenido)
     document.getElementById('ResultadoEscritoGrafo').innerHTML = contenido
 }
 
 function pintarResultado( camino) {
-    
-    camino.forEach(nodo =>{
+    // usamos el asyn para decirle que espere y que se vea como animado el pintar los nodos rojos
+    camino.forEach( async nodo =>{
         
         const nodoElemento =document.getElementById(`${nodo}`)
-        console.log(nodoElemento);
         if (nodoElemento.classList.contains('bg-warning')) {
             nodoElemento.classList.remove('bg-warning')   
         }
         nodoElemento.classList.add('bg-danger')
+        await esperar(800)
     })
-    // for (const nodo in camino) {
-        
-    // }
 }
 
-// funcion para ver y mostrar la informcaion de los nodos
+// funcion para ver y mostrar la informcaion de los nodos -- Pinta el nodo actual y a los que apunta
 function mostrarInformacionNodal(e) {
-    e.preventDefault()
+    // e.preventDefault() // todo desactivarlo po que causaba error con el comportamiento determinado de los links
+    // console.log(e.target);
     if (e.target.classList.contains('circle')) {
 
         // limpia los colores por si estaba algun circulo selecionado
@@ -168,6 +185,7 @@ function mostrarGrafo(e) {
 
 
 // ------- FUNCIONES SECUNDARIAS =========================================================================
+// Algoritmo completo de Dijkstra 
 async function algoritmoDijkstra(grafo, nodoInicial, nodoFinal) {
     const nodos = Object.keys(grafo)// los nodos que tenemos A , B , C . D , E , F 
 
@@ -236,17 +254,16 @@ async function algoritmoDijkstra(grafo, nodoInicial, nodoFinal) {
     return resultado
 }
 
+// Funcion que pinta el nodo actual de color azul 
  function marcarNodoActual(nodo) {
-    // const nodo = document.()
-    // console.log(nodo);
     const structuraNodo= document.getElementById(nodo)
-    // console.log(structuraNodo);
     if (structuraNodo.classList.contains('bg-warning') ||structuraNodo.classList.contains('bg-success')) {
         structuraNodo.classList.remove('bg-warning') ||structuraNodo.classList.remove('bg-success')
     }
     structuraNodo.classList.add('bg-primary')
  }
 
+//  Funcion que pinta el nodo visitado de color verde 
  function marcarNodoVisitado(nodo) {
     const structuraNodo= document.getElementById(nodo)
     // console.log(structuraNodo);
@@ -271,13 +288,11 @@ function ajustargrafico(grafoSelecionado) {
 
             const nodoDestino = linea.goTo
             const pesoTramo = linea.peso
-            // incerta la infomacion de la conexion actual del nodo actual 
             conexion[nodoDestino]=pesoTramo
         })
         // incerta el nodo y las conexiones 
         grafico[nodo.nombre]=conexion
     })
-    // console.log(grafico);
     // resultado es asi 
     // {a:{b:2,c:4}, b:{h:6,e:2}, c:{d:3,g:1}} 
     // se constituye de 
@@ -289,18 +304,16 @@ function ajustargrafico(grafoSelecionado) {
 // funcion que pinta los nodos adyacentes de colores y el primario de otro 
 function pintarNodos(nodoPrimario, nodoDirigidos) {
     
-    pintarNodoPrimario(nodoPrimario)
-    pintarNodosSecundarios(nodoDirigidos)
+    pintarNodoPrimario(nodoPrimario)  // pinta de verde
+    pintarNodosSecundarios(nodoDirigidos) // los vecions de azul 
 
 }
 
-// funcion que retorna a donde se dirige los nodos 
+// funcion que retorna a donde se dirige los nodos  del nodo que se esta presionando
 function encontarNodosDirigidos(nodoPrimario, grafo) {
     const nodosEncontrados=[]
     grafo.circulos.forEach(nodo => {
-        // console.log(nodo);
         if (nodo.nombre === nodoPrimario.textContent) {
-            // console.log(nodo.LINEAS);
             nodo.LINEAS.forEach(linea => {
                 nodosEncontrados.push(linea)
             });
@@ -333,7 +346,6 @@ function cargarGrafo( grafo) {
 function mostrarTabla(grafo) {
     const grafoEncontrado = posicionCirculos.find(item => item.nombre === grafo);
     
-    // hacer un fix despues y hacer m,ejor la tabla luego 
     let tablaHTML = '';
     grafoEncontrado.circulos.forEach((circulo , index) => {
         circulo.LINEAS.forEach(linea => {
@@ -356,12 +368,12 @@ function mostrarTabla(grafo) {
 
 
 // ========================= FUNCIONES TERCIARIAS =============
-
+// Pinta el nodo primario de verde
 function pintarNodoPrimario(nodo) {
     nodo.classList.remove('bg-warning')
     nodo.classList.add('bg-success')
 }
-
+// pinta los nodos secundarios de azul 
 function pintarNodosSecundarios( arrayNodos) {
     
     arrayNodos.forEach(nodo => {
@@ -373,9 +385,9 @@ function pintarNodosSecundarios( arrayNodos) {
             elementoCoincidente.classList.remove('bg-warning');
             elementoCoincidente.classList.add('bg-primary');
         } else {
-            console.log(`No se encontró un elemento con texto "${nodo.goTo}"`);
+            mandarResultado(`No se encontro un nodo con el nombre ${nodo.goTo}`)
         }
-    });
+    })
 }
 
 // crea los circulos de cada grafo
@@ -384,8 +396,7 @@ function crearCirculo(grafo) {
         const circle = document.createElement('div');
 
         circle.classList.add('circle' , 'bg-warning', 'text-center' , 'aling-items-center' , `${circulo.nombre}`);
-        circle.setAttribute( 'id' , `${circulo.nombre}`)
-        // circle.classList.add();
+        circle.setAttribute( 'id' , `${circulo.nombre}`) // se le agrga el id segun el nombre para que sea mas facil al pintar el resultado
         // agrgando los stilos de cada circulo segun los px que indicamos en el array global 
         circle.style.left = `${circulo.left}px`;
         circle.style.top = `${circulo.top}px`;
@@ -395,6 +406,7 @@ function crearCirculo(grafo) {
     });
 }
 
+// Crea las lineas de los nodos de punto a al punto B 
 function crearLineasNodales(grafo) {
  // Crear las lineas de recorrido en el canvas  ----- APOYO DE CHAT GPT/ GEMENNI Y COPILOT
  grafo.forEach(circulo => {
@@ -533,10 +545,9 @@ function limpiarcirculos() {
             elemeto.classList.add('bg-warning')
         }
     });
-    // console.log(arrayCirculos);
 }
 
-
+// funcion que recibe un tiempo y hace que espere el usuario 
 function esperar(tiempoMs) {
     return new Promise(resolve => {
         setTimeout(resolve, tiempoMs)

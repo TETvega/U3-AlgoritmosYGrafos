@@ -13,6 +13,10 @@
 
         <style>
 
+        .linck-EstaSeccion{
+            scroll-margin-top: 100px;
+        }
+
         .circle {
                 width: 30px;
                 height: 30px;
@@ -83,33 +87,36 @@
     <div class="container">
         <!-- Bloque izquierdo del menú de algoritmos -->
         <div class="row mt-3 mb-4">
-            <aside class="col-sm-12 col-md-2 " style="border-right: solid 2px gray;">
-                <h3 class="fs-5 text-gray fw-light">Formas de Busqueda</h3>
-                <hr>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" aria-current="page" href="grafos.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoProfundidad.html">Profundidad</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoAnchura.html">Anchura</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-black active" href="grafoDijkstra.html"><strong>Dijkstral</strong></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoKruskal.html">Kruskal</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoPrim.html">Prim</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoBellamFord.html">Bellam Ford</a>
-                    </li>
-                </ul>
-            </aside>
+            <div class="col-sm-12 col-md-2" style="border-right: solid 2px gray;">
+                <aside class="sticky-top" style=" top: 50px;">
+                    <h3 class="fs-5 text-gray fw-light">Formas de Busqueda</h3>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" aria-current="page" href="grafos.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" href="grafoProfundidad.html">Profundidad</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" href="grafoAnchura.html">Anchura</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black active" href="grafoDijkstra.html"><strong>Dijkstral</strong></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" href="grafoKruskal.html">Kruskal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" href="grafoPrim.html">Prim</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" href="grafoBellamFord.html">Bellam Ford</a>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+            
             <!-- Fin del bloque izquierdo -->
         
             <!-- Contenido del main -->
@@ -120,7 +127,7 @@
 
                          <!-- bloque de QUE ES UN ALGORITMO DE BUSQUEDA  -->
                         <section class="mb-4">
-                            <h3 class="mb-2" id="queEsUnAlgoritmoBusqueda">¿Que es el Grafo de Dijkstra?</h3>
+                            <h3 class="mb-2" id="queesDijkstra">¿Que es el Grafo de Dijkstra?</h3>
                             <hr>
 
                             <p>
@@ -134,7 +141,7 @@
                                 corto entre dos nodos en un grafo ponderado.</strong>
                             </p>
                             <br><br><br>
-                            <h3 class="mb-2" id="queEsUnAlgoritmoBusqueda">¿Cuál es el funcionamiento del algoritmo de Dijkstra?</h3>
+                            <h3 class="mb-2 linck-EstaSeccion" id="cuaEsElFuncionamientoDijkstra">¿Cuál es el funcionamiento del algoritmo de Dijkstra?</h3>
                                <p>
                                 El algoritmo de Dijkstra es como un navegador que te ayuda a encontrar
                                 la ruta más corta entre dos puntos en un mapa, pero en lugar de considerar solo la distancia física
@@ -233,7 +240,7 @@
                         <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BUSQUEDA s -->    
                         <!-- Empieza la secion del formulario y funcion por grafos de DIJKSTRAL ----------------------   -->
                         <section>
-                            <h2 class="mb-2 mt-4 lick-EstaSeccion" id="Algoritmo_BusquedaLineal_enAccion">Algoritmo de grafos DIJKSTRAL</h2>
+                            <h2 class="mb-2 mt-4 linck-EstaSeccion" id="Algoritmo_Dijkstra_enAccion">Algoritmo de grafos DIJKSTRAL</h2>
                             <hr>
                             <p>Cuenta con nodos Apuntado, puedes ver la tabla</p>
                             <p>Puede Probar los algoritmos en esta seccion. </p>
@@ -365,7 +372,7 @@
                         </section>
                         <hr>
                         <section class="mt-4 mb-4 ">
-                            <h2 class="mb-4 lick-EstaSeccion" id="CodigoAlgoritmos" >Código de la función de búsqueda lineal única para JS</h2>
+                            <h2 class="mb-4 linck-EstaSeccion" id="CodigoAlgoritmos" >Código de la función de Dijkstra para JS</h2>
                             <p>Codigo utilizado para  <span class="text-warning">JS</span></p>
                             <p>Recibe un grafo de esta manera 
                                 const Grafo:
@@ -378,11 +385,11 @@
                             <p>Se detiene en el momento que encuentra el nodo con el camino mas corto buscado.</p>
                             <div class="row justify-content-end mx-2">
                                 <div class="col-1">
-                                    <button type="button" id="btn_CopiarLinealUnica" class="btn btn-outline-primary mb-2">Copy</button>
+                                    <button type="button" id="btn_CopiarAlgoritmo" class="btn btn-outline-primary mb-2">Copy</button>
                                 </div>
                             </div>
                             <pre class="bg-dark mb-4" style="border-radius: 5px;">
-                                <code class="text-white" id="codigoBusquedaUnica">
+                                <code class="text-white" id="algoritmoDijkstraCopy">
     async function algoritmoDijkstra(grafo, nodoInicial, nodoFinal) {
         const nodos = Object.keys(grafo)
         const distancias = {}
@@ -443,13 +450,15 @@
                     
         
                     <!-- Aside en el lado derecho -->
-                    <div class="col-sm-12 col-md-2 fw-light " style="color: rgb(90, 90, 90);">
-                        <aside>
+                    <div class="col-sm-12 col-md-2 fw-light" style="color: rgb(90, 90, 90);">
+                        <aside class="sticky-top" style="margin-top: 20px; top: 40px;">
                             <h3 class="fs-5 text-gray fw-light">En esta Seccion</h3>
                             <hr>
-                            <ul id="">
-                                <li> <a href="#queEsUnAlgoritmoBusqueda" class="text-decoration-none text-dark">¿Que es un Algoritmo de Busqueda?</a></li>
-                                <li> <a href="#camposAplicacion" class="text-decoration-none text-dark">Campos de Aplicacion</a></li>
+                            <ul>
+                                <li><a href="#queesDijkstra" class="text-decoration-none text-dark">¿Qué es el Grafo de Dijkstra?</a></li>
+                                <li><a href="#cuaEsElFuncionamientoDijkstra" class="text-decoration-none text-dark">¿Cómo funciona?</a></li>
+                                <li><a href="#Algoritmo_Dijkstra_enAccion" class="text-decoration-none text-dark">Probar Algoritmo Dijkstra</a></li>
+                                <li><a href="#CodigoAlgoritmos" class="text-decoration-none text-dark">Código Dijkstra JS</a></li>
                             </ul>
                         </aside>
                     </div>
