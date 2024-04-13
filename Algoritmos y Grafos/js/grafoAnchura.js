@@ -83,8 +83,19 @@ const svgGrafo = document.getElementById('graphSVG'); // llamar al contenedor sv
     // Dibujar los nodos
     function dibujarNodos() {
         for (let nodo in nodes) {  // 'for in' para iterar los nombres de los nodos, del objeto 'nodes'
+            
             let coordenadas = nodes[nodo];            // La URL es un espacio de nombres (namespace) que se utiliza en XMLySVG para identificar los elementos y atributos específicos de SVG.
             let circulo = document.createElementNS("http://www.w3.org/2000/svg", "circle"); // le estamos diciendo al navegador que cree elementos SVG en lugar de elementos HTML regulares
+             // Crear un contenedor div para centrar el texto con Bootstrap
+             let txtContainerNodo = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject"); // elemento en SVG que permite incrustar contenido HTML dentro de un documento SVG.
+             txtContainerNodo.setAttribute("x", coordenadas.x - 10); // posicion según el tamaño del círculo
+             txtContainerNodo.setAttribute("y", coordenadas.y - 10); 
+             txtContainerNodo.setAttribute("width", 20); // anchura y altura según el tamaño del círculo
+             txtContainerNodo.setAttribute("height", 20); 
+             txtContainerNodo.classList.add('foreignObject')
+             // txtContainerNodo.setAttribute('onclick', 'seleccionarNodo("e")');
+             txtContainerNodo.innerHTML = `<div class="d-flex justify-content-center align-items-center txtnodo" style="width:100%;height:100%;"><span class = "txtnodoSpan">${nodo}</span></div>` //creando un div con varias clases de Bootstrap  
+             svgGrafo.appendChild(txtContainerNodo);
             circulo.setAttribute("cx", coordenadas.x); // posición x del centro, 
             circulo.setAttribute("cy", coordenadas.y); // posición y del centro 
             circulo.setAttribute("r", 10); // radio 'r' del círculo
@@ -93,16 +104,7 @@ const svgGrafo = document.getElementById('graphSVG'); // llamar al contenedor sv
 
             svgGrafo.appendChild(circulo); // mostrar en html
             
-            // Crear un contenedor div para centrar el texto con Bootstrap
-            let txtContainerNodo = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject"); // elemento en SVG que permite incrustar contenido HTML dentro de un documento SVG.
-            txtContainerNodo.setAttribute("x", coordenadas.x - 10); // posicion según el tamaño del círculo
-            txtContainerNodo.setAttribute("y", coordenadas.y - 10); 
-            txtContainerNodo.setAttribute("width", 20); // anchura y altura según el tamaño del círculo
-            txtContainerNodo.setAttribute("height", 20); 
-            txtContainerNodo.classList.add('foreignObject')
-            // txtContainerNodo.setAttribute('onclick', 'seleccionarNodo("e")');
-            txtContainerNodo.innerHTML = `<div class="d-flex justify-content-center align-items-center txtnodo" style="width:100%;height:100%;"><span class = "txtnodoSpan">${nodo}</span></div>` //creando un div con varias clases de Bootstrap  
-            svgGrafo.appendChild(txtContainerNodo);
+           
         }
     }
     
@@ -147,29 +149,89 @@ svgGrafo.addEventListener('click', (e) => {  // seleccionar Nodo
         let nodoPresionado = e.target.textContent;
         console.log(nodoPresionado);
         console.log('Aqui inicia algoritmo');
-        bfs(grafo, nodoPresionado);
+        bfs(grafo, nodoPresionado,e);
     }
 })
 const nodoP = document.querySelector('.txtnodoSpan').textContent;
 console.log(nodoP, '****'); 
-function bfs(grafo, vInicial) {
+
+
+
+function bfs(grafo, vInicial, e) {
+    if (e && e.target.classList.contains('txtnodoSpan')) {
+        console.log('Llamada desde el evento de clic');
+    } else {
+        console.log('No se detectó un evento de clic válido');
+    }
+
     let visitados = {}; // Objeto para almacenar los nodos visitados
     let cola = [vInicial]; // Cola para el recorrido en anchura
-
     while (cola.length > 0) { // Mientras haya nodos en la cola
-        let verticeActual = cola[0]; // primer nodo de la cola
-        cola = cola.slice(1); // Eliminamos el primer elemento de la cola
+      let verticeActual = cola[0]; // Primer nodo de la cola
+      cola = cola.slice(1); // Eliminamos el primer elemento de la cola
+      if (!visitados[verticeActual]) { // Si el nodo actual no ha sido visitado
+        visitados[verticeActual] = true; // Marcamos el nodo como visitado
+        console.log(verticeActual);
+      
+        // Obtener el elemento SVG del nodo actual y cambiar su clase
+        const spans = document.querySelectorAll(".txtnodoSpan");
+        console.log(spans);
+        for (const span of spans) {
+            // Comprobar si el contenido de texto del elemento coincide con la variable `x`
+            if (span.textContent === verticeActual) {
+              // Este es el elemento que estás buscando
+              console.log(span);
+              span.classList.add('visitado') // Imprimir el elemento en la consola
+              let encontrado = true;
+              break; // Salir del bucle si se encuentra el elemento
+            }
+            span.classList.remove('no-visitado');
+          }
+          
 
-        if (!visitados[verticeActual]) { // Si el nodo actual no ha sido visitado
-            visitados[verticeActual] = true; // Marcamos el nodo como visitado
-            console.log(verticeActual);  
+        
+            // if (encontrado) {
+            //     matchingSpan.style.color = 'blue'; // Cambiar el color del nodo actual a azul
+            //     // nodoActual.classList.remove('no-visitado');
+            // }
+        
+            // nodoActual.classList.add('visitado');
+        let adyacentes = grafo[verticeActual]; // Obtenemos los nodos adyacentes al nodo actual
+        adyacentes.forEach(adyacente => { // Agregamos los nodos adyacentes a la cola...
+          if (!visitados[adyacente]) { // ...si no han sido visitados
+            cola.push(adyacente);
 
-            let adyacentes = grafo[verticeActual]; // Obtenemos los nodos adyacentes al nodo actual
-            adyacentes.forEach(adyacente => { // Agregamos los nodos adyacentes a la cola...
-                if (!visitados[adyacente]) { // ...si no han sido visitados
-                    cola.push(adyacente);
-                }
-            });
-        }
+            // Obtener el elemento SVG del nodo adyacente y cambiar su clase
+            let nodoAdyacente = document.querySelector(`.nodo[data-nodo="${adyacente}"]`);
+            // nodoAdyacente.classList.add('adyacente');
+          }
+        });
+      }
     }
-}
+  }
+
+
+
+// function bfs(grafo, vInicial, e) {
+//     let visitados = {}; // Objeto para almacenar los nodos visitados
+//     let cola = [vInicial]; // Cola para el recorrido en anchura
+
+//     while (cola.length > 0) { // Mientras haya nodos en la cola
+//         let verticeActual = cola[0]; // primer nodo de la cola
+//         cola = cola.slice(1); // Eliminamos el primer elemento de la cola
+//         if (e.target.classList.contains('txtnodoSpan')) {
+//             console.log('desde validacion');
+//         }
+//         if (!visitados[verticeActual]) { // Si el nodo actual no ha sido visitado
+//             visitados[verticeActual] = true; // Marcamos el nodo como visitado
+//             console.log(verticeActual);  
+
+//             let adyacentes = grafo[verticeActual]; // Obtenemos los nodos adyacentes al nodo actual
+//             adyacentes.forEach(adyacente => { // Agregamos los nodos adyacentes a la cola...
+//                 if (!visitados[adyacente]) { // ...si no han sido visitados
+//                     cola.push(adyacente);
+//                 }
+//             });
+//         }
+//     }
+// }
