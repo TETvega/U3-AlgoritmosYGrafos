@@ -6,11 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     svgGrafo.addEventListener('click', (e) => {
         if (e.target.classList.contains('txtnodoSpan')) {
             let nodoPresionado = e.target.textContent;
-            console.log();
+            console.log('Se presionó: ', nodoPresionado);
             if (nodoActual) { // Restaurar el color original del nodo anteriormente presionado, si lo hay
                 let circleNodoAnterior = document.getElementById(nodoActual);
                 circleNodoAnterior.classList.remove('nodoInicio');
                 circleNodoAnterior.classList.add('no-visitado');
+                
             }
             nodoActual = nodoPresionado
            // Cambiar el color del nodo presionado actualmente
@@ -19,11 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
             circleNodoPresionado.classList.add('nodoInicio');
 
             // Restaurar el color original de los nodos adyacentes coloreados anteriormente
-            nodosAnteriores.forEach(nodoAnterior => {
-                let circleAnterior = document.getElementById(nodoAnterior);
-                circleAnterior.classList.remove('adyacente');
-                circleAnterior.classList.add('no-visitado');
-            });
+            // nodosAnteriores.forEach(nodoAnterior => {
+            //     let circleAnterior = document.getElementById(nodoAnterior);
+            //     circleAnterior.classList.remove('visitado');
+            //     circleAnterior.classList.remove('adyacente');
+            //     circleAnterior.classList.add('no-visitado');
+            // });
+        const nodosGrafos = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+            nodosGrafos.forEach(nodo => {
+                let circle = document.getElementById(nodo)
+                circle.classList.remove('visitado');
+                circle.classList.remove('nodoFin')
+                circle.classList.add('no-visitado')
+                console.log('Añadiendo la clase "no-visitado" a: ',nodo);
+            })
+
             ejecutarBFS(grafo, nodoPresionado);
         }
     });
@@ -205,19 +216,28 @@ const svgGrafo = document.getElementById('graphSVG'); // llamar al contenedor sv
 // })
 
 // Función para cambiar el color de un nodo en el SVG
-function cambiarColorNodo(nodoId, color) {
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+  async function cambiarColorNodo(nodoId, color) {
     let nodo = document.getElementById(nodoId);
     if (nodo) {
-        // nodo.setAttribute('fill', color);
-        nodo.classList.add('visitado');
-        console.log(`Color cambiado para nodo ${nodoId} a ${color}`);
+      nodo.classList.remove('no-visitado');
+      nodo.classList.add('nodoEnProceso');
+      await sleep(800); // Pausa de 1 segundo
+      nodo.classList.remove('nodoEnProceso');
+      nodo.classList.add('visitado');
+      console.log(`Color cambiado para nodo ${nodoId} a ${color}`);
     } else {
-        console.error(`Nodo ${nodoId} no encontrado`);
+      console.error(`Nodo ${nodoId} no encontrado`);
     }
-}
+  }
+  
 
 // Función para ejecutar el recorrido BFS y cambiar los colores de los nodos
 function ejecutarBFS(grafo, nodoInicial) {
+    let ultimoNodo = ''
     let visitados = {};
     let cola = [nodoInicial];
     console.log('*-*-*-Iniciando Recorrido-*-*-*-*');
@@ -228,6 +248,7 @@ function ejecutarBFS(grafo, nodoInicial) {
             if (!visitados[verticeActual]) {
                 visitados[verticeActual] = true;
                 cambiarColorNodo(verticeActual, '#8EEA7A');
+            ultimoNodo = verticeActual
                 let adyacentes = grafo[verticeActual];
                 adyacentes.forEach(adyacente => {
                     if (!visitados[adyacente]) {
@@ -237,10 +258,16 @@ function ejecutarBFS(grafo, nodoInicial) {
             }
             setTimeout(pasoBFS, 1000); // Ejecutar el siguiente paso después de un intervalo de tiempo
         } else {
-            console.log('Recorrido BFS completado');
-        }
-    }
 
+            console.log('Recorrido BFS completado');
+            let circleUltimoNodo = document.getElementById(ultimoNodo)
+            circleUltimoNodo.classList.remove('visitado')
+            circleUltimoNodo.style.fill = "#8a2be2"
+            circleUltimoNodo.classList.add('nodoFin')
+            console.log('el ultimo nodo en ser iterado es: ', ultimoNodo);
+        }
+    }   
+    
     pasoBFS(); // Iniciar el recorrido BFS
 }
 
