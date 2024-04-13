@@ -1,3 +1,34 @@
+document.addEventListener('DOMContentLoaded', () => {
+    dibujarGrafo();
+    let nodosAnteriores = []; // array para almacenar los nodos adyacentes coloreados anteriormente
+    let nodoActual = null; // almacenar el nodo actualmente presionado
+    // Evento de clic para iniciar el recorrido BFS desde el nodo presionado
+    svgGrafo.addEventListener('click', (e) => {
+        if (e.target.classList.contains('txtnodoSpan')) {
+            let nodoPresionado = e.target.textContent;
+            console.log();
+            if (nodoActual) { // Restaurar el color original del nodo anteriormente presionado, si lo hay
+                let circleNodoAnterior = document.getElementById(nodoActual);
+                circleNodoAnterior.classList.remove('nodoInicio');
+                circleNodoAnterior.classList.add('no-visitado');
+            }
+            nodoActual = nodoPresionado
+           // Cambiar el color del nodo presionado actualmente
+            let circleNodoPresionado = document.getElementById(nodoPresionado);
+            circleNodoPresionado.classList.remove('no-visitado');
+            circleNodoPresionado.classList.add('nodoInicio');
+
+            // Restaurar el color original de los nodos adyacentes coloreados anteriormente
+            nodosAnteriores.forEach(nodoAnterior => {
+                let circleAnterior = document.getElementById(nodoAnterior);
+                circleAnterior.classList.remove('adyacente');
+                circleAnterior.classList.add('no-visitado');
+            });
+            ejecutarBFS(grafo, nodoPresionado);
+        }
+    });
+})
+
 function dfs(grafo, vInicial, visitados = {}) {
     // Marcamos el nodo actual como visitado
     visitados[vInicial] = true;
@@ -91,14 +122,12 @@ const svgGrafo = document.getElementById('graphSVG'); // llamar al contenedor sv
             foreignObj.setAttribute("y", coordenadas.y - 10);
             foreignObj.setAttribute("width", 30); // Ajustar el ancho y el alto según el tamaño del círculo y el texto
             foreignObj.setAttribute("height", 30);
-            foreignObj.classList.add('foreignObject');
-            // foreignObj.style.cursor = "pointer"; // Cambiar el cursor a pointer cuando el mouse está sobre este elemento
             
             // Crear el contenido dentro del foreignObject
             let content = `
                 <div class="d-flex justify-content-center align-items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style="border: none;">
-                        <circle cx="10" cy="10" r="10" class="${nodo}" />
+                        <circle cx="10" cy="10" r="10" id="${nodo}"/>
                     </svg>
                     <span class="txtnodoSpan" style="position: absolute; top: -3px; cursor: pointer;">${nodo}</span>
                 </div>
@@ -110,9 +139,7 @@ const svgGrafo = document.getElementById('graphSVG'); // llamar al contenedor sv
         }
     }
     
-    
-    
-    
+
     // Dibujar las aristas
     function dibujarAristas() {
         for (let nodo in grafo) {
@@ -136,100 +163,97 @@ const svgGrafo = document.getElementById('graphSVG'); // llamar al contenedor sv
         dibujarAristas();
         dibujarNodos();
     }
-    dibujarGrafo();
 
-window.onload = dibujarGrafo();
+// let nodosAnteriores = []; // array para almacenar los nodos adyacentes coloreados anteriormente
+// let nodoActual = null; // almacenar el nodo actualmente presionado
+// svgGrafo.addEventListener('click', (e) => {  // seleccionar Nodo
+//     e.preventDefault()
 
-    // const svgNodos = document.querySelector('.foreignObject')
-    // console.log(svgNodos);
-    // console.log('----');
-    // svgNodos.addEventListener('click', (e) => {
-    //     console.log('¡Se hizo clic en un círculo!');
-    
-    // })
+//     if (e.target.classList.contains('txtnodoSpan')) 
+//     {
+//         let adyacentes = [];
+//         let nodoPresionado = e.target.textContent; // obtenemos el nombre del nodo
 
-svgGrafo.addEventListener('click', (e) => {  // seleccionar Nodo
-    e.preventDefault()
-    if (e.target.classList.contains('txtnodoSpan')) {
-        let adyacentes = null;
-        let nodoPresionado = e.target.textContent; // obtenemos el nombre del nodo
-        const circle = document.querySelector(`.${nodoPresionado}`) // seleccionar <circle>
-        const classCircle = circle.getAttribute('class')
-        console.log(classCircle); // obtenemos el nombre del nodo (por medio de la clase del circle)
-            adyacentes = grafo[classCircle]; // obtenemos a los nodos adyacetes al nodo seleccionado
-        console.log(adyacentes);
+// // si hay un valor (no null) en nodoActual (lo que significa que un nodo ha sido seleccionado previamente), se ejecutará el codigo dentro del  if
+//         if (nodoActual) { // Restaurar el color original del nodo anteriormente presionado, si lo hay
+//             let circleNodoAnterior = document.getElementById(nodoActual);
+//             circleNodoAnterior.classList.remove('nodoInicio');
+//             circleNodoAnterior.classList.add('no-visitado');
+//         }
+//         nodoActual = nodoPresionado; // actualizar el nodo actualmente presionado
 
-        adyacentes.forEach(nodoAdyacente => {
-            console.log(nodoAdyacente);
-            let circleAdyacente = document.querySelector(`.${nodoAdyacente}`)
-            console.log(circleAdyacente);
-            // circleAdyacente.classList.add('adyacente')
-            // circleAdyacente.style.fill = '#90D632'
-            circleAdyacente.setAttribute('fill', 'red');
-            console.log(circleAdyacente);// Cambiar el color del nodo actual a azul
-          // nodoActual.classList.remove('no-visitado');
-        })
-        // console.log('Aqui inicia algoritmo');
-        // bfs(grafo, nodoPresionado,e);
-    }
-})
-// const nodoP = document.querySelector('.txtnodoSpan').textContent;
-// console.log(nodoP, '****'); 
+//         // Cambiar el color del nodo presionado actualmente
+//         let circleNodoPresionado = document.getElementById(nodoPresionado);
+//         circleNodoPresionado.classList.remove('no-visitado');
+//         circleNodoPresionado.classList.add('nodoInicio');
 
+//         // Restaurar el color original de los nodos adyacentes coloreados anteriormente
+//         nodosAnteriores.forEach(nodoAnterior => {
+//             let circleAnterior = document.getElementById(nodoAnterior);
+//             circleAnterior.classList.remove('adyacente');
+//             circleAnterior.classList.add('no-visitado');
+//         });
+   
+//         adyacentes = grafo[nodoPresionado]; // Obtener los nodos adyacentes al nodo seleccionado
+//         adyacentes.forEach(nodoAdyacente => { // Colorear los nodos adyacentes al nodo seleccionado
+//             let circleAdyacente = document.getElementById(nodoAdyacente);
+//             circleAdyacente.classList.remove('no-visitado');
+//             circleAdyacente.classList.add('adyacente');
+//         });
+//         nodosAnteriores = adyacentes.slice(); // pasar adyacentes al array notasAnteriores (se sobreescribe el array)
+//     }
+// })
 
-
-function bfs(grafo, vInicial, e) {
-    if (e && e.target.classList.contains('txtnodoSpan')) {
-        console.log('Llamada desde el evento de clic');
+// Función para cambiar el color de un nodo en el SVG
+function cambiarColorNodo(nodoId, color) {
+    let nodo = document.getElementById(nodoId);
+    if (nodo) {
+        // nodo.setAttribute('fill', color);
+        nodo.classList.add('visitado');
+        console.log(`Color cambiado para nodo ${nodoId} a ${color}`);
     } else {
-        console.log('No se detectó un evento de clic válido');
+        console.error(`Nodo ${nodoId} no encontrado`);
     }
+}
 
-    let visitados = {}; // Objeto para almacenar los nodos visitados
-    let cola = [vInicial]; // Cola para el recorrido en anchura
-    while (cola.length > 0) { // Mientras haya nodos en la cola
-      let verticeActual = cola[0]; // Primer nodo de la cola
-      cola = cola.slice(1); // Eliminamos el primer elemento de la cola
-      if (!visitados[verticeActual]) { // Si el nodo actual no ha sido visitado
-        visitados[verticeActual] = true; // Marcamos el nodo como visitado
-        console.log(verticeActual);
-      
-        // Obtener el elemento SVG del nodo actual y cambiar su clase
-        const spans = document.querySelectorAll(".txtnodoSpan");
-        console.log(spans);
-        for (const span of spans) {
-            // Comprobar si el contenido de texto del elemento coincide con la variable `x`
-            if (span.textContent === verticeActual) {
-              // Este es el elemento que estás buscando
-              console.log(span);
-              span.classList.add('visitado') // Imprimir el elemento en la consola
-              let encontrado = true;
-              break; // Salir del bucle si se encuentra el elemento
+// Función para ejecutar el recorrido BFS y cambiar los colores de los nodos
+function ejecutarBFS(grafo, nodoInicial) {
+    let visitados = {};
+    let cola = [nodoInicial];
+    console.log('*-*-*-Iniciando Recorrido-*-*-*-*');
+    // Función para ejecutar el paso BFS con un intervalo de tiempo
+    function pasoBFS() {
+        if (cola.length > 0) {
+            let verticeActual = cola.shift();
+            if (!visitados[verticeActual]) {
+                visitados[verticeActual] = true;
+                cambiarColorNodo(verticeActual, '#8EEA7A');
+                let adyacentes = grafo[verticeActual];
+                adyacentes.forEach(adyacente => {
+                    if (!visitados[adyacente]) {
+                        cola.push(adyacente);
+                    }
+                });
             }
-            span.classList.remove('no-visitado');
-          }
-          
-
-        
-            // if (encontrado) {
-            //     matchingSpan.style.color = 'blue'; // Cambiar el color del nodo actual a azul
-            //     // nodoActual.classList.remove('no-visitado');
-            // }
-        
-            // nodoActual.classList.add('visitado');
-        let adyacentes = grafo[verticeActual]; // Obtenemos los nodos adyacentes al nodo actual
-        adyacentes.forEach(adyacente => { // Agregamos los nodos adyacentes a la cola...
-          if (!visitados[adyacente]) { // ...si no han sido visitados
-            cola.push(adyacente);
-
-            // Obtener el elemento SVG del nodo adyacente y cambiar su clase
-            let nodoAdyacente = document.querySelector(`.nodo[data-nodo="${adyacente}"]`);
-            // nodoAdyacente.classList.add('adyacente');
-          }
-        });
-      }
+            setTimeout(pasoBFS, 1000); // Ejecutar el siguiente paso después de un intervalo de tiempo
+        } else {
+            console.log('Recorrido BFS completado');
+        }
     }
-  }
+
+    pasoBFS(); // Iniciar el recorrido BFS
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
