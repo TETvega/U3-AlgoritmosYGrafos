@@ -132,17 +132,16 @@ function escribirResultadoGrafo(camino , peso) {
     document.getElementById('ResultadoEscritoGrafo').innerHTML = contenido
 }
 
-function pintarResultado( camino) {
+async function pintarResultado( camino) {
     // usamos el asyn para decirle que espere y que se vea como animado el pintar los nodos rojos
-    camino.forEach( async nodo =>{
-        
+    for (const nodo of camino) {
         const nodoElemento =document.getElementById(`${nodo}`)
         if (nodoElemento.classList.contains('bg-warning')) {
             nodoElemento.classList.remove('bg-warning')   
         }
         nodoElemento.classList.add('bg-danger')
         await esperar(800)
-    })
+    }
 }
 
 // funcion para ver y mostrar la informcaion de los nodos -- Pinta el nodo actual y a los que apunta
