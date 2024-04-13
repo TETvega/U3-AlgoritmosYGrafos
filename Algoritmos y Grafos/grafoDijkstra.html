@@ -11,6 +11,25 @@
     <!-- Enlaces a Bootstrap  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
+        <style>
+
+        .linck-EstaSeccion{
+            scroll-margin-top: 100px;
+        }
+
+        .circle {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                position: absolute;
+            }
+            .linea {
+                position: absolute;
+                border-top: 2px solid black;
+                transform-origin: top left;
+                z-index: -1;
+            }
+        </style>
 
 </head>
 <body>
@@ -68,129 +87,378 @@
     <div class="container">
         <!-- Bloque izquierdo del menú de algoritmos -->
         <div class="row mt-3 mb-4">
-            <aside class="col-2" style="border-right: solid 2px gray;">
-                <h3 class="fs-5 text-gray fw-light">Formas de Busqueda</h3>
-                <hr>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link text-black active" aria-current="page" href="grafos.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoProfundidad.html">Profundidad</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoAnchura.html">Anchura</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoDijkstra.html"><strong>Dijkstral</strong></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoKruskal.html">Kruskal</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoPrim.html">Prim</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-body-secondary" href="grafoBellamFord.html">Bellam Ford</a>
-                    </li>
-                </ul>
-            </aside>
+            <div class="col-sm-12 col-md-2" style="border-right: solid 2px gray;">
+                <aside class="sticky-top" style=" top: 50px;">
+                    <h3 class="fs-5 text-gray fw-light">Formas de Busqueda</h3>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" aria-current="page" href="grafos.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" href="grafoProfundidad.html">Profundidad</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" href="grafoAnchura.html">Anchura</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black active" href="grafoDijkstra.html"><strong>Dijkstral</strong></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" href="grafoKruskal.html">Kruskal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" href="grafoPrim.html">Prim</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body-secondary" href="grafoBellamFord.html">Bellam Ford</a>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+            
             <!-- Fin del bloque izquierdo -->
         
             <!-- Contenido del main -->
-            <main class="container col-10">
+            <main class="container col-sm-12 col-md-10">
                 <!-- Contenido en el lado izquierdo -->
                 <div class="row">
                     <div class="col-10 p-4 ">
 
                          <!-- bloque de QUE ES UN ALGORITMO DE BUSQUEDA  -->
                         <section class="mb-4">
-                            <h3 class="mb-2" id="queEsUnAlgoritmoBusqueda">¿Que es un Grafo en la Informatica?</h3>
+                            <h3 class="mb-2" id="queesDijkstra">¿Que es el Grafo de Dijkstra?</h3>
                             <hr>
-                            <p>Un algoritmo de búsqueda es un conjunto de pasos bien definidos y ordenados que se utilizan para encontrar un elemento específico 
-                                dentro de un conjunto de datos. Estos algoritmos son ampliamente utilizados en informática y se aplican en una variedad de 
-                                contextos, como la búsqueda de información en bases de datos, la navegación en internet, la resolución de problemas en 
-                                inteligencia artificial, entre otros.</p>
 
-                            <p>Hay varios tipos de algoritmos de búsqueda, cada uno con sus propias características y aplicaciones:</p>  
+                            <p>
+                                El teorema de Dijkstra es un concepto fundamental en el campo de la teoría de grafos y la 
+                                programación de algoritmos. Fue propuesto por el científico de la computación Edsger Dijkstra 
+                                en 1956 y desde entonces ha sido ampliamente utilizado en diversas aplicaciones, como la 
+                                búsqueda del camino más corto en redes de transporte, la planificación de rutas en 
+                                sistemas de navegación y la optimización de recursos en sistemas de distribución.
                                 
+                                Este teorema se basa en el algoritmo de Dijkstra, el cual <strong>permite encontrar el camino más 
+                                corto entre dos nodos en un grafo ponderado.</strong>
+                            </p>
+                            <br><br><br>
+                            <h3 class="mb-2 linck-EstaSeccion" id="cuaEsElFuncionamientoDijkstra">¿Cuál es el funcionamiento del algoritmo de Dijkstra?</h3>
+                               <p>
+                                El algoritmo de Dijkstra es como un navegador que te ayuda a encontrar
+                                la ruta más corta entre dos puntos en un mapa, pero en lugar de considerar solo la distancia física
+                                entre lugares, también tiene en cuenta los pesos asociados a las aristas (caminos) en un grafo,
+                                lo que puede representar tiempo, costo u otras métricas.
+
+                               </p>
+                            <br>
                             <ul>
                                 <li>
+                                    <h4 class="fs-5 text-muted">Paso 1: Inicialización</h4>
+
                                     <p>
-                                        <strong>Búsqueda Lineal (Sequential Search):</strong> Este algoritmo recorre secuencialmente cada elemento del conjunto de datos hasta 
-                                        encontrar el elemento deseado o llegar al final del conjunto. Es sencillo pero puede ser ineficiente para 
-                                        conjuntos de datos grandes.
+                                        Comenzamos desde un nodo de origen y asignamos una distancia inicial de 0 a este nodo. Para todos los
+                                        demás nodos, asignamos una distancia inicial infinita, lo que indica que aún no hemos encontrado la
+                                        mejor ruta hacia esos nodos.
                                     </p>
                                 </li>
+                                <br>
                                 <li>
+                                    <h4 class="fs-5 text-muted">Paso 2: Exploración de Nodos</h4>
                                     <p>
-                                        <strong>Búsqueda Binaria (Binary Search):</strong>  Este algoritmo solo funciona en conjuntos de datos ordenados. Divide repetidamente 
-                                        el conjunto de datos por la mitad y compara el elemento buscado con el elemento en la posición media. De esta manera, 
-                                        reduce la búsqueda a la mitad en cada iteración, lo que lo hace muy eficiente para conjuntos de datos grandes
+                                        El algoritmo selecciona el nodo más cercano al nodo de origen que aún no ha sido visitado. 
+                                        Este será nuestro nodo actual.
+                                    </p>
+                                </li>
+                                <br>
+                                <li>
+                                    <h4 class="fs-5 text-muted">Paso 3: Actualización de Distancias</h4>
+                                
+                                    <p>
+                                        Para cada nodo vecino del nodo actual, calculamos la distancia desde el nodo de origen pasando por el 
+                                        nodo actual y llegando al nodo vecino. Si esta distancia es menor que la distancia actualmente 
+                                        conocida para ese nodo vecino, actualizamos la distancia. Esto significa que hemos encontrado una 
+                                        ruta más corta hacia ese nodo.
+                                    </p>
+                                </li>
+                                <br>
+                                <li>
+                                    <h4 class="fs-5 text-muted">
+                                        Paso 4: Marcar Nodos Visitados
+                                    </h4>
+                                    
+                                    <p>
+                                        Marcamos el nodo actual como visitado para no volver a él en futuras iteraciones. También es importante 
+                                        tener en cuenta que si un nodo ya ha sido visitado y se encuentra una nueva ruta más corta hacia él, 
+                                        no se vuelve a visitar, ya que ya hemos encontrado la ruta más corta.
+                                    </p>
+
+                                </li>
+                                <br>
+                                <li>
+                                    <h4 class="fs-5 text-muted">Paso 5: Repetición y Condiciones de Parada</h4>
+                                
+                                    <p>
+                                        Repetimos los pasos 2 al 4 hasta que hayamos visitado todos los nodos o hasta que lleguemos al nodo de
+                                        destino. Esto asegura que consideremos todas las posibles rutas y encontremos la ruta más corta.
+                                    </p>
+                                </li>
+                                <br>
+                                <li>
+                                    <h4 class="fs-5 text-muted">Manejo de Situaciones Especiales:</h4> 
+                                
+                                    <p>
+                                         <ul>
+                                             <li>
+                                                 Si encontramos un nodo que ya ha sido visitado pero a través de un camino más largo, simplemente lo 
+                                                 ignoramos y continuamos explorando otras rutas.
+                                             </li>
+                                             <li>
+                                                 Si encontramos un camino más corto hacia un nodo que ya hemos visitado, actualizamos la distancia 
+                                                 conocida para ese nodo y continuamos explorando desde ese nodo, ya que podría llevarnos a rutas 
+                                                 más cortas hacia otros nodos.
+                                             </li>
+                                         </ul>
+     
                                     </p>
                                 </li>
                             </ul>
+                            <br>
+                            <br>
 
-                            <p class="mt-4">
-                                Estos son solo algunos ejemplos de algoritmos de búsqueda. Cada uno tiene sus propias ventajas y desventajas, y la elección del 
-                                algoritmo adecuado depende del problema específico que se esté abordando y las características de los datos involucrados.
-                            </p>
-                        </section>
-                        <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BUSQUEDA s -->
-
-                        <section class="mt-4">
-                            <h3 class="mb-2 mt-4" id="camposAplicacion">Campos de Aplicacion</h3>
-                            <hr>
-                            <p>
-                                Los algoritmos de búsqueda se aplican en una amplia variedad de campos y disciplinas. Algunos de los campos de aplicación más comunes 
-                                incluyen:
-                            </p>
-                                <ul>
-                                    <li>
-                                        <p>
-                                            <strong>Informática y Tecnología:</strong> Los algoritmos de búsqueda son fundamentales en la informática y la tecnología. 
-                                            Se utilizan para buscar información en bases de datos, archivos y sistemas de almacenamiento, así como para 
-                                            optimizar la búsqueda en motores de búsqueda en internet.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            <strong>Inteligencia Artificial:</strong>  En inteligencia artificial, los algoritmos de búsqueda se utilizan para encontrar 
-                                            soluciones a problemas complejos, como la planificación de rutas en sistemas de navegación, la toma de decisiones en 
-                                            sistemas expertos y la resolución de problemas en juegos como el ajedrez y el Go.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            <strong>Procesamiento de Lenguaje Natural (NLP):</strong>En NLP, los algoritmos de búsqueda se utilizan para encontrar 
-                                            patrones en grandes conjuntos de datos de texto, como la búsqueda de palabras clave, la extracción de información y 
-                                            la traducción automática.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            <strong>Robótica:</strong>En robótica, los algoritmos de búsqueda se utilizan para planificar movimientos y rutas 
-                                            para robots móviles, así como para la percepción y la toma de decisiones en entornos dinámicos.
-                                
-                                        </p>
-                                    </li>
-                                </ul>
-                            <p>
-                               Estos son solo algunos ejemplos de los campos de aplicación de los algoritmos de búsqueda. Su versatilidad y utilidad los convierten en una herramienta fundamental en numerosas áreas de estudio y aplicación.
-                            </p>
-                        </section>
-                        
+                            <h4 class="fs-5 ">Ejemplo:</h4>
                             
+                            <p>
+                                Imagina que estás planificando una ruta de entrega para una empresa de logística. El algoritmo de Dijkstra
+                                te ayudaría a encontrar la ruta más corta entre almacenes y destinos finales, considerando 
+                                como la distancia y el tiempo de viaje. Si descubres un atajo que reduce el tiempo de entrega,
+                                el algoritmo lo tendrá en cuenta y ajustará la ruta en consecuencia, siempre buscando la forma
+                                más eficiente de llegar a cada destino.
+                            </p>
+                                
+                                
+
+                        </section>
+                        <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BUSQUEDA s -->    
+                        <!-- Empieza la secion del formulario y funcion por grafos de DIJKSTRAL ----------------------   -->
+                        <section>
+                            <h2 class="mb-2 mt-4 linck-EstaSeccion" id="Algoritmo_Dijkstra_enAccion">Algoritmo de grafos DIJKSTRAL</h2>
+                            <hr>
+                            <p>Cuenta con nodos Apuntado, puedes ver la tabla</p>
+                            <p>Puede Probar los algoritmos en esta seccion. </p>
+                            <p>Solo son validos numeros enteros</p>
+                            <p>Solo son validos los pesos Positivos para los caminos</p>
+                            <br>
+                            <br>
+                            <hr>
+                            <div class="container mt-4">
+                                <div class="row mt-4 col-md-12">
+                                    <div class="input-group mb-3">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-3 mb-4">
+                                                    <select class="form-select" aria-label="Default select example" id="seleccionarGrafo">
+                                                        <option selected value="Grafo1">Grafo 1</option>
+                                                        <option value="Grafo2">Grafo 2</option>
+                                                        <option value="Grafo3">Grafo 3</option>
+                                                        <!-- <option value="Grafo4">Crear Grafo</option> -->
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p>
+                                                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#FormularioColapsable" aria-expanded="false" aria-controls="collapseExample">
+                                                          Desplegar Formulario
+                                                        </button>
+                                                      </p>
+                                                </div>
+                                            
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <div class="collapse" id="FormularioColapsable">
+                                                        <div class="card card-body">
+                                                            <div class="container mb-3 mt-2 col-12 ">
+                                                                <form action="" class="col-md-6 col-sm-12" id="formularioDatosGrafos">
+                                                                        <div >
+                                                                            <label for="exampleDataList" class="form-label">Ingrese en Nodo de Partida </label>
+                                                                            <input class="form-control" autocomplete="off" id="nodo-Inicial" type="text" placeholder="A" aria-label="default input example">
+                                                                            
+                                                                            <label for="exampleDataList" class="form-label">Ingrese en Nodo Final </label>
+                                                                            <input class="form-control" autocomplete="off" id="nodo-Final" type="text" placeholder="E" aria-label="default input example">
+                                                                            <div class="mt-1" id="capturaErrores">
+
+                                                                            </div>
+                                                                        </div>
+                                                                </form>
+                                                                <div class="container col-sm-12 col-md-6  px-4 justify-content-center align-items-center" >
+                                                                    <div class="row align-items-center px-4">
+                                                                        <div class="col mt-3">
+                                                                            <button type="button" class="btn btn-success" id="ejecutarAlgoritmo">Ejecutar</button>
+                                                                        </div>
+                                                                        <div class="col mt-3">
+                                                                            <button type="button" class="btn btn-info" id="limpiarContenido">Limpiar</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="container canvas" id="contenidoCanvas"
+                                                style="border: solid 1px black; height: 400px; max-width: 800px; min-width: 800px; border-radius: 5px; position: relative;
+                                                ">
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="row col-12">
+                                            <p>
+                                                <button class="btn btn-primary mt-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                  Ver la tabla de pesos
+                                                </button>
+                                              </p>
+                                              <div class="collapse" id="collapseExample">
+                                                <div class="card card-body">
+                                                    <div class="row mb-4 col-12">
+                                                        <div class="container">
+            
+                                                            <div id="tabla-container">
+                                                                <table class="table" id="dataTable_ListasNodos">
+                                                                    <!-- nombre de la tabla  -->
+                                                                    <caption>
+                                                                      Tabla de Productos
+                                                                    </caption>
+                                                                    <thead>
+                                                                      <!-- Fila de los encabezados  -->
+                                                                        <tr>
+                                                                          <th class="text-center">Nd de Partida</th>
+                                                                          <th class="text-center">Nd de Finalizacion</th>
+                                                                          <th class="text-center">Peso Camino</th>
+            
+                                                                      </tr>
+                                                                    </thead>
+                                                                    <tbody id="tableBody_nodos">
+                                                        
+                                                                    </tbody>
+                                                                </table>
+            
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                              </div>
+    
+                                        </div>
+                                        
+                                        <br>
+                                        <br>
+                                        <div class="row">
+                                            <div>
+                                                <span>Resultado</span>
+                                                <span><p id="ResultadoEscritoGrafo">...</p></span>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                      </div>
+                            </div>
+
+                            <!-- Termina la secion del formulario y funcion lineal ----------------------   -->
+                            <!-- Empieza la secion del muestra de codigo ----------------------   -->
+                        </section>
+                        <hr>
+                        <section class="mt-4 mb-4 ">
+                            <h2 class="mb-4 linck-EstaSeccion" id="CodigoAlgoritmos" >Código de la función de Dijkstra para JS</h2>
+                            <p>Codigo utilizado para  <span class="text-warning">JS</span></p>
+                            <p>Recibe un grafo de esta manera 
+                                const Grafo:
+                                {
+                                    A: { B: 3, C: 5 },
+                                    B: { C: 2, D: 6 },
+                                    C: { D: 1 },
+                                    D: {}
+                                }</p>
+                            <p>Se detiene en el momento que encuentra el nodo con el camino mas corto buscado.</p>
+                            <div class="row justify-content-end mx-2">
+                                <div class="col-1">
+                                    <button type="button" id="btn_CopiarAlgoritmo" class="btn btn-outline-primary mb-2">Copy</button>
+                                </div>
+                            </div>
+                            <pre class="bg-dark mb-4" style="border-radius: 5px;">
+                                <code class="text-white" id="algoritmoDijkstraCopy">
+    async function algoritmoDijkstra(grafo, nodoInicial, nodoFinal) {
+        const nodos = Object.keys(grafo)
+        const distancias = {}
+        const visitados = {}
+        const camino = {}
+
+        for (let nodo of nodos) {
+            distancias[nodo] = Infinity;
+            camino[nodo] = null;
+        }
+
+        
+        distancias[nodoInicial] = 0;
+
+        while (true) {
+            let nodoActual = null;
+            let distanciaMinima = Infinity;
+
+            // Encontrar el nodo no visitado con la distancia minima
+            for (let nodo in distancias) {
+                if (!visitados[nodo] && distancias[nodo] < distanciaMinima){
+                    nodoActual = nodo;
+                    distanciaMinima = distancias[nodo];
+                }
+            }
+            
+            if (nodoActual === null) break //no hay mas nodos que visitar
+
+            visitados[nodoActual] = true;
+
+            for (let vecino in grafo[nodoActual]){
+                let distancia = distanciaMinima + grafo[nodoActual][vecino]
+                if (distancia < distancias[vecino]) {
+                    distancias[vecino] = distancia
+                    camino[vecino] = nodoActual
+                }
+            }
+        }
+
+
+        let nodo = nodoFinal
+        const caminoMasCorto = []
+        while (nodo !== null) {
+            caminoMasCorto.unshift(nodo)
+            nodo = camino[nodo]
+        }
+        const distaciaFinal = distancias[nodoFinal]
+        const resultado = {caminoMasCorto , peso: distaciaFinal}
+        return resultado
+    }
+                                </code>
+                            </pre>
+                        </section>
+
+                        <!-- Termina la secion del muestra de codigo ----------------------   -->
                     </div>
+
+                    
         
                     <!-- Aside en el lado derecho -->
-                    <div class="col-2 fw-light " style="color: rgb(90, 90, 90);">
-                        <aside>
+                    <div class="col-sm-12 col-md-2 fw-light" style="color: rgb(90, 90, 90);">
+                        <aside class="sticky-top" style="margin-top: 20px; top: 40px;">
                             <h3 class="fs-5 text-gray fw-light">En esta Seccion</h3>
                             <hr>
-                            <ul id="">
-                                <li> <a href="#queEsUnAlgoritmoBusqueda" class="text-decoration-none text-dark">¿Que es un Algoritmo de Busqueda?</a></li>
-                                <li> <a href="#camposAplicacion" class="text-decoration-none text-dark">Campos de Aplicacion</a></li>
+                            <ul>
+                                <li><a href="#queesDijkstra" class="text-decoration-none text-dark">¿Qué es el Grafo de Dijkstra?</a></li>
+                                <li><a href="#cuaEsElFuncionamientoDijkstra" class="text-decoration-none text-dark">¿Cómo funciona?</a></li>
+                                <li><a href="#Algoritmo_Dijkstra_enAccion" class="text-decoration-none text-dark">Probar Algoritmo Dijkstra</a></li>
+                                <li><a href="#CodigoAlgoritmos" class="text-decoration-none text-dark">Código Dijkstra JS</a></li>
                             </ul>
                         </aside>
                     </div>
@@ -268,7 +536,7 @@
     </footer>
     <!-- final del Footer  -->
 
-
+    <script src="js/grafoDijkstra.js"></script>
     <!-- scripts de bootstrap 5  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
