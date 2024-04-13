@@ -82,31 +82,36 @@ const svgGrafo = document.getElementById('graphSVG'); // llamar al contenedor sv
     
     // Dibujar los nodos
     function dibujarNodos() {
-        for (let nodo in nodes) {  // 'for in' para iterar los nombres de los nodos, del objeto 'nodes'
+        for (let nodo in nodes) {  
+            let coordenadas = nodes[nodo];
             
-            let coordenadas = nodes[nodo];            // La URL es un espacio de nombres (namespace) que se utiliza en XMLySVG para identificar los elementos y atributos específicos de SVG.
-            let circulo = document.createElementNS("http://www.w3.org/2000/svg", "circle"); // le estamos diciendo al navegador que cree elementos SVG en lugar de elementos HTML regulares
-             // Crear un contenedor div para centrar el texto con Bootstrap
-             let txtContainerNodo = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject"); // elemento en SVG que permite incrustar contenido HTML dentro de un documento SVG.
-             txtContainerNodo.setAttribute("x", coordenadas.x - 10); // posicion según el tamaño del círculo
-             txtContainerNodo.setAttribute("y", coordenadas.y - 10); 
-             txtContainerNodo.setAttribute("width", 20); // anchura y altura según el tamaño del círculo
-             txtContainerNodo.setAttribute("height", 20); 
-             txtContainerNodo.classList.add('foreignObject')
-             // txtContainerNodo.setAttribute('onclick', 'seleccionarNodo("e")');
-             txtContainerNodo.innerHTML = `<div class="d-flex justify-content-center align-items-center txtnodo" style="width:100%;height:100%;"><span class = "txtnodoSpan">${nodo}</span></div>` //creando un div con varias clases de Bootstrap  
-             svgGrafo.appendChild(txtContainerNodo);
-            circulo.setAttribute("cx", coordenadas.x); // posición x del centro, 
-            circulo.setAttribute("cy", coordenadas.y); // posición y del centro 
-            circulo.setAttribute("r", 10); // radio 'r' del círculo
-            circulo.classList.add('nodo')
+            // Crear el foreignObject que contendrá el círculo y el texto
+            let foreignObj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+            foreignObj.setAttribute("x", coordenadas.x - 15); // Ajustar la posición según el tamaño del círculo y el texto
+            foreignObj.setAttribute("y", coordenadas.y - 10);
+            foreignObj.setAttribute("width", 30); // Ajustar el ancho y el alto según el tamaño del círculo y el texto
+            foreignObj.setAttribute("height", 30);
+            foreignObj.classList.add('foreignObject');
+            // foreignObj.style.cursor = "pointer"; // Cambiar el cursor a pointer cuando el mouse está sobre este elemento
             
-
-            svgGrafo.appendChild(circulo); // mostrar en html
+            // Crear el contenido dentro del foreignObject
+            let content = `
+                <div class="d-flex justify-content-center align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style="border: none;">
+                        <circle cx="10" cy="10" r="10" class="${nodo}" />
+                    </svg>
+                    <span class="txtnodoSpan" style="position: absolute; top: -3px; cursor: pointer;">${nodo}</span>
+                </div>
+            `;
+            foreignObj.innerHTML = content;
             
-           
+            // Agregar el foreignObject al SVG
+            svgGrafo.appendChild(foreignObj);
         }
     }
+    
+    
+    
     
     // Dibujar las aristas
     function dibujarAristas() {
@@ -135,8 +140,8 @@ const svgGrafo = document.getElementById('graphSVG'); // llamar al contenedor sv
 
 window.onload = dibujarGrafo();
 
-    const svgNodos = document.querySelector('.foreignObject')
-    console.log(svgNodos);
+    // const svgNodos = document.querySelector('.foreignObject')
+    // console.log(svgNodos);
     // console.log('----');
     // svgNodos.addEventListener('click', (e) => {
     //     console.log('¡Se hizo clic en un círculo!');
@@ -146,14 +151,30 @@ window.onload = dibujarGrafo();
 svgGrafo.addEventListener('click', (e) => {  // seleccionar Nodo
     e.preventDefault()
     if (e.target.classList.contains('txtnodoSpan')) {
-        let nodoPresionado = e.target.textContent;
-        console.log(nodoPresionado);
-        console.log('Aqui inicia algoritmo');
-        bfs(grafo, nodoPresionado,e);
+        let adyacentes = null;
+        let nodoPresionado = e.target.textContent; // obtenemos el nombre del nodo
+        const circle = document.querySelector(`.${nodoPresionado}`) // seleccionar <circle>
+        const classCircle = circle.getAttribute('class')
+        console.log(classCircle); // obtenemos el nombre del nodo (por medio de la clase del circle)
+            adyacentes = grafo[classCircle]; // obtenemos a los nodos adyacetes al nodo seleccionado
+        console.log(adyacentes);
+
+        adyacentes.forEach(nodoAdyacente => {
+            console.log(nodoAdyacente);
+            let circleAdyacente = document.querySelector(`.${nodoAdyacente}`)
+            console.log(circleAdyacente);
+            // circleAdyacente.classList.add('adyacente')
+            // circleAdyacente.style.fill = '#90D632'
+            circleAdyacente.setAttribute('fill', 'red');
+            console.log(circleAdyacente);// Cambiar el color del nodo actual a azul
+          // nodoActual.classList.remove('no-visitado');
+        })
+        // console.log('Aqui inicia algoritmo');
+        // bfs(grafo, nodoPresionado,e);
     }
 })
-const nodoP = document.querySelector('.txtnodoSpan').textContent;
-console.log(nodoP, '****'); 
+// const nodoP = document.querySelector('.txtnodoSpan').textContent;
+// console.log(nodoP, '****'); 
 
 
 
