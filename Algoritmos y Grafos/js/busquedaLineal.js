@@ -96,7 +96,7 @@ function verificarNumeros(e) {
     // uso de las expresiones regiulares donde se hace por medio de /[ valores  que quiero ]/
     // url del video visto : https://www.youtube.com/watch?v=0V3rIrSBzTU&ab_channel=Funnycode
 
-    const expresionRegular = /[0-9]/
+    const expresionRegular = /[0-9,]/
     //  e.key obtiene el valor de la tecla presionada 
     // y el test vasicamentre que valide que sea parte de la expresion regular 
     if ( !expresionRegular.test(e.key)) {

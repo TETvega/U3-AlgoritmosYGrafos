@@ -107,28 +107,27 @@
 
                          <!-- bloque de QUE ES UN ALGORITMO DE BUSQUEDA  -->
                         <section class="mb-4">
-                            <h3 class="mb-2" id="busquedaSaltos">Algoritmo de Busqueda por Saltos</h3>
+                            <h3 class="mb-2" id="busquedaSaltos">Algoritmo de Busqueda por Saltos || Jump Search</h3>
                             <hr>
-                            <p>Un algoritmo de búsqueda es un conjunto de pasos bien definidos y ordenados que se utilizan para encontrar un elemento específico 
-                                dentro de un conjunto de datos. Estos algoritmos son ampliamente utilizados en informática y se aplican en una variedad de 
-                                contextos, como la búsqueda de información en bases de datos, la navegación en internet, la resolución de problemas en 
-                                inteligencia artificial, entre otros.</p>
+                            <p>Jump Search es un algoritmo de búsqueda en el cual, en vez de irse de manera secuencial, 
+                                salta un grupo de elementos de manera repetitiva hasta encontrar el valor buscado o uno mayor. 
+                                Si se encuentra el valor, termina nuestro algoritmo. Si llegamos a un valor mayor, retrocedemos 
+                                de uno en uno hasta llegar al valor buscado. Es importante mencionar que el arreglo debe estar ordenado..</p>
 
-                            <p>Hay varios tipos de algoritmos de búsqueda, cada uno con sus propias características y aplicaciones:</p>  
+                            <p>Supongamos que tenemos el siguiente arreglo de 15 elementos: <strong>[1, 3, 4, 7, 9, 11, 13, 16, 19, 18, 20, 22, 24, 27, 30]</strong>:</p>  
                                 
                             <ul>
                                 <li>
                                     <p>
-                                        <strong>Búsqueda Lineal (Sequential Search):</strong> Este algoritmo recorre secuencialmente cada elemento del conjunto de datos hasta 
-                                        encontrar el elemento deseado o llegar al final del conjunto. Es sencillo pero puede ser ineficiente para 
-                                        conjuntos de datos grandes.
+                                        Necesitamos saber la posición del número <strong>27</strong> dentro del arreglo.
                                     </p>
                                 </li>
                                 <li>
                                     <p>
-                                        <strong>Búsqueda Binaria (Binary Search):</strong>  Este algoritmo solo funciona en conjuntos de datos ordenados. Divide repetidamente 
-                                        el conjunto de datos por la mitad y compara el elemento buscado con el elemento en la posición media. De esta manera, 
-                                        reduce la búsqueda a la mitad en cada iteración, lo que lo hace muy eficiente para conjuntos de datos grandes
+                                        <strong>Cómo determinar el número de elementos a brincar en cada iteración</strong>  <br>
+                                        Usualmente sería √N donde N es el total de elementos. En este caso √15 = 3.87Redondeando, serían 4.<br>
+                                        Con este tamaño de paso y este arreglo en particular, el peor escenario serían 5 iteraciones para encontrar el número
+                                        <strong>27</strong>.
                                     </p>
                                 </li>
                             </ul>
@@ -139,7 +138,59 @@
                             </p>
                         </section>
                         <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BUSQUEDA s -->
+                    </section>
+                    <!-- Empieza la secion del formulario y funcion de saltos ----------------------   -->
+                    <section>
+                        <h2 class="mb-2 mt-4 lick-EstaSeccion" id="Algoritmo_BusquedaLineal_enAccion">Algoritmo de Busqueda de saltos</h2>
+                        <hr>
+                        <p>Puede Probar los algoritmos en esta seccion. </p>
+                        <p>Solo son validos numeros enteros</p>
+                        <br>
+                        <br>
+                        <hr>
+                        <div class="container mt-4">
+                            <div class="row mt-4 col-md-12">
+                                <div class="input-group mb-3">
+                                    <div class="container">
+                                        <div class="row">
+                                            <!-- <div class="col-md-3 mb-4">
+                                                <select class="form-select" aria-label="Default select example" id="seleccionarBusqueda">
+                                                    <option value="Multiple">Multiple Coincidencia</option>
+                                                </select>
+                                            </div> -->
+                                            <div class="col-md-9 mb-4 align-items-center text-center">
+                                                <label for="exampleDataList" class="form-label">Ingrese en Numero Buscado </label>
+                                                <input class="form-control col-9" autocomplete="off" id="numero_Buscado" type="number" placeholder="Ingrese un numero entero" aria-label="default input example">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <p>Ingrese los numeros de la lista:</p>
+                                    <div class="input-group mb-3">
+                                        
+                                        <input type="text" autocomplete="off" class="form-control" id="lista_Numeros" aria-label="Text input with 2 dropdown buttons" placeholder="Example: 1, 3, 6 , 8 , 9, 10">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">MENU</button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" id="btn_buscarNumero">Buscar</a></li>
+                                        <li><a class="dropdown-item" id="btn_limpiarTextos">Limpiar</a></li>
+                                        <!-- <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="#">Separated link</a></li> -->
+                                        </ul>
+                                    </div>
 
+                                    <div>
+                                        <span>Resultado</span>
+                                        <span><p id="ResultadoLineal">...</p></span>
+                                    </div>
+                                    
+                                  </div>
+                        </div>
+
+                        <!-- Termina la secion del formulario y funcion lineal ----------------------   -->
+                        <!-- Empieza la secion del muestra de codigo ----------------------   -->
+                    </section>
                         <section class="mt-4">
                             <h3 class="mb-2 mt-4" id="camposAplicacion">Campos de Aplicacion</h3>
                             <hr>
