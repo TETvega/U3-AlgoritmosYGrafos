@@ -1,38 +1,51 @@
-document.addEventListener('DOMContentLoaded', () => {
-    dibujarGrafo();
+let bandera=false
+document.addEventListener('DOMContentLoaded',async () => {
+     dibujarGrafo();
     let nodoActual = null; // almacenar el nodo actualmente presionado
-    svgGrafo.addEventListener('click', (e) =>  // Evento de clic para iniciar el recorrido BFS desde el nodo presionado
-    {    if (e.target.classList.contains('txtnodoSpan')) 
-        {   let nodoPresionado = e.target.textContent;
-            console.log('Se presionó: ', nodoPresionado);
-            if (nodoActual) { // Restaurar el color original del nodo anteriormente presionado, si lo hay
-                let circleNodoAnterior = document.getElementById(nodoActual);
-                circleNodoAnterior.classList.remove('nodoInicio');
-                circleNodoAnterior.classList.add('no-visitado'); 
+        svgGrafo.addEventListener('click', async(e) =>  // Evento de clic para iniciar el recorrido BFS desde el nodo presionado
+        {   if (!bandera) 
+            {   console.log(bandera);
+                bandera=true
+
+                if (e.target.classList.contains('txtnodoSpan')) 
+                { let nodoPresionado = e.target.textContent;
+                  console.log('Se presionó: ', nodoPresionado);
+                
+                if (nodoActual) { // Restaurar el color original del nodo anteriormente presionado, si lo hay
+                    let circleNodoAnterior = document.getElementById(nodoActual);
+                    circleNodoAnterior.classList.remove('nodoInicio');
+                    circleNodoAnterior.classList.add('no-visitado'); 
+                }
+                nodoActual = nodoPresionado
+                // Cambiar el color del nodo presionado actualmente
+                let circleNodoPresionado = document.getElementById(nodoPresionado);
+                circleNodoPresionado.classList.remove('no-visitado');
+                circleNodoPresionado.classList.add('nodoInicio');
+    
+                const nodosGrafos = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                nodosGrafos.forEach(nodo => {
+                    let circle = document.getElementById(nodo)
+                    circle.style.fill = ''
+                    circle.classList.remove('nodoFin');
+                    circle.classList.remove('visitado');
+                    circle.classList.remove('nodoFin')
+                    circle.classList.add('no-visitado')
+                    console.log('Añadiendo la clase "no-visitado" a: ',nodo);
+                })
+    
+                await ejecutarBFS(grafo, nodoPresionado); // aqui espera hasta que BFS termine
+                // circleUltimoNodo = document.getElementById(ultimoNodo)
+                // circleUltimoNodo.classList.add('nodoFin')
+                }
+                bandera=false
+                console.log(bandera);
             }
-            nodoActual = nodoPresionado
-            // Cambiar el color del nodo presionado actualmente
-            let circleNodoPresionado = document.getElementById(nodoPresionado);
-            circleNodoPresionado.classList.remove('no-visitado');
-            circleNodoPresionado.classList.add('nodoInicio');
-
-        const nodosGrafos = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-            nodosGrafos.forEach(nodo => {
-                let circle = document.getElementById(nodo)
-                circle.style.fill = ''
-                circle.classList.remove('nodoFin');
-                circle.classList.remove('visitado');
-                circle.classList.remove('nodoFin')
-                circle.classList.add('no-visitado')
-                console.log('Añadiendo la clase "no-visitado" a: ',nodo);
-            })
-
-            ejecutarBFS(grafo, nodoPresionado);
-            // circleUltimoNodo = document.getElementById(ultimoNodo)
-            // circleUltimoNodo.classList.add('nodoFin')
-        }
-    });
+               
+        });
+   
+   
 });
+
 
 const grafo = { // representar el grafo en lista de adyacencia (en un objeto)
     'A': ['B'],
@@ -45,34 +58,45 @@ const grafo = { // representar el grafo en lista de adyacencia (en un objeto)
 };
 // AQUI EMPIZAMOS A DIBUJAR EL GRAFO CON SVG
 const svgGrafo = document.getElementById('graphSVG'); // llamar al contenedor svg
-    const nodes = { // definir las posiciones de los nodos y sus nombres
-        'A': {x: 169, y: 100},
-        'B': {x: 456.3, y: 100},
-        'C': {x: 169, y: 300},
-        'D': {x: 338, y: 150},
-        'E': {x: 84.5, y: 200},
-        'F': {x: 676, y: 200},
-        'G': {x: 470.3, y: 350}
-    };
+const nodes = { // definir las posiciones de los nodos y sus nombres
+    'A': {x: 34.5 + 160, y: 200-20},
+    'B': {x: 104.5 + 160, y: 200-20},
+    'C': {x: 404.5 + 160, y: 300-20},
+    'D': {x: 204.5 + 160, y: 120-20},
+    'E': {x: 404.5 + 160, y: 120-20},
+    'F': {x: 300 + 160, y: 200-20},
+    'G': {x: 204.5 + 160, y: 300-20}
+};
+
+    // const nodes = { 
+    //     'A': {x: 169, y: 100},
+    //     'B': {x: 456.3, y: 100},
+    //     'C': {x: 169, y: 300},
+    //     'D': {x: 338, y: 150},
+    //     'E': {x: 84.5, y: 200},
+    //     'F': {x: 676, y: 200},
+    //     'G': {x: 470.3, y: 350}
+    // };
     
-    function dibujarNodos() {
-        for (let nodo in nodes) {  
-            let coordenadas = nodes[nodo];
+    function dibujarNodos() 
+    {   for (let nodo in nodes) 
+        {  let coordenadas = nodes[nodo];
 
             // Crear el foreignObject que contendrá el círculo y el texto
             let foreignObj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
-            foreignObj.setAttribute("x", coordenadas.x - 15); // Ajustar la posición según el tamaño del círculo y el texto
-            foreignObj.setAttribute("y", coordenadas.y - 10);
-            foreignObj.setAttribute("width", 30); // Ajustar el ancho y el alto según el tamaño del círculo y el texto
-            foreignObj.setAttribute("height", 30);
+            foreignObj.setAttribute("x", coordenadas.x - 20); // Ajustar la posición según el tamaño del círculo y el texto
+            foreignObj.setAttribute("y", coordenadas.y - 20);
+            foreignObj.setAttribute("width", 40); // Ajustar el ancho y el alto según el tamaño del círculo y el texto
+            foreignObj.setAttribute("height", 40);
+            foreignObj.classList.add('foreignObj');
             
             // Crear el contenido dentro del foreignObject
             let contenido = `
                 <div class="d-flex justify-content-center align-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style="border: none;">
-                        <circle cx="10" cy="10" r="10" id="${nodo}" class="circle"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" style="border: none;">
+                        <circle cx="20" cy="20" r="20" id="${nodo}" class="circle"/>
                     </svg>
-                    <span class="txtnodoSpan" style="position: absolute; top: -3px; cursor: pointer;">${nodo}</span>
+                    <span class="txtnodoSpan" style="position: absolute; top: 9px; cursor: pointer;">${nodo}</span>
                 </div>
             `;
             foreignObj.innerHTML = contenido;
@@ -80,9 +104,9 @@ const svgGrafo = document.getElementById('graphSVG'); // llamar al contenedor sv
         }
     }
     
-    function dibujarAristas() {
-        for (let nodo in grafo) {
-            let nodosAdyacentes = grafo[nodo]; // obtenemos a los nodos adyacentes al nodo actual
+    function dibujarAristas() 
+    {   for (let nodo in grafo) 
+        {   let nodosAdyacentes = grafo[nodo]; // obtenemos a los nodos adyacentes al nodo actual
             let puntoInicio = nodes[nodo]; // obtenemos las coordenadas de inicio, del nodo actual del objeto 'nodes' 
             for (let i = 0; i < nodosAdyacentes.length; i++) { //  iteramos sobre cada nodo adyacente del nodo actual
                 let puntoFinal = nodes[nodosAdyacentes[i]]; // obtenemos las coordenadas del nodo adyacente actual (punto final de la arista)
@@ -116,10 +140,10 @@ function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
       console.error(`Nodo ${nodoId} no encontrado`);
     }
   }
+
   let ultimoNodo = ''
 async function ejecutarBFS(grafo, nodoInicial)  // Funcion para ejecutar el recorrido BFS y cambiar los colores de los nodos
-{   
-    let visitados = {}; // objeto para almacenar los nodos visitados
+{   let visitados = {}; // objeto para almacenar los nodos visitados
     let cola = [nodoInicial];
     console.log('*-*-*-Iniciando Recorrido-*-*-*-*');
     // Función para ejecutar el paso BFS con un intervalo de tiempo

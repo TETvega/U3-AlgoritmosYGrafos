@@ -18,7 +18,7 @@
         }
 
         text {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             font-size: 12px;
             fill: black;
             text-anchor: middle; 
@@ -44,8 +44,26 @@
         };
 
         .nodoFin{
+            transition: fill 0.5s ease;
             fill: #8a2be2;
         }
+
+        .bold-1 {
+    font-weight: 400; /* Light */
+}
+
+.bold-2 {
+    font-weight: 600; /* Semibold */
+}
+
+.bold-3 {
+    font-weight: 700; /* Bold */
+}
+
+.bold-4 {
+    font-weight: 800; /* Extra bold */
+}
+
     </style>
 
 
@@ -146,48 +164,45 @@
       
                          <!-- bloque de QUE ES UN ALGORITMO DE BUSQUEDA  -->
                         <section class="mb-4">
-                            <h3 class="mb-2" id="queEsUnAlgoritmoBusqueda">Búsqueda en anchura (BFS)</h3>
+                            <h3 class="mb-2" id="queEsUnAlgoritmoBusqueda">Búsqueda de Grafos en Anchura (BFS)</h3>
                             <hr>
-                            <p>Algoritmo para recorrer y analizar grafos. Su nombre en inglés es "Breadth First Search", de ahí el acrónimo BFS. La idea principal es explorar todos los nodos del grafo a una distancia fija del nodo inicial, antes de pasar a los nodos a una distancia mayor.
-                            </p>
-
-                            <p>Hay varios tipos de algoritmos de búsqueda, cada uno con sus propias características y aplicaciones:</p>  
+                            <p>Imagina que estás en un laberinto gigante lleno de pasillos interconectados. Quieres encontrar la salida lo más rápido posible, pero no sabes por dónde empezar. Aquí es donde entra en juego la Búsqueda de Grafos en Anchura, o BFS por sus siglas en inglés (Breadth First Search).</p>
+                                 <h6 id="queEsBusquedaAnchura">¿Qué es la Búsqueda de Grafos en Anchura?</h6>
+                                 <p>Es un algoritmo que nos permite <b class="bold-2">recorrer y explorar un grafo</b> de manera sistemática, <b class="bold-2">nivel por nivel</b>, desde un nodo inicial dado.</p>
+                            <p>BFS <u>es como un explorador</u> que comienza en un punto y se mueve gradualmente a través de los pasillos del laberinto, explorando cada posible ruta paso a paso. No salta de un lugar a otro sin antes revisar todas las opciones cercanas. Es como si estuviera extendiendo su búsqueda hacia afuera en todas las direcciones al mismo tiempo.</p>  
+                                <h6>¿Cómo funciona?</h6>
+                            <p>
+                                <ol>
+                                    <li><strong class="bold-2">Comenzamos en un nodo inicial</strong>: Seleccionamos un nodo inicial desde el cual comenzar nuestro recorrido en el grafo.</li>
+                                    <li><strong class="bold-2">Exploramos nodos vecinos</strong>: Visitamos todos los nodos vecinos del nodo inicial antes de pasar a los nodos en el siguiente nivel.</li>
+                                    <li><strong class="bold-2">Mantenemos un registro de nodos visitados</strong>: Para evitar ciclos infinitos, marcamos los nodos que ya hemos visitado.</li>
+                                    <li><strong class="bold-2">Continuamos explorando en anchura</strong>: Repetimos el proceso, moviéndonos nivel por nivel, hasta haber explorado todos los nodos alcanzables desde el nodo inicial.</li>
+                                </ol>
                                 
-                            <ul>
-                                <li>
-                                    <p>
-                                        <strong>Búsqueda Lineal (Sequential Search):</strong> Este algoritmo recorre secuencialmente cada elemento del conjunto de datos hasta 
-                                        encontrar el elemento deseado o llegar al final del conjunto. Es sencillo pero puede ser ineficiente para 
-                                        conjuntos de datos grandes.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>
-                                        <strong>Búsqueda Binaria (Binary Search):</strong>  Este algoritmo solo funciona en conjuntos de datos ordenados. Divide repetidamente 
-                                        el conjunto de datos por la mitad y compara el elemento buscado con el elemento en la posición media. De esta manera, 
-                                        reduce la búsqueda a la mitad en cada iteración, lo que lo hace muy eficiente para conjuntos de datos grandes
-                                    </p>
-                                </li>
-                            </ul>
-
-                            <p class="mt-4">
-                                Estos son solo algunos ejemplos de algoritmos de búsqueda. Cada uno tiene sus propias ventajas y desventajas, y la elección del 
-                                algoritmo adecuado depende del problema específico que se esté abordando y las características de los datos involucrados.
-                            </p>
-
+                            </p>  
+                                <h6>¿Por qué es útil?</h6>
+                            <p>La BFS es genial porque garantiza que no te pierdas ninguna ruta posible. Si hay una salida en el laberinto, eventualmente llegarás a ella. También es eficiente porque no retrocedes sobre tus pasos innecesariamente. Sigues explorando hacia adelante hasta que hayas revisado todas las opciones desde tu punto actual.</p>    
+                            
+                                <h6>Ejemplo práctico</h6>
+                            <p>Imagina que estás en un juego de computadora con un mapa de niveles interconectados. Quieres encontrar la salida del nivel actual. Usas BFS para explorar los pasillos del nivel, buscando la salida. A medida que avanzas, marcas los pasillos que ya has visitado para asegurarte de no volver a ellos.</p>    
+                            
                           
                         </section>
                         
-                        <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BUSQUEDA s -->
+                        <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BFS-->
 
                         <section>
-                            <h2 class="mb-2 mt-4 lick-EstaSeccion" id="Algoritmo_BusquedaLineal_enAccion">Algoritmo de grafos ANCHURA</h2>
+                            <h3 class="mb-2 mt-4 lick-EstaSeccion" id="probarAlgoritmo">¡Prueba el Algoritmo!</h3>
                             <hr>
-                            <p>Puede probar el algoritmo en esta seccion. </p>
-                            <p>Solo tiene que <b>seleccionar el nodo</b> con el que desea iniciar, precionando el mismo en el siguiente Grafo No dirigido.</p>
-                            <br>
-                            <br>
-                            <hr>
+                            Puede probar el algoritmo en esta seccion. 
+                            <p>Solo tiene que <b>seleccionar el nodo</b> con el que desea iniciar, precionando en el mismo en el siguiente Grafo No dirigido.</p>
+                            <p class="bold-4"> Estado de Nodos:</p>
+                            <p> <span style="color: #ffc108" class="bold-3">Amarillo</span>: Nodo Inicial.<br>
+                                <span style="color: #C5BFC2" class="bold-3">Gris</span>: No visitado.<br>
+                                <span style="color: #34B5E9" class="bold-3">Azul</span>: En Proceso.<br>
+                                <span style="color: #45C629" class="bold-3">Verde</span>: Visitado.<br>
+                                <span style="color: #8a2be2" class="bold-3">Morado</span>: Nodo Final.
+                            </p>
                             <div class="container mt-4">
                                 <div class="row mt-4 col-md-12">
                                     <div class="input-group mb-3">
@@ -219,8 +234,8 @@
                             <h3 class="fs-5 text-gray fw-light">En esta Seccion</h3>
                             <hr>
                             <ul id="">
-                                <li> <a href="#queEsUnAlgoritmoBusqueda" class="text-decoration-none text-dark">¿Que es un Algoritmo de Busqueda?</a></li>
-                                <li> <a href="#camposAplicacion" class="text-decoration-none text-dark">Campos de Aplicacion</a></li>
+                                <li> <a href="#queEsBusquedaAnchura" class="text-decoration-none text-dark">¿Qué es la Búsqueda de Grafos en Anchura?</a></li>
+                                <li> <a href="#probarAlgoritmo" class="text-decoration-none text-dark">¡Prueba el Algoritmo!</a></li>
                             </ul>
                         </aside>
                     </div>
