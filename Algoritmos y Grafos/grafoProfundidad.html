@@ -8,7 +8,7 @@
 
     <!-- enlace a scc puro -->
     <link rel="stylesheet" href="css/styleINDEX.css">
-
+    <link rel="stylesheet" href="css/styleBFS.css">
 
         <!-- iconos  -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -108,80 +108,90 @@
                     <div class="col-10 p-4 ">
 
                          <!-- bloque de QUE ES UN ALGORITMO DE BUSQUEDA  -->
-                        <section class="mb-4">
-                            <h3 class="mb-2" id="queEsUnAlgoritmoBusqueda">¿Que es un Grafo en la Informatica?</h3>
-                            <hr>
-                            <p>Un algoritmo de búsqueda es un conjunto de pasos bien definidos y ordenados que se utilizan para encontrar un elemento específico 
-                                dentro de un conjunto de datos. Estos algoritmos son ampliamente utilizados en informática y se aplican en una variedad de 
-                                contextos, como la búsqueda de información en bases de datos, la navegación en internet, la resolución de problemas en 
-                                inteligencia artificial, entre otros.</p>
-
-                            <p>Hay varios tipos de algoritmos de búsqueda, cada uno con sus propias características y aplicaciones:</p>  
-                                
-                            <ul>
-                                <li>
-                                    <p>
-                                        <strong>Búsqueda Lineal (Sequential Search):</strong> Este algoritmo recorre secuencialmente cada elemento del conjunto de datos hasta 
-                                        encontrar el elemento deseado o llegar al final del conjunto. Es sencillo pero puede ser ineficiente para 
-                                        conjuntos de datos grandes.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>
-                                        <strong>Búsqueda Binaria (Binary Search):</strong>  Este algoritmo solo funciona en conjuntos de datos ordenados. Divide repetidamente 
-                                        el conjunto de datos por la mitad y compara el elemento buscado con el elemento en la posición media. De esta manera, 
-                                        reduce la búsqueda a la mitad en cada iteración, lo que lo hace muy eficiente para conjuntos de datos grandes
-                                    </p>
-                                </li>
-                            </ul>
-
-                            <p class="mt-4">
-                                Estos son solo algunos ejemplos de algoritmos de búsqueda. Cada uno tiene sus propias ventajas y desventajas, y la elección del 
-                                algoritmo adecuado depende del problema específico que se esté abordando y las características de los datos involucrados.
-                            </p>
+                         <h3 class="mb-2" id="queEsUnAlgoritmoBusqueda">Búsqueda de Grafos por Profundidad (DFS)</h3>
+                         <hr>
+                         <p>¿Alguna vez te has preguntado cómo funcionan las búsquedas en las redes sociales para encontrar amigos, o cómo los mapas en línea encuentran la ruta más corta entre dos ubicaciones? La Búsqueda de Grafos por Profundidad es una gran herramienta que nos ayuda a resolver este tipo de problemas.</p>
+                              <h6 id="queEsBusquedaAnchura">¿Qué es la Búsqueda de Grafos por Profundidad?</h6>
+                              <p>La Búsqueda de Grafos por Profundidad o DFS (por sus siglas en inglés: Depth First Search) es un algoritmo que nos permite explorar y buscar información en un grafo de una manera sistemática. </p>
+                         <p>BFS <u>es como un explorador</u> que comienza en un punto y se mueve gradualmente a través de los pasillos del laberinto, explorando cada posible ruta paso a paso. No salta de un lugar a otro sin antes revisar todas las opciones cercanas. Es como si estuviera extendiendo su búsqueda hacia afuera en todas las direcciones al mismo tiempo.</p>  
+                             <h6>¿Cómo Funciona DFS?</h6>
+                         <p>
+                            <ol>
+                                <li><strong class="bold-2">Comenzamos en un nodo inicial</strong>: Seleccionamos un nodo para comenzar nuestra búsqueda.</li>
+                                <li><strong class="bold-2">Exploramos a fondo</strong>: Desde el nodo inicial, seguimos una conexión a otro nodo y luego a otro, y así sucesivamente, hasta que no hayan más conexiones que seguir.</li>
+                                <li><strong class="bold-2">Retrocedemos cuando sea necesario</strong>: Si llegamos a un punto donde no podemos seguir más, retrocedemos al último nodo donde había otras conexiones sin explorar y continuamos desde allí.</li>
+                                <li><strong class="bold-2">Marcamos los nodos visitados</strong>: Para asegurarnos de no visitar el mismo nodo dos veces, marcamos los nodos que ya hemos explorado.</li>
+                            </ol>
+                             
+                         </p>  
+                             <h6>¿Por qué es útil?</h6>
+                         <p>La BFS es genial porque garantiza que no te pierdas ninguna ruta posible. Si hay una salida en el laberinto, eventualmente llegarás a ella. También es eficiente porque no retrocedes sobre tus pasos innecesariamente. Sigues explorando hacia adelante hasta que hayas revisado todas las opciones desde tu punto actual.</p>    
+                         
+                             <h6>Ejemplo práctico</h6>
+                         <p>Imagina que estás en un juego de computadora con un mapa de niveles interconectados. Quieres encontrar la salida del nivel actual. Usas BFS para explorar los pasillos del nivel, buscando la salida. A medida que avanzas, marcas los pasillos que ya has visitado para asegurarte de no volver a ellos.</p>    
+                         
                         </section>
                         <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BUSQUEDA s -->
 
-                        <section class="mt-4">
-                            <h3 class="mb-2 mt-4" id="camposAplicacion">Campos de Aplicacion</h3>
+                        <section class="mb-4">
+                            <h3 class="mb-2" id="queEsUnAlgoritmoBusqueda">Búsqueda de Grafos por Profundidad (DFS)</h3>
                             <hr>
+                            <p>Imagina que estás en un laberinto gigante lleno de pasillos interconectados. Quieres encontrar la salida lo más rápido posible, pero no sabes por dónde empezar. Aquí es donde entra en juego la Búsqueda de Grafos en Anchura, o BFS por sus siglas en inglés (Breadth First Search).</p>
+                                 <h6 id="queEsBusquedaAnchura">¿Qué es la Búsqueda de Grafos en Anchura?</h6>
+                                 <p>Es un algoritmo que nos permite <b class="bold-2">recorrer y explorar un grafo</b> de manera sistemática, <b class="bold-2">nivel por nivel</b>, desde un nodo inicial dado.</p>
+                            <p>BFS <u>es como un explorador</u> que comienza en un punto y se mueve gradualmente a través de los pasillos del laberinto, explorando cada posible ruta paso a paso. No salta de un lugar a otro sin antes revisar todas las opciones cercanas. Es como si estuviera extendiendo su búsqueda hacia afuera en todas las direcciones al mismo tiempo.</p>  
+                                <h6>¿Cómo funciona?</h6>
                             <p>
-                                Los algoritmos de búsqueda se aplican en una amplia variedad de campos y disciplinas. Algunos de los campos de aplicación más comunes 
-                                incluyen:
-                            </p>
-                                <ul>
-                                    <li>
-                                        <p>
-                                            <strong>Informática y Tecnología:</strong> Los algoritmos de búsqueda son fundamentales en la informática y la tecnología. 
-                                            Se utilizan para buscar información en bases de datos, archivos y sistemas de almacenamiento, así como para 
-                                            optimizar la búsqueda en motores de búsqueda en internet.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            <strong>Inteligencia Artificial:</strong>  En inteligencia artificial, los algoritmos de búsqueda se utilizan para encontrar 
-                                            soluciones a problemas complejos, como la planificación de rutas en sistemas de navegación, la toma de decisiones en 
-                                            sistemas expertos y la resolución de problemas en juegos como el ajedrez y el Go.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            <strong>Procesamiento de Lenguaje Natural (NLP):</strong>En NLP, los algoritmos de búsqueda se utilizan para encontrar 
-                                            patrones en grandes conjuntos de datos de texto, como la búsqueda de palabras clave, la extracción de información y 
-                                            la traducción automática.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            <strong>Robótica:</strong>En robótica, los algoritmos de búsqueda se utilizan para planificar movimientos y rutas 
-                                            para robots móviles, así como para la percepción y la toma de decisiones en entornos dinámicos.
+                                <ol>
+                                    <li><strong class="bold-2">Comenzamos en un nodo inicial</strong>: Seleccionamos un nodo inicial desde el cual comenzar nuestro recorrido en el grafo.</li>
+                                    <li><strong class="bold-2">Exploramos nodos vecinos</strong>: Visitamos todos los nodos vecinos del nodo inicial antes de pasar a los nodos en el siguiente nivel.</li>
+                                    <li><strong class="bold-2">Mantenemos un registro de nodos visitados</strong>: Para evitar ciclos infinitos, marcamos los nodos que ya hemos visitado.</li>
+                                    <li><strong class="bold-2">Continuamos explorando en anchura</strong>: Repetimos el proceso, moviéndonos nivel por nivel, hasta haber explorado todos los nodos alcanzables desde el nodo inicial.</li>
+                                </ol>
                                 
-                                        </p>
-                                    </li>
-                                </ul>
-                            <p>
-                               Estos son solo algunos ejemplos de los campos de aplicación de los algoritmos de búsqueda. Su versatilidad y utilidad los convierten en una herramienta fundamental en numerosas áreas de estudio y aplicación.
+                            </p>  
+                                <h6>¿Por qué es útil?</h6>
+                            <p>La BFS es genial porque garantiza que no te pierdas ninguna ruta posible. Si hay una salida en el laberinto, eventualmente llegarás a ella. También es eficiente porque no retrocedes sobre tus pasos innecesariamente. Sigues explorando hacia adelante hasta que hayas revisado todas las opciones desde tu punto actual.</p>    
+                            
+                                <h6>Ejemplo práctico</h6>
+                            <p>Imagina que estás en un juego de computadora con un mapa de niveles interconectados. Quieres encontrar la salida del nivel actual. Usas BFS para explorar los pasillos del nivel, buscando la salida. A medida que avanzas, marcas los pasillos que ya has visitado para asegurarte de no volver a ellos.</p>    
+                            
+                          
+                        </section>
+                        
+                        <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BFS-->
+
+                        <section>
+                            <h3 class="mb-2 mt-4 lick-EstaSeccion" id="probarAlgoritmo">¡Prueba el Algoritmo!</h3>
+                            <hr>
+                            Puede probar el algoritmo en esta seccion. 
+                            <p>Solo tiene que <b>seleccionar el nodo</b> con el que desea iniciar, precionando en el mismo en el siguiente Grafo No dirigido.</p>
+                            <p class="bold-4"> Estado de Nodos:</p>
+                            <p> <span style="color: #ffc108" class="bold-3">Amarillo</span>: Nodo Inicial.<br>
+                                <span style="color: #C5BFC2" class="bold-3">Gris</span>: No visitado.<br>
+                                <span style="color: #34B5E9" class="bold-3">Azul</span>: En Proceso.<br>
+                                <span style="color: #45C629" class="bold-3">Verde</span>: Visitado.<br>
+                                <span style="color: #8a2be2" class="bold-3">Morado</span>: Nodo Final.
                             </p>
+                            <div class="container mt-4">
+                                <div class="row mt-4 col-md-12">
+                                    <div class="input-group mb-3">
+                                        <div class="container">
+                                           
+                                            <div class="row">
+                                                <svg id="graphSVG" width="800" height="400"  style="border: solid 1px black; height: 400px; max-width: 800px; min-width: 800px; border-radius: 5px; position: relative;"></svg>
+                                            </div>
+                                            </div>
+
+                                        </div>
+                                        <br>                                       
+                                        <br>
+                                        <br>      
+                                      </div>
+                            </div>
+
+                            <!-- Termina la secion del formulario y funcion lineal ----------------------   -->
+                            <!-- Empieza la secion del muestra de codigo ----------------------   -->
                         </section>
                         
                             
@@ -261,7 +271,7 @@
             <hr class="mb-4">
             <div class="row align-items-center">
                 <div class="">
-                    <p> © 2021 Algoritmos, SRC
+                    <p> © 2024 Algoritmos, SRC
                         <a href="https://curoc.unah.edu.hn/" class="text-decoration-none">
                             <strong class="text-warning">UNAH-CUROC</strong>
                         </a>
@@ -272,7 +282,7 @@
     </footer>
     <!-- final del Footer  -->
 
-
+    <script src="/js/grafoProfundidad.js"></script>
     <!-- scripts de bootstrap 5  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
