@@ -8,8 +8,8 @@
 
     <!-- enlace a scc puro -->
     <link rel="stylesheet" href="css/styleINDEX.css">
-    <link rel="stylesheet" href="css/styleBFS.css">
-
+    <style>
+    svg{border:1px solid black}.circle{fill:#a4b354;transition:fill 0.5s ease}text{font-family:'Franklin Gothic Medium','Arial Narrow',Arial,sans-serif;font-size:12px;fill:black;text-anchor:middle}line{stroke:black;stroke-width:2}.visitado{fill:#45C629}.no-visitado{fill:#C5BFC2}.nodoEnProceso{fill:#34B5E9}.nodoInicio{fill:#ffc108}.nodoFin{transition:fill 0.5s ease;fill:#8a2be2}.bold-1{font-weight:400}.bold-2{font-weight:600}.bold-3{font-weight:700}.bold-4{font-weight:800}</style>
         <!-- iconos  -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- Enlaces a Bootstrap  -->
@@ -127,37 +127,20 @@
                              <h6>¿Por qué es útil?</h6>
                          <p>La BFS es genial porque garantiza que no te pierdas ninguna ruta posible. Si hay una salida en el laberinto, eventualmente llegarás a ella. También es eficiente porque no retrocedes sobre tus pasos innecesariamente. Sigues explorando hacia adelante hasta que hayas revisado todas las opciones desde tu punto actual.</p>    
                          
+                         <h3 class="mb-2 mt-4 lick-EstaSeccion" id="visualizarAlgoritmo">¡Un Vistazo al DFS!</h3>
+                         <hr>
+                         <p>En este video puedes visualizar como funciona la "pila" en el algoritmo en profundidad. Presiona PLAY. (Inicia en 04:45)</p>
+                         <div id="video-section" class="mt-5">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/HelpfhBel_k?start=285&mute=1&vq=hd1080" frameborder="0" allowfullscreen></iframe> 	
+                          </div>
+
                              <h6>Ejemplo práctico</h6>
                          <p>Imagina que estás en un juego de computadora con un mapa de niveles interconectados. Quieres encontrar la salida del nivel actual. Usas BFS para explorar los pasillos del nivel, buscando la salida. A medida que avanzas, marcas los pasillos que ya has visitado para asegurarte de no volver a ellos.</p>    
                          
                         </section>
                         <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BUSQUEDA s -->
 
-                        <section class="mb-4">
-                            <h3 class="mb-2" id="queEsUnAlgoritmoBusqueda">Búsqueda de Grafos por Profundidad (DFS)</h3>
-                            <hr>
-                            <p>Imagina que estás en un laberinto gigante lleno de pasillos interconectados. Quieres encontrar la salida lo más rápido posible, pero no sabes por dónde empezar. Aquí es donde entra en juego la Búsqueda de Grafos en Anchura, o BFS por sus siglas en inglés (Breadth First Search).</p>
-                                 <h6 id="queEsBusquedaAnchura">¿Qué es la Búsqueda de Grafos en Anchura?</h6>
-                                 <p>Es un algoritmo que nos permite <b class="bold-2">recorrer y explorar un grafo</b> de manera sistemática, <b class="bold-2">nivel por nivel</b>, desde un nodo inicial dado.</p>
-                            <p>BFS <u>es como un explorador</u> que comienza en un punto y se mueve gradualmente a través de los pasillos del laberinto, explorando cada posible ruta paso a paso. No salta de un lugar a otro sin antes revisar todas las opciones cercanas. Es como si estuviera extendiendo su búsqueda hacia afuera en todas las direcciones al mismo tiempo.</p>  
-                                <h6>¿Cómo funciona?</h6>
-                            <p>
-                                <ol>
-                                    <li><strong class="bold-2">Comenzamos en un nodo inicial</strong>: Seleccionamos un nodo inicial desde el cual comenzar nuestro recorrido en el grafo.</li>
-                                    <li><strong class="bold-2">Exploramos nodos vecinos</strong>: Visitamos todos los nodos vecinos del nodo inicial antes de pasar a los nodos en el siguiente nivel.</li>
-                                    <li><strong class="bold-2">Mantenemos un registro de nodos visitados</strong>: Para evitar ciclos infinitos, marcamos los nodos que ya hemos visitado.</li>
-                                    <li><strong class="bold-2">Continuamos explorando en anchura</strong>: Repetimos el proceso, moviéndonos nivel por nivel, hasta haber explorado todos los nodos alcanzables desde el nodo inicial.</li>
-                                </ol>
-                                
-                            </p>  
-                                <h6>¿Por qué es útil?</h6>
-                            <p>La BFS es genial porque garantiza que no te pierdas ninguna ruta posible. Si hay una salida en el laberinto, eventualmente llegarás a ella. También es eficiente porque no retrocedes sobre tus pasos innecesariamente. Sigues explorando hacia adelante hasta que hayas revisado todas las opciones desde tu punto actual.</p>    
-                            
-                                <h6>Ejemplo práctico</h6>
-                            <p>Imagina que estás en un juego de computadora con un mapa de niveles interconectados. Quieres encontrar la salida del nivel actual. Usas BFS para explorar los pasillos del nivel, buscando la salida. A medida que avanzas, marcas los pasillos que ya has visitado para asegurarte de no volver a ellos.</p>    
-                            
-                          
-                        </section>
+                        
                         
                         <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BFS-->
 
@@ -199,7 +182,7 @@
         
                     <!-- Aside en el lado derecho -->
                     <div class="col-2 fw-light " style="color: rgb(90, 90, 90);">
-                        <aside>
+                        <aside class="sticky-top" style="margin-top: 20px; top: 40px;">
                             <h3 class="fs-5 text-gray fw-light">En esta Seccion</h3>
                             <hr>
                             <ul id="">
@@ -282,8 +265,9 @@
     </footer>
     <!-- final del Footer  -->
 
-    <script src="/js/grafoProfundidad.js"></script>
+    <script src="js/grafoProfundidad"></script>
     <!-- scripts de bootstrap 5  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
 </body>
 </html>
