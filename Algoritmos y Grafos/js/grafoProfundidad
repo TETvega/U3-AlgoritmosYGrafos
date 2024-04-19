@@ -1,50 +1,73 @@
 let bandera=false
-
+let nodoInicial = null; // Almacenar el nodo inicial seleccionado por el usuario
+let nodoDestino = null; // Almacenar el nodo destino seleccionado por el usuario
 document.addEventListener('DOMContentLoaded',async () => {
      dibujarGrafo(); // Llamar a la función para dibujar el grafo
-    let nodoActual = null; // almacenar el nodo actualmente presionado
+    
         svgGrafo.addEventListener('click', async(e) =>  // Evento de clic para iniciar el recorrido BFS desde el nodo presionado
-        {   if (!bandera) 
-            {   console.log(bandera);
-                bandera=true
+        {   
+            if (!bandera) 
+            {  bandera=true;
+                // if (nodoInicial) // Restaurar el color original del nodo anteriormente presionado, si lo hay
+                // {   let circleNodoAnterior = document.getElementById(nodoInicial);
+                //     circleNodoAnterior.classList.remove('nodoInicio');
+                //     circleNodoAnterior.classList.add('no-visitado'); 
 
-                if (e.target.classList.contains('txtnodoSpan')) 
-                { let nodoPresionado = e.target.textContent;
-                  console.log('Se presionó: ', nodoPresionado);
-                
-                if (nodoActual) { // Restaurar el color original del nodo anteriormente presionado, si lo hay
-                    let circleNodoAnterior = document.getElementById(nodoActual);
-                    circleNodoAnterior.classList.remove('nodoInicio');
-                    circleNodoAnterior.classList.add('no-visitado'); 
-                }
-                nodoActual = nodoPresionado
-                // Cambiar el color del nodo presionado actualmente
-                let circleNodoPresionado = document.getElementById(nodoPresionado);
-                circleNodoPresionado.classList.remove('no-visitado');
-                circleNodoPresionado.classList.add('nodoInicio');
-    
-                const nodosGrafos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
-                nodosGrafos.forEach(nodo => {
-                    let circle = document.getElementById(nodo)
-                    circle.style.fill = ''
-                    circle.classList.remove('nodoFin');
-                    circle.classList.remove('visitado');
-                    circle.classList.remove('nodoFin')
-                    circle.classList.add('no-visitado')
-                    console.log('Añadiendo la clase "no-visitado" a: ',nodo);
-                })
-    
-                await ejecutarDFS(grafo, nodoPresionado); // aqui espera hasta que BFS termine
-                // circleUltimoNodo = document.getElementById(ultimoNodo)
-                // circleUltimoNodo.classList.add('nodoFin')
-                }
-                bandera=false
-                console.log(bandera);
-            }
-               
+                // }
+                mostrarRecorrido.innerHTML = '';
+                        if (!nodoInicial) // Si aún no se ha seleccionado el nodo inicial
+                        { 
+                            if (e.target.classList.contains('txtnodoSpan')) 
+                            {   nodoInicial = e.target.textContent;
+                                // console.log('Nodo inicial seleccionado:', nodoInicial);
+                        
+                                
+
+                                const nodosGrafos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+                                nodosGrafos.forEach(nodo => {
+                                    let circle = document.getElementById(nodo)
+                                    circle.style.fill = ''
+                                    circle.classList.remove('nodoFin');
+                                    circle.classList.remove('visitado');
+                                    circle.classList.remove('nodoFin')
+                                    circle.classList.add('no-visitado')
+                                    circle.classList.remove('nodoInicio')
+                                    // console.log('Añadiendo la clase "no-visitado" a: ',nodo);
+                                })
+
+                                // Cambiar el color del nodo inicial seleccionado
+                                let circleNodoInicial = document.getElementById(nodoInicial);
+                                circleNodoInicial.classList.remove('no-visitado');
+                                circleNodoInicial.classList.add('nodoInicio');
+
+                                
+                            }
+                            alert('Ahora presione el nodo final.')
+                        } else if (!nodoDestino) // Si ya se seleccionó el nodo inicial pero no el destino
+                            { 
+                                
+                                if (e.target.classList.contains('txtnodoSpan')) 
+                                {   nodoDestino = e.target.textContent;
+                                    // console.log('Nodo destino seleccionado:', nodoDestino);
+                                    // Cambiar el color del nodo destino seleccionado
+                                    let circleNodoDestino = document.getElementById(nodoDestino);
+                                    circleNodoDestino.classList.remove('no-visitado');
+                                    circleNodoDestino.classList.remove('circle');
+                                    circleNodoDestino.style.fill = '#8a2be2';
+                                    circleNodoDestino.classList.add('nodoFin');
+                                    
+                                    // Ejecutar el algoritmo DFS con el nodo inicial y el destino
+                                    await ejecutarDFS(grafo, nodoInicial, nodoDestino);
+                                    nodoInicial = null; 
+                                    nodoDestino = null;
+                                }
+                               
+                            }
+            bandera=false
+            
+            }     
+            
         });
-   
-   
 });
 
 
@@ -66,11 +89,11 @@ const nodes = {
 };
 
 const grafo = { // Representar el grafo en lista de adyacencia (en un objeto)
-    'A': ['B','C', 'D'],
+    'A': ['C','B', 'D'],
     'B': ['A', 'E', 'F'],
     'C': ['A'],
     'D': ['A','G', 'H'],
-    'E': ['I', 'J'],
+    'E': ['I', 'J', 'B'],
     'F': ['B'],
     'G': ['D','K', 'L'],
     'H': ['D'],
@@ -137,43 +160,57 @@ function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
   async function cambiarColorNodo(nodoId, color) { // Funcion (cambiarColorNodo) para cambiar el color de un nodo en el SVG
     let nodo = document.getElementById(nodoId);
     if (nodo) {
+                if(nodo.id === nodoInicial){ //  para mantener el color amarillo al nodo inicial
+                    nodo.classList.add('nodoInicio')
+                    return;
+                }
         nodo.classList.add('nodoEnProceso');
         await sleep(800);
         nodo.classList.remove('nodoEnProceso');
         nodo.classList.add('visitado');
         nodo.classList.remove('no-visitado'); // Esto podría ser innecesario si 'visitado' sobrescribe 'no-visitado'
-        console.log(`Color cambiado para nodo ${nodoId} a ${color}`);
+        // console.log(`Color cambiado para nodo ${nodoId} a ${color}`);
     } else {
         console.error(`Nodo ${nodoId} no encontrado`);
     }
 }
 
+const mostrarRecorrido = document.querySelector('.mostrarRecorrido')
 
-  let ultimoNodo = ''  
-async function ejecutarDFS(grafo, nodoInicial) 
-{           let visitados = {}; // Objeto para almacenar los nodos visitados
-            let pila = [nodoInicial]; // Pila para el recorrido en profundidad
-            console.log('*-*-*-Iniciando Recorrido-*-*-*-*');
-            // Mientras haya nodos en la pila
-            while (pila.length > 0) 
-            {   let verticeActual = pila.pop(); // Sacamos el último nodo de la pila
-                if (!visitados[verticeActual]) // Si el nodo actual no ha sido visitado
-                {   visitados[verticeActual] = true; // Marcamos el nodo como visitado
-                    cambiarColorNodo(verticeActual, '#8EEA7A');
-                ultimoNodo = verticeActual // al finalizar el ciclo esta variable contendrá el ultimo nodo iterado; el cual se pintará de un color en especifico
-                    let adyacentes = grafo[verticeActual]; // Obtenemos los nodos adyacentes al nodo actual
-                    adyacentes.forEach(adyacente => { // Agregamos los nodos adyacentes a la pila (si no han sido visitados)
-                        if (!visitados[adyacente]) {
-                            pila.push(adyacente); // Agregamos los nodos adyacentes a la cola (si no han sido visitados)
-                        }
-            }); // fin forEach
-        } // fin IF principal
-        await sleep(1000); 
-    } // fin WHILE
-        let circleUltimoNodo = document.getElementById(ultimoNodo)
-        circleUltimoNodo.classList.remove('visitado')
-        circleUltimoNodo.classList.remove('circle')
-        circleUltimoNodo.style.fill = '#8a2be2'
-        circleUltimoNodo.classList.add('nodoFin')
-        console.log('el ultimo nodo en ser iterado es: ', ultimoNodo); 
-} 
+async function ejecutarDFS(grafo, nodoInicial, nodoDestino) {
+    let visitados = {}; // Objeto para almacenar los nodos visitados
+    let pila = [nodoInicial]; // Pila para el recorrido en profundidad
+    
+    console.log('*-*-*-Iniciando Recorrido-*-*-*-*');
+    
+    // Mientras haya nodos en la pila
+    while (pila.length > 0) {
+        let verticeActual = pila.pop(); // Sacamos el último nodo de la pila
+        // VERTICE: sinonimo de NODO
+        if (!visitados[verticeActual]) { // Si el nodo actual no ha sido visitado
+            visitados[verticeActual] = true; // Marcamos el nodo como visitado
+            await cambiarColorNodo(verticeActual, '#8EEA7A'); // Cambiamos el color del nodo visitado
+            console.log(verticeActual);
+            let nodoTexto = document.createTextNode(` -> ${verticeActual}`);
+            console.log(nodoTexto);
+            mostrarRecorrido.appendChild(nodoTexto);
+           
+            
+            let adyacentes = grafo[verticeActual]; // Obtenemos los nodos adyacentes al nodo actual
+            
+            adyacentes.forEach(adyacente => { // Agregamos los nodos adyacentes a la pila (si no han sido visitados)
+                if (!visitados[adyacente]) {
+                    pila.push(adyacente);
+                }
+            });
+        }
+        
+        await sleep(1000); // Esperamos un segundo antes de continuar con el siguiente nodo
+        if (verticeActual === nodoDestino) { // Verificamos si el nodo actual es el destino
+            alert('Recorrido Completado.')
+            console.log("Se encontró el nodo de destino:", verticeActual);
+            break; // Si se encontró el destino, salimos del bucle
+        }
+    }
+    
+}

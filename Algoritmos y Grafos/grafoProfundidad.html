@@ -147,8 +147,29 @@
                         <section>
                             <h3 class="mb-2 mt-4 lick-EstaSeccion" id="probarAlgoritmo">¡Prueba el Algoritmo!</h3>
                             <hr>
-                            Puede probar el algoritmo en esta seccion. 
-                            <p>Solo tiene que <b>seleccionar el nodo</b> con el que desea iniciar, precionando en el mismo en el siguiente Grafo No dirigido.</p>
+<p>Instrucciones para probar el algoritmo de búsqueda:</p>
+<ol>
+  <li>
+    <h6>Selecciona el <span style="color: #ffc108;">Nodo Inicial</span></h6>
+    <p>Haz clic en la letra del nodo inicial que desees en el Grafo No dirigido. Este será el punto de partida de la búsqueda.</p>
+  </li>
+  <li>
+    <h6>Selecciona el <span style="color: #8a2be2;">Nodo Final</span></h6>
+    <p>Luego, haz clic en la letra del nodo final que deseas en el mismo Grafo No dirigido. Este será el punto de llegada de la búsqueda.</p>
+  </li>
+  <li>
+    <h6>Visualiza el Recorrido</h6>
+    <p>Una vez seleccionados el nodo inicial y el nodo final, el algoritmo realizará una búsqueda para encontrar el camino entre ellos.</p>
+  </li>
+  <li>
+    <h6>Observa los Resultados</h6>
+    <p>El algoritmo mostrará el recorrido realizado para llegar desde el nodo inicial hasta el nodo final. Si el camino no es posible, se te informará sobre esta situación.</p>
+  </li>
+</ol>
+<p>Recordá que los nodos que seleccionés como inicial y final deben estar presentes en el grafo y deben ser válidos para el algoritmo de búsqueda.</p>
+                     
+                            
+                            <hr>
                             <p class="bold-4"> Estado de Nodos:</p>
                             <p> <span style="color: #ffc108" class="bold-3">Amarillo</span>: Nodo Inicial.<br>
                                 <span style="color: #C5BFC2" class="bold-3">Gris</span>: No visitado.<br>
@@ -160,18 +181,24 @@
                                 <div class="row mt-4 col-md-12">
                                     <div class="input-group mb-3">
                                         <div class="container">
-                                           
                                             <div class="row">
                                                 <svg id="graphSVG" width="800" height="400"  style="border: solid 1px black; height: 400px; max-width: 800px; min-width: 800px; border-radius: 5px; position: relative;"></svg>
                                             </div>
-                                            </div>
-
                                         </div>
+                                        
+                                    </div>
+                                        <h4>El Recorrido Es</h4>
+                                            <div class="mostrarRecorrido">
+                                                <b>...</b>
+                                            </div>
                                         <br>                                       
                                         <br>
                                         <br>      
-                                      </div>
+                                </div>
+                                
                             </div>
+
+
 
                             <!-- Termina la secion del formulario y funcion lineal ----------------------   -->
                             <!-- Empieza la secion del muestra de codigo ----------------------   -->
@@ -182,7 +209,7 @@
         
                     <!-- Aside en el lado derecho -->
                     <div class="col-2 fw-light " style="color: rgb(90, 90, 90);">
-                        <aside class="sticky-top" style="margin-top: 20px; top: 40px;">
+                        <aside  style="margin-top: 20px; top: 40px;">
                             <h3 class="fs-5 text-gray fw-light">En esta Seccion</h3>
                             <hr>
                             <ul id="">
