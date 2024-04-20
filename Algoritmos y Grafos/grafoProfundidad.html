@@ -9,8 +9,12 @@
     <!-- enlace a scc puro -->
     <link rel="stylesheet" href="css/styleINDEX.css">
     <style>
-    svg{border:1px solid black}.circle{fill:#a4b354;transition:fill 0.5s ease}text{font-family:'Franklin Gothic Medium','Arial Narrow',Arial,sans-serif;font-size:12px;fill:black;text-anchor:middle}line{stroke:black;stroke-width:2}.visitado{fill:#45C629}.no-visitado{fill:#C5BFC2}.nodoEnProceso{fill:#34B5E9}.nodoInicio{fill:#ffc108}.nodoFin{transition:fill 0.5s ease;fill:#8a2be2}.bold-1{font-weight:400}.bold-2{font-weight:600}.bold-3{font-weight:700}.bold-4{font-weight:800}</style>
-        <!-- iconos  -->
+    svg{border:1px solid black}.circle{fill:#a4b354;transition:fill 0.5s ease}text{font-family:'Franklin Gothic Medium','Arial Narrow',Arial,sans-serif;font-size:12px;fill:black;text-anchor:middle}line{stroke:black;stroke-width:2}.visitado{fill:#45C629}.no-visitado{fill:#C5BFC2}.nodoEnProceso{fill:#34B5E9}.nodoInicio{fill:#ffc108}.nodoFin{transition:fill 0.5s ease;fill:#8a2be2}.bold-1{font-weight:400}.bold-2{font-weight:600}.bold-3{font-weight:700}.bold-4{font-weight:800}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}.mostrarRecorrido span{opacity:0;animation:fadeIn .5s ease forwards} /*animacion para cuando se  muestre el recorrido de nodos */
+    .tituloResultado{display: flex;}
+    </style>
+     
+     <!-- iconos  -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- Enlaces a Bootstrap  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -108,35 +112,104 @@
                     <div class="col-10 p-4 ">
 
                          <!-- bloque de QUE ES UN ALGORITMO DE BUSQUEDA  -->
-                         <h3 class="mb-2" id="queEsUnAlgoritmoBusqueda">Búsqueda de Grafos por Profundidad (DFS)</h3>
+                         <h3 class="mb-2" >Búsqueda de Grafos por Profundidad (DFS)</h3>
                          <hr>
-                         <p>¿Alguna vez te has preguntado cómo funcionan las búsquedas en las redes sociales para encontrar amigos, o cómo los mapas en línea encuentran la ruta más corta entre dos ubicaciones? La Búsqueda de Grafos por Profundidad es una gran herramienta que nos ayuda a resolver este tipo de problemas.</p>
-                              <h6 id="queEsBusquedaAnchura">¿Qué es la Búsqueda de Grafos por Profundidad?</h6>
+                          
                               <p>La Búsqueda de Grafos por Profundidad o DFS (por sus siglas en inglés: Depth First Search) es un algoritmo que nos permite explorar y buscar información en un grafo de una manera sistemática. </p>
-                         <p>BFS <u>es como un explorador</u> que comienza en un punto y se mueve gradualmente a través de los pasillos del laberinto, explorando cada posible ruta paso a paso. No salta de un lugar a otro sin antes revisar todas las opciones cercanas. Es como si estuviera extendiendo su búsqueda hacia afuera en todas las direcciones al mismo tiempo.</p>  
-                             <h6>¿Cómo Funciona DFS?</h6>
+                         <p>Una manera de visualizar el DFS es comparándolo con el <i>viaje de un explorador en un bosque</i>. Imaginemos a este explorador adentrándose en un bosque denso y oscuro. El explorador sigue un camino particular tan lejos como puede, retrocediendo solo cuando se encuentra con un callejón sin salida. Es como moverse por un laberinto oscuro, donde el explorador elige un camino y sigue avanzando sin tener una visión completa del laberinto en su totalidad.</p>
+                         <h6>¿Cómo Funciona DFS?</h6>
                          <p>
                             <ol>
                                 <li><strong class="bold-2">Comenzamos en un nodo inicial</strong>: Seleccionamos un nodo para comenzar nuestra búsqueda.</li>
                                 <li><strong class="bold-2">Exploramos a fondo</strong>: Desde el nodo inicial, seguimos una conexión a otro nodo y luego a otro, y así sucesivamente, hasta que no hayan más conexiones que seguir.</li>
                                 <li><strong class="bold-2">Retrocedemos cuando sea necesario</strong>: Si llegamos a un punto donde no podemos seguir más, retrocedemos al último nodo donde había otras conexiones sin explorar y continuamos desde allí.</li>
                                 <li><strong class="bold-2">Marcamos los nodos visitados</strong>: Para asegurarnos de no visitar el mismo nodo dos veces, marcamos los nodos que ya hemos explorado.</li>
-                            </ol>
-                             
+                            </ol> 
                          </p>  
-                             <h6>¿Por qué es útil?</h6>
-                         <p>La BFS es genial porque garantiza que no te pierdas ninguna ruta posible. Si hay una salida en el laberinto, eventualmente llegarás a ella. También es eficiente porque no retrocedes sobre tus pasos innecesariamente. Sigues explorando hacia adelante hasta que hayas revisado todas las opciones desde tu punto actual.</p>    
-                         
-                         <h3 class="mb-2 mt-4 lick-EstaSeccion" id="visualizarAlgoritmo">¡Un Vistazo al DFS!</h3>
+                        
+                         <h3 class="mb-2 mt-4 lick-EstaSeccion" id="detallesTecDFS">Detalles Técnicos del Algoritmo DFS</h3>
+                         <hr> 
+                            <h6>Estructura de Datos Utilizadas</h6>
+                            <p>
+                                En la implementación del algoritmo DFS, se hacen uso de diversas estructuras de datos para llevar a cabo el proceso de búsqueda de manera eficiente. La estructura principal es una <i><u>pila</u></i>, que se utiliza para almacenar los nodos que se están explorando en un momento dado. Además, se emplea un conjunto (<i><u>objeto</u></i>) para llevar un registro de los nodos que ya han sido visitados durante el recorrido.
+                            </p>
+                        
+                            <h6>Proceso de Búsqueda</h6>
+                            <p>
+                                El algoritmo DFS sigue un enfoque de exploración en profundidad, comenzando desde un nodo inicial y moviéndose a través de las ramas del grafo de manera recursiva o iterativa. Cuando se explora un nodo, se revisan sus nodos adyacentes y se procede a explorarlos de manera recursiva, profundizando en el grafo <u>hasta que se alcance un punto muerto</u>. En ese momento, se retrocede al último nodo con conexiones no exploradas y se continúa la búsqueda desde allí.
+                            </p>
+                        
+                            <h6>Marcado de Nodos Visitados</h6>
+                            <p>
+                                Para evitar recorrer el mismo nodo más de una vez y caer en un bucle infinito, se marca cada nodo visitado durante el proceso de búsqueda. Esto se logra mediante el mantenimiento de un registro de los nodos que ya han sido explorados, puede ser con un objeto.
+                            </p>
+                        
+                            <h6>Complejidad Temporal y Espacial</h6>
+                            <p>
+                                La eficiencia del algoritmo DFS puede verse influenciada por el tamaño y la complejidad del grafo en el que se aplica. En su peor caso, la cantidad de operaciones que realiza puede ser proporcional al número total de nodos y conexiones en el grafo. Esto significa que cuanto mayor sea el número de nodos y conexiones, más tiempo puede llevar ejecutar el algoritmo. En cuanto a la complejidad espacial, el algoritmo requiere memoria adicional para almacenar la pila de nodos a explorar y el registro de nodos visitados.
+                            </p>
+                        
+                            <h5 id="ejemploImplementacion">Ejemplo de Implementación</h5>
+                              <pre class="bg-dark mb-4 rounded" style="border-radius: 5px;">
+                                <code class="text-white" id="algoritmoDijkstraCopy">
+    
+    const grafo = {
+        'A': ['B', 'C'],
+        'B': ['A', 'D', 'E'],
+        'C': ['A', 'F'],
+        'D': ['B'],
+        'E': ['B'],
+        'F': ['C']
+    };
+
+    dfs(grafo, 'D'); // Comienza el recorrido desde el nodo 'D'
+
+
+    function dfs(grafo, NodoInicial) 
+    {
+        let visitados = {}; // Objeto para almacenar los nodos visitados
+        let pila = [NodoInicial]; // Pila para el recorrido en profundidad
+        
+        while (pila.length > 0) // Mientras haya nodos en la pila
+        {
+            let NodoActual = pila.pop(); // Sacamos el último nodo de la pila
+            if (!visitados[NodoActual])  // Si el nodo actual no ha sido visitado
+            {   
+                // Marcamos el nodo como visitado
+                visitados[NodoActual] = true; 
+                
+                // Mostramos el nodo actual 
+                console.log(NodoActual); 
+                
+                // Obtenemos los nodos adyacentes al nodo actual
+                let adyacentes = grafo[NodoActual]; 
+
+                // Agregamos los nodos adyacentes a la pila (si no han sido visitados) 
+                adyacentes.forEach(adyacente => {
+                    if (!visitados[adyacente]) { 
+                        pila.push(adyacente); 
+                    }
+                });
+            }
+        }
+    }
+                    </code>
+                </pre>
+                        <h3 class="mb-2 mt-4 lick-EstaSeccion" id="visualizarAlgoritmo">¡Visualiza el DFS!</h3>
                          <hr>
-                         <p>En este video puedes visualizar como funciona la "pila" en el algoritmo en profundidad. Presiona PLAY. (Inicia en 04:45)</p>
-                         <div id="video-section" class="mt-5">
+                         En este video puedes visualizar como funciona la "pila" en el algoritmo en profundidad. Presiona PLAY. (Inicia en 04:45)
+                         <div id="video-section" class="mt-4">
                             <iframe width="100%" height="400" src="https://www.youtube.com/embed/HelpfhBel_k?start=285&mute=1&vq=hd1080" frameborder="0" allowfullscreen></iframe> 	
                           </div>
+<br>
+                         <h6>Desventaja del DFS 😬</h6> <hr>
+                         <p>El algoritmo de búsqueda en profundidad (DFS) es útil para explorar grafos, pero tiene una limitación importante: no considera la distancia entre nodos. Simplemente sigue ramas del grafo hasta llegar a nodos sin salida, lo que no garantiza encontrar el camino más corto.</p>
+                         <p>Por ejemplo, en un grafo determinado, el DFS puede optar por explorar una rama larga antes de explorar una rama más corta que conduzca al nodo destino. Esto puede resultar en un recorrido más largo y menos eficiente en términos de distancia.</p>
 
-                             <h6>Ejemplo práctico</h6>
-                         <p>Imagina que estás en un juego de computadora con un mapa de niveles interconectados. Quieres encontrar la salida del nivel actual. Usas BFS para explorar los pasillos del nivel, buscando la salida. A medida que avanzas, marcas los pasillos que ya has visitado para asegurarte de no volver a ellos.</p>    
-                         
+                         <p> En comparación, algoritmos como BFS o Dijkstra son más eficientes para encontrar la ruta más corta en grafos no ponderados (grafo en el que las aristas no tienen un peso asociado).</p>
+                                
+
+
                         </section>
                         <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BUSQUEDA s -->
 
@@ -151,11 +224,11 @@
 <ol>
   <li>
     <h6>Selecciona el <span style="color: #ffc108;">Nodo Inicial</span></h6>
-    <p>Haz clic en la letra del nodo inicial que desees en el Grafo No dirigido. Este será el punto de partida de la búsqueda.</p>
+    <p>Haz <u>clic en la letra del nodo inicial</u> que desees en el Grafo No dirigido. Este será el punto de partida de la búsqueda.</p>
   </li>
   <li>
     <h6>Selecciona el <span style="color: #8a2be2;">Nodo Final</span></h6>
-    <p>Luego, haz clic en la letra del nodo final que deseas en el mismo Grafo No dirigido. Este será el punto de llegada de la búsqueda.</p>
+    <p>Luego, haz <u>clic en la letra del nodo final</u> que deseas en el mismo grafo. Este será el punto de llegada de la búsqueda.</p>
   </li>
   <li>
     <h6>Visualiza el Recorrido</h6>
@@ -166,7 +239,6 @@
     <p>El algoritmo mostrará el recorrido realizado para llegar desde el nodo inicial hasta el nodo final. Si el camino no es posible, se te informará sobre esta situación.</p>
   </li>
 </ol>
-<p>Recordá que los nodos que seleccionés como inicial y final deben estar presentes en el grafo y deben ser válidos para el algoritmo de búsqueda.</p>
                      
                             
                             <hr>
@@ -187,12 +259,14 @@
                                         </div>
                                         
                                     </div>
-                                        <h4>El Recorrido Es</h4>
-                                            <div class="mostrarRecorrido">
-                                                <b>...</b>
-                                            </div>
-                                        <br>                                       
-                                        <br>
+                                        <div class="tituloResultado">
+                                            <h4>El Recorrido de </h4>
+                                            <div class="inicioFinDiv" class="bold-2"></div>
+                                        </div>  
+                                        <div class="mostrarRecorrido">
+                                            <b>...</b>
+                                        </div>
+                                        
                                         <br>      
                                 </div>
                                 
@@ -213,8 +287,9 @@
                             <h3 class="fs-5 text-gray fw-light">En esta Seccion</h3>
                             <hr>
                             <ul id="">
-                                <li> <a href="#queEsUnAlgoritmoBusqueda" class="text-decoration-none text-dark">¿Que es un Algoritmo de Busqueda?</a></li>
-                                <li> <a href="#camposAplicacion" class="text-decoration-none text-dark">Campos de Aplicacion</a></li>
+                                <li> <a href="#visualizarAlgoritmo" class="text-decoration-none text-dark">¡Visualiza el DFS!</a></li>
+                                <li> <a href="#probarAlgoritmo" class="text-decoration-none text-dark">¡Prueba el Algoritmo!</a></li>
+                                <li> <a href="#ejemploImplementacion" class="text-decoration-none text-dark">Ejemplo de Implementación</a></li>
                             </ul>
                         </aside>
                     </div>
