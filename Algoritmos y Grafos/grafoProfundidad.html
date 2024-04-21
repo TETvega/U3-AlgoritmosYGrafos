@@ -8,9 +8,13 @@
 
     <!-- enlace a scc puro -->
     <link rel="stylesheet" href="css/styleINDEX.css">
-
-
-        <!-- iconos  -->
+    <style>
+    svg{border:1px solid black}.circle{fill:#a4b354;transition:fill 0.5s ease}text{font-family:'Franklin Gothic Medium','Arial Narrow',Arial,sans-serif;font-size:12px;fill:black;text-anchor:middle}line{stroke:black;stroke-width:2}.visitado{fill:#45C629}.no-visitado{fill:#C5BFC2}.nodoEnProceso{fill:#34B5E9}.nodoInicio{fill:#ffc108}.nodoFin{transition:fill 0.5s ease;fill:#8a2be2}.bold-1{font-weight:400}.bold-2{font-weight:600}.bold-3{font-weight:700}.bold-4{font-weight:800}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}.mostrarRecorrido span{opacity:0;animation:fadeIn .5s ease forwards} /*animacion para cuando se  muestre el recorrido de nodos */
+    .tituloResultado{display: flex;}
+    </style>
+     
+     <!-- iconos  -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- Enlaces a Bootstrap  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -108,80 +112,170 @@
                     <div class="col-10 p-4 ">
 
                          <!-- bloque de QUE ES UN ALGORITMO DE BUSQUEDA  -->
-                        <section class="mb-4">
-                            <h3 class="mb-2" id="queEsUnAlgoritmoBusqueda">¿Que es un Grafo en la Informatica?</h3>
-                            <hr>
-                            <p>Un algoritmo de búsqueda es un conjunto de pasos bien definidos y ordenados que se utilizan para encontrar un elemento específico 
-                                dentro de un conjunto de datos. Estos algoritmos son ampliamente utilizados en informática y se aplican en una variedad de 
-                                contextos, como la búsqueda de información en bases de datos, la navegación en internet, la resolución de problemas en 
-                                inteligencia artificial, entre otros.</p>
-
-                            <p>Hay varios tipos de algoritmos de búsqueda, cada uno con sus propias características y aplicaciones:</p>  
-                                
-                            <ul>
-                                <li>
-                                    <p>
-                                        <strong>Búsqueda Lineal (Sequential Search):</strong> Este algoritmo recorre secuencialmente cada elemento del conjunto de datos hasta 
-                                        encontrar el elemento deseado o llegar al final del conjunto. Es sencillo pero puede ser ineficiente para 
-                                        conjuntos de datos grandes.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>
-                                        <strong>Búsqueda Binaria (Binary Search):</strong>  Este algoritmo solo funciona en conjuntos de datos ordenados. Divide repetidamente 
-                                        el conjunto de datos por la mitad y compara el elemento buscado con el elemento en la posición media. De esta manera, 
-                                        reduce la búsqueda a la mitad en cada iteración, lo que lo hace muy eficiente para conjuntos de datos grandes
-                                    </p>
-                                </li>
-                            </ul>
-
-                            <p class="mt-4">
-                                Estos son solo algunos ejemplos de algoritmos de búsqueda. Cada uno tiene sus propias ventajas y desventajas, y la elección del 
-                                algoritmo adecuado depende del problema específico que se esté abordando y las características de los datos involucrados.
+                         <h3 class="mb-2" >Búsqueda de Grafos por Profundidad (DFS)</h3>
+                         <hr>
+                          
+                              <p>La Búsqueda de Grafos por Profundidad o DFS (por sus siglas en inglés: Depth First Search) es un algoritmo que nos permite explorar y buscar información en un grafo de una manera sistemática. </p>
+                         <p>Una manera de visualizar el DFS es comparándolo con el <i>viaje de un explorador en un bosque</i>. Imaginemos a este explorador adentrándose en un bosque denso y oscuro. El explorador sigue un camino particular tan lejos como puede, retrocediendo solo cuando se encuentra con un callejón sin salida. Es como moverse por un laberinto oscuro, donde el explorador elige un camino y sigue avanzando sin tener una visión completa del laberinto en su totalidad.</p>
+                         <h6>¿Cómo Funciona DFS?</h6>
+                         <p>
+                            <ol>
+                                <li><strong class="bold-2">Comenzamos en un nodo inicial</strong>: Seleccionamos un nodo para comenzar nuestra búsqueda.</li>
+                                <li><strong class="bold-2">Exploramos a fondo</strong>: Desde el nodo inicial, seguimos una conexión a otro nodo y luego a otro, y así sucesivamente, hasta que no hayan más conexiones que seguir.</li>
+                                <li><strong class="bold-2">Retrocedemos cuando sea necesario</strong>: Si llegamos a un punto donde no podemos seguir más, retrocedemos al último nodo donde había otras conexiones sin explorar y continuamos desde allí.</li>
+                                <li><strong class="bold-2">Marcamos los nodos visitados</strong>: Para asegurarnos de no visitar el mismo nodo dos veces, marcamos los nodos que ya hemos explorado.</li>
+                            </ol> 
+                         </p>  
+                        
+                         <h3 class="mb-2 mt-4 lick-EstaSeccion" id="detallesTecDFS">Detalles Técnicos del Algoritmo DFS</h3>
+                         <hr> 
+                            <h6>Estructura de Datos Utilizadas</h6>
+                            <p>
+                                En la implementación del algoritmo DFS, se hacen uso de diversas estructuras de datos para llevar a cabo el proceso de búsqueda de manera eficiente. La estructura principal es una <i><u>pila</u></i>, que se utiliza para almacenar los nodos que se están explorando en un momento dado. Además, se emplea un conjunto (<i><u>objeto</u></i>) para llevar un registro de los nodos que ya han sido visitados durante el recorrido.
                             </p>
+                        
+                            <h6>Proceso de Búsqueda</h6>
+                            <p>
+                                El algoritmo DFS sigue un enfoque de exploración en profundidad, comenzando desde un nodo inicial y moviéndose a través de las ramas del grafo de manera recursiva o iterativa. Cuando se explora un nodo, se revisan sus nodos adyacentes y se procede a explorarlos de manera recursiva, profundizando en el grafo <u>hasta que se alcance un punto muerto</u>. En ese momento, se retrocede al último nodo con conexiones no exploradas y se continúa la búsqueda desde allí.
+                            </p>
+                        
+                            <h6>Marcado de Nodos Visitados</h6>
+                            <p>
+                                Para evitar recorrer el mismo nodo más de una vez y caer en un bucle infinito, se marca cada nodo visitado durante el proceso de búsqueda. Esto se logra mediante el mantenimiento de un registro de los nodos que ya han sido explorados, puede ser con un objeto.
+                            </p>
+                        
+                            <h6>Complejidad Temporal y Espacial</h6>
+                            <p>
+                                La eficiencia del algoritmo DFS puede verse influenciada por el tamaño y la complejidad del grafo en el que se aplica. En su peor caso, la cantidad de operaciones que realiza puede ser proporcional al número total de nodos y conexiones en el grafo. Esto significa que cuanto mayor sea el número de nodos y conexiones, más tiempo puede llevar ejecutar el algoritmo. En cuanto a la complejidad espacial, el algoritmo requiere memoria adicional para almacenar la pila de nodos a explorar y el registro de nodos visitados.
+                            </p>
+                        
+                            <h5 id="ejemploImplementacion">Ejemplo de Implementación</h5>
+                              <pre class="bg-dark mb-4 rounded" style="border-radius: 5px;">
+                                <code class="text-white" id="algoritmoDijkstraCopy">
+    
+    const grafo = {
+        'A': ['B', 'C'],
+        'B': ['A', 'D', 'E'],
+        'C': ['A', 'F'],
+        'D': ['B'],
+        'E': ['B'],
+        'F': ['C']
+    };
+
+    dfs(grafo, 'D'); // Comienza el recorrido desde el nodo 'D'
+
+
+    function dfs(grafo, NodoInicial) 
+    {
+        let visitados = {}; // Objeto para almacenar los nodos visitados
+        let pila = [NodoInicial]; // Pila para el recorrido en profundidad
+        
+        while (pila.length > 0) // Mientras haya nodos en la pila
+        {
+            let NodoActual = pila.pop(); // Sacamos el último nodo de la pila
+            if (!visitados[NodoActual])  // Si el nodo actual no ha sido visitado
+            {   
+                // Marcamos el nodo como visitado
+                visitados[NodoActual] = true; 
+                
+                // Mostramos el nodo actual 
+                console.log(NodoActual); 
+                
+                // Obtenemos los nodos adyacentes al nodo actual
+                let adyacentes = grafo[NodoActual]; 
+
+                // Agregamos los nodos adyacentes a la pila (si no han sido visitados) 
+                adyacentes.forEach(adyacente => {
+                    if (!visitados[adyacente]) { 
+                        pila.push(adyacente); 
+                    }
+                });
+            }
+        }
+    }
+                    </code>
+                </pre>
+                        <h3 class="mb-2 mt-4 lick-EstaSeccion" id="visualizarAlgoritmo">¡Visualiza el DFS!</h3>
+                         <hr>
+                         En este video puedes visualizar como funciona la "pila" en el algoritmo en profundidad. Presiona PLAY. (Inicia en 04:45)
+                         <div id="video-section" class="mt-4">
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/HelpfhBel_k?start=285&mute=1&vq=hd1080" frameborder="0" allowfullscreen></iframe> 	
+                          </div>
+<br>
+                         <h6>Desventaja del DFS 😬</h6> <hr>
+                         <p>El algoritmo de búsqueda en profundidad (DFS) es útil para explorar grafos, pero tiene una limitación importante: no considera la distancia entre nodos. Simplemente sigue ramas del grafo hasta llegar a nodos sin salida, lo que no garantiza encontrar el camino más corto.</p>
+                         <p>Por ejemplo, en un grafo determinado, el DFS puede optar por explorar una rama larga antes de explorar una rama más corta que conduzca al nodo destino. Esto puede resultar en un recorrido más largo y menos eficiente en términos de distancia.</p>
+
+                         <p> En comparación, algoritmos como BFS o Dijkstra son más eficientes para encontrar la ruta más corta en grafos no ponderados (grafo en el que las aristas no tienen un peso asociado).</p>
+                                
+
+
                         </section>
                         <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BUSQUEDA s -->
 
-                        <section class="mt-4">
-                            <h3 class="mb-2 mt-4" id="camposAplicacion">Campos de Aplicacion</h3>
+                        
+                        
+                        <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BFS-->
+
+                        <section>
+                            <h3 class="mb-2 mt-4 lick-EstaSeccion" id="probarAlgoritmo">¡Prueba el Algoritmo!</h3>
                             <hr>
-                            <p>
-                                Los algoritmos de búsqueda se aplican en una amplia variedad de campos y disciplinas. Algunos de los campos de aplicación más comunes 
-                                incluyen:
+<p>Instrucciones para probar el algoritmo de búsqueda:</p>
+<ol>
+  <li>
+    <h6>Selecciona el <span style="color: #ffc108;">Nodo Inicial</span></h6>
+    <p>Haz <u>clic en la letra del nodo inicial</u> que desees en el Grafo No dirigido. Este será el punto de partida de la búsqueda.</p>
+  </li>
+  <li>
+    <h6>Selecciona el <span style="color: #8a2be2;">Nodo Final</span></h6>
+    <p>Luego, haz <u>clic en la letra del nodo final</u> que deseas en el mismo grafo. Este será el punto de llegada de la búsqueda.</p>
+  </li>
+  <li>
+    <h6>Visualiza el Recorrido</h6>
+    <p>Una vez seleccionados el nodo inicial y el nodo final, el algoritmo realizará una búsqueda para encontrar el camino entre ellos.</p>
+  </li>
+  <li>
+    <h6>Observa los Resultados</h6>
+    <p>El algoritmo mostrará el recorrido realizado para llegar desde el nodo inicial hasta el nodo final. Si el camino no es posible, se te informará sobre esta situación.</p>
+  </li>
+</ol>
+                     
+                            
+                            <hr>
+                            <p class="bold-4"> Estado de Nodos:</p>
+                            <p> <span style="color: #ffc108" class="bold-3">Amarillo</span>: Nodo Inicial.<br>
+                                <span style="color: #C5BFC2" class="bold-3">Gris</span>: No visitado.<br>
+                                <span style="color: #34B5E9" class="bold-3">Azul</span>: En Proceso.<br>
+                                <span style="color: #45C629" class="bold-3">Verde</span>: Visitado.<br>
+                                <span style="color: #8a2be2" class="bold-3">Morado</span>: Nodo Final.
                             </p>
-                                <ul>
-                                    <li>
-                                        <p>
-                                            <strong>Informática y Tecnología:</strong> Los algoritmos de búsqueda son fundamentales en la informática y la tecnología. 
-                                            Se utilizan para buscar información en bases de datos, archivos y sistemas de almacenamiento, así como para 
-                                            optimizar la búsqueda en motores de búsqueda en internet.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            <strong>Inteligencia Artificial:</strong>  En inteligencia artificial, los algoritmos de búsqueda se utilizan para encontrar 
-                                            soluciones a problemas complejos, como la planificación de rutas en sistemas de navegación, la toma de decisiones en 
-                                            sistemas expertos y la resolución de problemas en juegos como el ajedrez y el Go.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            <strong>Procesamiento de Lenguaje Natural (NLP):</strong>En NLP, los algoritmos de búsqueda se utilizan para encontrar 
-                                            patrones en grandes conjuntos de datos de texto, como la búsqueda de palabras clave, la extracción de información y 
-                                            la traducción automática.
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            <strong>Robótica:</strong>En robótica, los algoritmos de búsqueda se utilizan para planificar movimientos y rutas 
-                                            para robots móviles, así como para la percepción y la toma de decisiones en entornos dinámicos.
+                            <div class="container mt-4">
+                                <div class="row mt-4 col-md-12">
+                                    <div class="input-group mb-3">
+                                        <div class="container">
+                                            <div class="row">
+                                                <svg id="graphSVG" width="800" height="400"  style="border: solid 1px black; height: 400px; max-width: 800px; min-width: 800px; border-radius: 5px; position: relative;"></svg>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                        <div class="tituloResultado">
+                                            <h4>El Recorrido de </h4>
+                                            <div class="inicioFinDiv" class="bold-2"></div>
+                                        </div>  
+                                        <div class="mostrarRecorrido">
+                                            <b>...</b>
+                                        </div>
+                                        
+                                        <br>      
+                                </div>
                                 
-                                        </p>
-                                    </li>
-                                </ul>
-                            <p>
-                               Estos son solo algunos ejemplos de los campos de aplicación de los algoritmos de búsqueda. Su versatilidad y utilidad los convierten en una herramienta fundamental en numerosas áreas de estudio y aplicación.
-                            </p>
+                            </div>
+
+
+
+                            <!-- Termina la secion del formulario y funcion lineal ----------------------   -->
+                            <!-- Empieza la secion del muestra de codigo ----------------------   -->
                         </section>
                         
                             
@@ -189,12 +283,13 @@
         
                     <!-- Aside en el lado derecho -->
                     <div class="col-2 fw-light " style="color: rgb(90, 90, 90);">
-                        <aside>
+                        <aside  style="margin-top: 20px; top: 40px;">
                             <h3 class="fs-5 text-gray fw-light">En esta Seccion</h3>
                             <hr>
                             <ul id="">
-                                <li> <a href="#queEsUnAlgoritmoBusqueda" class="text-decoration-none text-dark">¿Que es un Algoritmo de Busqueda?</a></li>
-                                <li> <a href="#camposAplicacion" class="text-decoration-none text-dark">Campos de Aplicacion</a></li>
+                                <li> <a href="#visualizarAlgoritmo" class="text-decoration-none text-dark">¡Visualiza el DFS!</a></li>
+                                <li> <a href="#probarAlgoritmo" class="text-decoration-none text-dark">¡Prueba el Algoritmo!</a></li>
+                                <li> <a href="#ejemploImplementacion" class="text-decoration-none text-dark">Ejemplo de Implementación</a></li>
                             </ul>
                         </aside>
                     </div>
@@ -261,7 +356,7 @@
             <hr class="mb-4">
             <div class="row align-items-center">
                 <div class="">
-                    <p> © 2021 Algoritmos, SRC
+                    <p> © 2024 Algoritmos, SRC
                         <a href="https://curoc.unah.edu.hn/" class="text-decoration-none">
                             <strong class="text-warning">UNAH-CUROC</strong>
                         </a>
@@ -272,8 +367,9 @@
     </footer>
     <!-- final del Footer  -->
 
-
+    <script src="js/grafoProfundidad"></script>
     <!-- scripts de bootstrap 5  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
 </body>
 </html>
