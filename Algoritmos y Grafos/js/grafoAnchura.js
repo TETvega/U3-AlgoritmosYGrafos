@@ -146,7 +146,7 @@ function dibujarGrafo() { // Función para dibujar el grafo
 
 function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));} //pausar la ejecucion del codigo durante un periodo de tiempo detrminado
    
-  async function cambiarColorNodo(nodoId, color) { // Funcion (cambiarColorNodo) para cambiar el color de un nodo en el SVG
+  async function cambiarColorNodo(nodoId) { // Funcion (cambiarColorNodo) para cambiar el color de un nodo en el SVG
     let nodo = document.getElementById(nodoId);
     if (nodo) // si no es null
     {            if(nodo.id === nodoInicial){ //  para mantener el color amarillo al nodo inicial
@@ -163,6 +163,7 @@ function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));} //p
     }
 }
 
+// contendeores de los resultados
 const mostrarRecorrido = document.querySelector('.mostrarRecorrido')
 const inicioFinDiv = document.querySelector('.inicioFinDiv');
 
