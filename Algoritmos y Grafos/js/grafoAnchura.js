@@ -1,89 +1,101 @@
+const svgGrafo = document.getElementById('graphSVG'); // Llamar al contenedor svg
 let bandera=false
+let nodoInicial = null; // Almacenar el nodo inicial seleccionado por el usuario
+let nodoDestino = null; // Almacenar el nodo destino seleccionado por el usuario
 document.addEventListener('DOMContentLoaded',async () => {
-     dibujarGrafo();
-    let nodoActual = null; // almacenar el nodo actualmente presionado
+     dibujarGrafo(); // Llamar a la función para dibujar el grafo
+    
         svgGrafo.addEventListener('click', async(e) =>  // Evento de clic para iniciar el recorrido BFS desde el nodo presionado
-        {   if (!bandera) 
-            {   console.log(bandera);
-                bandera=true
+        {   
+            if (!bandera) 
+            {  bandera=true;
+                mostrarRecorrido.innerHTML = '';
+                inicioFinDiv.innerHTML = '';
+                        if (!nodoInicial) // Si aún no se ha seleccionado el nodo inicial
+                        { 
+                            if (e.target.classList.contains('txtnodoSpan')) 
+                            {   nodoInicial = e.target.textContent;
+                        
+                                const nodosGrafos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+                                nodosGrafos.forEach(nodo => {
+                                    let circle = document.getElementById(nodo)
+                                    circle.style.fill = ''
+                                    circle.classList.remove('nodoFin');
+                                    circle.classList.remove('visitado');
+                                    circle.classList.remove('nodoFin')
+                                    circle.classList.add('no-visitado')
+                                    circle.classList.remove('nodoInicio')
+                                })
 
-                if (e.target.classList.contains('txtnodoSpan')) 
-                { let nodoPresionado = e.target.textContent;
-                  console.log('Se presionó: ', nodoPresionado);
-                
-                if (nodoActual) { // Restaurar el color original del nodo anteriormente presionado, si lo hay
-                    let circleNodoAnterior = document.getElementById(nodoActual);
-                    circleNodoAnterior.classList.remove('nodoInicio');
-                    circleNodoAnterior.classList.add('no-visitado'); 
-                }
-                nodoActual = nodoPresionado
-                // Cambiar el color del nodo presionado actualmente
-                let circleNodoPresionado = document.getElementById(nodoPresionado);
-                circleNodoPresionado.classList.remove('no-visitado');
-                circleNodoPresionado.classList.add('nodoInicio');
-    
-                const nodosGrafos = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-                nodosGrafos.forEach(nodo => {
-                    let circle = document.getElementById(nodo)
-                    circle.style.fill = ''
-                    circle.classList.remove('nodoFin');
-                    circle.classList.remove('visitado');
-                    circle.classList.remove('nodoFin')
-                    circle.classList.add('no-visitado')
-                    console.log('Añadiendo la clase "no-visitado" a: ',nodo);
-                })
-    
-                await ejecutarBFS(grafo, nodoPresionado); // aqui espera hasta que BFS termine
-                // circleUltimoNodo = document.getElementById(ultimoNodo)
-                // circleUltimoNodo.classList.add('nodoFin')
-                }
-                bandera=false
-                console.log(bandera);
-            }
-               
+                                // Cambiar el color del nodo inicial seleccionado
+                                let circleNodoInicial = document.getElementById(nodoInicial);
+                                circleNodoInicial.classList.remove('no-visitado');
+                                circleNodoInicial.classList.add('nodoInicio');
+                                
+                            }
+                            alert('Ahora presione el nodo final.')
+                        } else if (!nodoDestino) // Si ya se seleccionó el nodo inicial pero no el destino
+                            { 
+                                if (e.target.classList.contains('txtnodoSpan')) 
+                                {   nodoDestino = e.target.textContent;
+                                    // Cambiar el color del nodo destino seleccionado
+                                    let circleNodoDestino = document.getElementById(nodoDestino);
+                                    circleNodoDestino.classList.remove('no-visitado');
+                                    circleNodoDestino.classList.remove('circle');
+                                    circleNodoDestino.style.fill = '#8a2be2';
+                                    circleNodoDestino.classList.add('nodoFin');
+                                    
+                                    // Ejecutar el algoritmo DFS con el nodo inicial y el destino
+                                    await ejecutarBFS(grafo, nodoInicial, nodoDestino);
+                                    nodoInicial = null; 
+                                    nodoDestino = null;
+                                }
+                               
+                            }
+             bandera=false
+            }     
+            
         });
-   
-   
 });
 
 
-const grafo = { // representar el grafo en lista de adyacencia (en un objeto)
-    'A': ['B'],
-    'B': ['A', 'D', 'G'],
-    'C': ['E', 'F'],
-    'D': ['B', 'E', 'F', 'G'],
-    'E': ['C', 'D', 'F'],
-    'F': ['C', 'D', 'E', 'G'],
-    'G': ['B', 'D', 'F']
-};
-// AQUI EMPIZAMOS A DIBUJAR EL GRAFO CON SVG
-const svgGrafo = document.getElementById('graphSVG'); // llamar al contenedor svg
-const nodes = { // definir las posiciones de los nodos y sus nombres
-    'A': {x: 34.5 + 160, y: 200-20},
-    'B': {x: 104.5 + 160, y: 200-20},
-    'C': {x: 404.5 + 160, y: 300-20},
-    'D': {x: 204.5 + 160, y: 120-20},
-    'E': {x: 404.5 + 160, y: 120-20},
-    'F': {x: 300 + 160, y: 200-20},
-    'G': {x: 204.5 + 160, y: 300-20}
+const grafo = { // Representar el grafo en lista de adyacencia (en un objeto)
+    'A': ['C','B', 'D'],
+    'B': ['A', 'E', 'F'],
+    'C': ['A'],
+    'D': ['A','G', 'H'],
+    'E': ['J', 'I', 'B'],
+    'F': ['B'],
+    'G': ['D','K', 'L'],
+    'H': ['D'],
+    'I': ['E'],
+    'J': ['E'],
+    'K': ['G'],
+    'L': ['G']
 };
 
-    // const nodes = { 
-    //     'A': {x: 169, y: 100},
-    //     'B': {x: 456.3, y: 100},
-    //     'C': {x: 169, y: 300},
-    //     'D': {x: 338, y: 150},
-    //     'E': {x: 84.5, y: 200},
-    //     'F': {x: 676, y: 200},
-    //     'G': {x: 470.3, y: 350}
-    // };
-    
-    function dibujarNodos() 
-    {   for (let nodo in nodes) 
-        {  let coordenadas = nodes[nodo];
+// *-*-*-*-*- AQUI SE EMPIEZA A DIBUJAR EL GRAFO CON SVG -*-*-*-*-*-*
 
-            // Crear el foreignObject que contendrá el círculo y el texto
-            let foreignObj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+const nodes = { // coordenadas de los nodos
+    'A': {x: (204.5 + 160) * 1.2, y: 50},
+    'B': {x: (104.5 + 160) * 1.2, y: 120},
+    'C': {x: (204.5 + 160) * 1.2, y: 140},
+    'D': {x: (304.5 + 160) * 1.2, y: 120},
+    'E': {x: (4.5 + 160) * 1.2, y: 240},
+    'F': {x: (104.5 + 160) * 1.2, y: 240},
+    'G': {x: (304.5 + 160) * 1.2, y: 240},
+    'H': {x: (404.5 + 160) * 1.2, y: 240},
+    'I': {x: 125, y: 320},
+    'J': {x: 197.4, y: 320},
+    'K': {x: (304.5 + 160) * 1.2, y: 320},
+    'L': {x: (304.5 + 160) * 1.2 + 72.4, y: 320}
+};
+
+function dibujarNodos() { // Función para dibujar los nodos
+    for (let nodo in nodes) {
+        let coordenadas = nodes[nodo];
+
+        let foreignObj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
             foreignObj.setAttribute("x", coordenadas.x - 20); // Ajustar la posición según el tamaño del círculo y el texto
             foreignObj.setAttribute("y", coordenadas.y - 20);
             foreignObj.setAttribute("width", 40); // Ajustar el ancho y el alto según el tamaño del círculo y el texto
@@ -101,72 +113,93 @@ const nodes = { // definir las posiciones de los nodos y sus nombres
             `;
             foreignObj.innerHTML = contenido;
             svgGrafo.appendChild(foreignObj); // Agregar el foreignObject al SVG
-        }
     }
-    
-    function dibujarAristas() 
-    {   for (let nodo in grafo) 
-        {   let nodosAdyacentes = grafo[nodo]; // obtenemos a los nodos adyacentes al nodo actual
-            let puntoInicio = nodes[nodo]; // obtenemos las coordenadas de inicio, del nodo actual del objeto 'nodes' 
-            for (let i = 0; i < nodosAdyacentes.length; i++) { //  iteramos sobre cada nodo adyacente del nodo actual
-                let puntoFinal = nodes[nodosAdyacentes[i]]; // obtenemos las coordenadas del nodo adyacente actual (punto final de la arista)
-                let linea = document.createElementNS("http://www.w3.org/2000/svg", "line"); // crear la linea
-                linea.setAttribute("x1", puntoInicio.x); //  añadirle atributos de la línea que se acaba de crear.
-                linea.setAttribute("y1", puntoInicio.y); // coordenadas x1 e y1 para el punto de inicio de la línea (startPoint) 
-                linea.setAttribute("x2", puntoFinal.x); 
-                linea.setAttribute("y2", puntoFinal.y); // coordenadas x2 e y2 para el punto final de la línea (endPoint).
-                linea.classList.add('arista')
-                svgGrafo.appendChild(linea); // mostrarlo en el html
+}
+
+function dibujarAristas() { // Función para dibujar las aristas
+    for (let nodo in grafo) {
+        let nodosAdyacentes = grafo[nodo]; // Obtenemos los nodos adyacentes al nodo actual
+        let puntoInicio = nodes[nodo]; // Obtenemos las coordenadas de inicio, del nodo actual del objeto 'nodes' 
+        for (let i = 0; i < nodosAdyacentes.length; i++) { // Iteramos sobre cada nodo adyacente del nodo actual
+            let nodoAdyacente = nodosAdyacentes[i];
+            if (nodoAdyacente !== '') {
+                let puntoFinal = nodes[nodoAdyacente]; // Obtenemos las coordenadas del nodo adyacente actual (punto final de la arista)
+                let linea = document.createElementNS("http://www.w3.org/2000/svg", "line"); // Crear la línea
+                linea.setAttribute("x1", puntoInicio.x); // Añadirle atributos de la línea que se acaba de crear.
+                linea.setAttribute("y1", puntoInicio.y); // Coordenadas x1 e y1 para el punto de inicio de la línea (startPoint) 
+                linea.setAttribute("x2", puntoFinal.x);
+                linea.setAttribute("y2", puntoFinal.y); // Coordenadas x2 e y2 para el punto final de la línea (endPoint).
+                linea.classList.add('arista');
+                svgGrafo.appendChild(linea); // Mostrarlo en el HTML
             }
         }
     }
-    function dibujarGrafo() {
-        dibujarAristas();
-        dibujarNodos();
-    }
-// AQUI TERMINAMOS DE DIBUJAR EL GRAFO CON SVG
+}
 
-function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
-    async function cambiarColorNodo(nodoId, color) { // Funcion (cambiarColorNodo) para cambiar el color de un nodo en el SVG
+function dibujarGrafo() { // Función para dibujar el grafo
+    dibujarAristas();
+    dibujarNodos();
+}
+
+// *-*-*-*-*- AQUI TERMINAMOS DE DIBUJAR EL GRAFO CON SVG -*-*-*-*-*-*
+
+
+function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));} //pausar la ejecucion del codigo durante un periodo de tiempo detrminado
+   
+  async function cambiarColorNodo(nodoId) { // Funcion (cambiarColorNodo) para cambiar el color de un nodo en el SVG
     let nodo = document.getElementById(nodoId);
-    if (nodo) {
-      nodo.classList.remove('no-visitado');
-      nodo.classList.add('nodoEnProceso');
-      await sleep(800); // Pausa de 1 segundo
-      nodo.classList.remove('nodoEnProceso');
-      nodo.classList.add('visitado');
-      console.log(`Color cambiado para nodo ${nodoId} a ${color}`);
+    if (nodo) // si no es null
+    {            if(nodo.id === nodoInicial){ //  para mantener el color amarillo al nodo inicial
+                    nodo.classList.add('nodoInicio')
+                    return;
+                }
+        nodo.classList.add('nodoEnProceso');
+        await sleep(800);
+        nodo.classList.remove('nodoEnProceso');
+        nodo.classList.add('visitado');
+        nodo.classList.remove('no-visitado');
     } else {
-      console.error(`Nodo ${nodoId} no encontrado`);
+        console.log(`Nodo ${nodoId} no encontrado`);
     }
-  }
+}
 
-  let ultimoNodo = ''
-async function ejecutarBFS(grafo, nodoInicial)  // Funcion para ejecutar el recorrido BFS y cambiar los colores de los nodos
-{   let visitados = {}; // objeto para almacenar los nodos visitados
+// contendeores de los resultados
+const mostrarRecorrido = document.querySelector('.mostrarRecorrido')
+const inicioFinDiv = document.querySelector('.inicioFinDiv');
+
+async function ejecutarBFS(grafo, nodoInicial)  // Funcion para ejecutar el recorrido BFS 
+{   
+    inicioFinDiv.innerHTML = `<span style="padding-left: 20px; font-size: 1.4em;">'${nodoInicial}' a '${nodoDestino}' es:</span>`;
+    let visitados = {}; // objeto para almacenar los nodos visitados
     let cola = [nodoInicial];
-    console.log('*-*-*-Iniciando Recorrido-*-*-*-*');
-    // Función para ejecutar el paso BFS con un intervalo de tiempo
+    
     while (cola.length > 0) 
     {   let verticeActual = cola[0]; // primer nodo de la cola
         cola = cola.slice(1); // Sacamos el primer nodo de la cola
+
         if (!visitados[verticeActual])  // Si el nodo actual no ha sido visitado
         {   visitados[verticeActual] = true; // Marcamos el nodo como visitado
             cambiarColorNodo(verticeActual, '#8EEA7A'); // cambiamos su estado (color)
-        ultimoNodo = verticeActual // al finalizar el ciclo esta variable contendrá el ultimo nodo iterado; el cual se pintará de un color en especifico
+            
+            // para mostar en html
+            let nodoTexto = document.createElement('span'); 
+            nodoTexto.textContent = ` -> ${verticeActual}`;
+            mostrarRecorrido.appendChild(nodoTexto);
+            
             let adyacentes = grafo[verticeActual]; // obtenemos los nodos adyacentes al nodo actual
+            
             adyacentes.forEach(adyacente => {
                 if (!visitados[adyacente]) {
                     cola.push(adyacente); // Agregamos los nodos adyacentes a la cola (si no han sido visitados)
                 }
             }); // fin forEach
         } // fin IF principal
-        await sleep(1000); 
-    } // fin WHILE
-        let circleUltimoNodo = document.getElementById(ultimoNodo)
-        circleUltimoNodo.classList.remove('visitado')
-        circleUltimoNodo.classList.remove('circle')
-        circleUltimoNodo.style.fill = '#8a2be2'
-        circleUltimoNodo.classList.add('nodoFin')
-        console.log('el ultimo nodo en ser iterado es: ', ultimoNodo); 
+
+        await sleep(1000); // Esperamos un segundo antes de continuar con el siguiente nodo
+        if (verticeActual === nodoDestino) { // Verificamos si el nodo actual es el destino
+            alert('Recorrido Completado.')
+            console.log("Se encontró el nodo de destino:", verticeActual);
+            break; // Si se encontró el destino, salimos del bucle
+        }
+    } // fin WHILE 
 } 
