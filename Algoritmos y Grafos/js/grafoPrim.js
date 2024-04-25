@@ -102,10 +102,15 @@ async function grafoMinimoDeExpancion(e) {
 
     console.log(e.target)
     pasarNodosEstadoNoVisitado()
-
     await esperar(300)
 
+    const conexiones = Grafos.map( grafo => 
+      grafo.conexiones
+    )
+    console.log(conexiones);
 
+    const resultado =prim(conexiones)
+    console.log(resultado);
 
   }
 }
@@ -184,3 +189,55 @@ function pasarNodosEstadoNoVisitado() {
     nodo.classList.add('bg-secondary');
   })
 }
+
+
+
+
+////////
+function prim(conexiones) {
+  // Initialize the set of vertices in the minimum spanning tree
+  let mstVertices = new Set();
+  // Initialize the minimum spanning tree
+  let mst = [];
+
+  // Choose an arbitrary vertex to start with (let's choose the first one)
+  let startVertex = Object.keys(conexiones[0])[0];
+  mstVertices.add(startVertex);
+
+  // Loop until all vertices are included in the minimum spanning tree
+  while (mstVertices.size < Object.keys(conexiones[0]).length) {
+      let minEdge = null;
+      let minCost = Infinity;
+
+      // Iterate over each vertex in the minimum spanning tree
+      mstVertices.forEach(vertex => {
+          // Iterate over each adjacent vertex and its edge cost
+          Object.entries(conexiones[vertex]).forEach(entry => {
+              let adjacentVertex = entry[0];
+              let edgeCost = entry[1];
+              // If the adjacent vertex is not already in the minimum spanning tree
+              if (!mstVertices.has(adjacentVertex)) {
+                  // If the current edge cost is less than the minimum cost found so far
+                  if (edgeCost < minCost) {
+                      // Update the minimum edge and cost
+                      minEdge = [vertex, adjacentVertex];
+                      minCost = edgeCost;
+                  }
+              }
+          });
+      });
+
+      // If a minimum edge was found, add it to the minimum spanning tree
+      if (minEdge !== null) {
+          mst.push({ from: minEdge[0], to: minEdge[1], cost: minCost });
+          // Add the newly included vertex to the set of vertices in the minimum spanning tree
+          mstVertices.add(minEdge[1]);
+      } else {
+          // No more edges to explore, break the loop
+          break;
+      }
+  }
+
+  return mst;
+}
+
