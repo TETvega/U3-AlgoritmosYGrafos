@@ -153,11 +153,6 @@
                                 <div class="input-group mb-3">
                                     <div class="container">
                                         <div class="row">
-                                            <!-- <div class="col-md-3 mb-4">
-                                                <select class="form-select" aria-label="Default select example" id="seleccionarBusqueda">
-                                                    <option value="Multiple">Multiple Coincidencia</option>
-                                                </select>
-                                            </div> -->
                                             <div class="col-md-9 mb-4 align-items-center text-center">
                                                 <label for="exampleDataList" class="form-label">Ingrese en Numero Buscado </label>
                                                 <input class="form-control col-9" autocomplete="off" id="numero_Buscado" type="number" placeholder="Ingrese un numero entero" aria-label="default input example">
@@ -169,15 +164,16 @@
                                     <p>Ingrese los numeros de la lista:</p>
                                     <div class="input-group mb-3">
                                         
-                                        <input type="text" autocomplete="off" class="form-control" id="lista_Numeros" aria-label="Text input with 2 dropdown buttons" placeholder="Example: 1, 3, 6 , 8 , 9, 10">
-                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">MENU</button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
+                                        <input type="text" autocomplete="off" class="form-control" id="lista_Numeros"  placeholder="Example: 1, 3, 6 , 8 , 9, 10">
+                                        <button id="btn_buscar" class="btn btn-outline-secondary"  type="button">BUSCAR</button>
+                                       
+                                        <!-- <ul class="dropdown-menu dropdown-menu-end">
                                         <li><a class="dropdown-item" id="btn_buscarNumero">Buscar</a></li>
                                         <li><a class="dropdown-item" id="btn_limpiarTextos">Limpiar</a></li>
-                                        <!-- <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="#">Separated link</a></li> -->
-                                        </ul>
+                                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                        </ul> -->
                                     </div>
 
                                     <div>
@@ -190,6 +186,59 @@
 
                         <!-- Termina la secion del formulario y funcion lineal ----------------------   -->
                         <!-- Empieza la secion del muestra de codigo ----------------------   -->
+                    </section>
+                    <section class="mt-4 mb-4 ">
+                        <h2 class="mb-4 lick-EstaSeccion" id="CodigoAlgoritmos" >Código de la función de búsqueda de Saltos para JS</h2>
+                        <p>Codigo utilizado para  <span class="text-warning">JS</span></p>
+                        <p>Recibe un numero entero y una lista de numeros enteros ordenada de menor a mayor: ( 13 , [0, 1, 1, 2, 3, 5, 8, 13] )</p>
+                        <p>Se detiene en el momento que encuentra el numero buscado.</p>
+                        <div class="row justify-content-end mx-2">
+                            <div class="col-1">
+                                <button type="button" id="btn_CopiarLinealUnica" class="btn btn-outline-primary mb-2">Copy</button>
+                            </div>
+                        </div>
+                        <pre class="bg-dark mb-4" style="border-radius: 5px;">
+                            <code class="text-white" id="codigoBusquedaUnica">
+                                function busquedaPorSaltos(arreglo, valorBuscado) {
+                                    const longitud = arreglo.length;
+                                    let salto = Math.floor(Math.sqrt(longitud));
+                                    let previo = 0;
+                                  
+                                    while (arreglo[Math.min(salto, longitud) - 1] < valorBuscado) {
+                                        previo = salto;
+                                        salto += Math.floor(Math.sqrt(longitud));
+                                        if (previo >= longitud) {
+                                            return -1; // El elemento no está en el array
+                                        }
+                                    }
+                                  
+                                    while (arreglo[previo] < valorBuscado) {
+                                        previo++;
+                                        // Si alcanzamos el siguiente bloque o el final del array, el elemento no está presente.
+                                        if (previo == Math.min(salto, longitud)) {
+                                            return -1;
+                                        }
+                                    }
+                                  
+                                    // Si el elemento es encontrado
+                                    if (arreglo[previo] === valorBuscado) {
+                                        return previo;
+                                    }
+                                  
+                                    return -1; 
+                                  }
+                                  
+                                  // Uso del ejemplo
+                                  const arreglo = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610];
+                                  const valorBuscado = 610;
+                                  
+                                  const listaN = document.getElementById('lista_Numeros')
+                                  
+                                  const indice = busquedaPorSaltos(arreglo, valorBuscado);
+                                  
+                                  console.log(`El número ${valorBuscado} está en el índice ${indice}`);
+                            </code>
+                        </pre>
                     </section>
                         <section class="mt-4">
                             <h3 class="mb-2 mt-4" id="camposAplicacion">Campos de Aplicacion</h3>
@@ -324,5 +373,7 @@
 
     <!-- scripts de bootstrap 5  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="js/jumpSearch.js"></script>
+
 </body>
 </html>
