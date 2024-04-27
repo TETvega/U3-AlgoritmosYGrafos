@@ -1,5 +1,5 @@
 const svgGrafo = document.getElementById('graphSVG'); // Llamar al contenedor svg
-let bandera=false
+let bandera=false 
 let nodoInicial = null; // Almacenar el nodo inicial seleccionado por el usuario
 let nodoDestino = null; // Almacenar el nodo destino seleccionado por el usuario
 document.addEventListener('DOMContentLoaded',async () => {
@@ -73,6 +73,7 @@ const grafo = { // Representar el grafo en lista de adyacencia (en un objeto)
     'K': ['G'],
     'L': ['G']
 };
+
 
 // *-*-*-*-*- AQUI SE EMPIEZA A DIBUJAR EL GRAFO CON SVG -*-*-*-*-*-*
 
