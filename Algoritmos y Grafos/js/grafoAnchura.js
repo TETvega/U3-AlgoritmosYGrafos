@@ -2,10 +2,11 @@ const svgGrafo = document.getElementById('graphSVG'); // Llamar al contenedor sv
 let bandera=false
 let nodoInicial = null; // Almacenar el nodo inicial seleccionado por el usuario
 let nodoDestino = null; // Almacenar el nodo destino seleccionado por el usuario
+
 document.addEventListener('DOMContentLoaded',async () => {
      dibujarGrafo(); // Llamar a la función para dibujar el grafo
     
-        svgGrafo.addEventListener('click', async(e) =>  // Evento de clic para iniciar el recorrido BFS desde el nodo presionado
+        svgGrafo.addEventListener('click', async(e) =>  // Evento de clic para iniciar el recorrido BFS desde el nodo presionado (y nodo destino)
         {   
             if (!bandera) 
             {  bandera=true;
@@ -92,27 +93,27 @@ const nodes = { // coordenadas de los nodos
 };
 
 function dibujarNodos() { // Función para dibujar los nodos
-    for (let nodo in nodes) {
+    for (let nodo in nodes) {  // 'for in' para iterar los nombres de los nodos, del objeto 'nodes'
         let coordenadas = nodes[nodo];
 
-        let foreignObj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
-            foreignObj.setAttribute("x", coordenadas.x - 20); // Ajustar la posición según el tamaño del círculo y el texto
+        let foreignObj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject"); // // elemento en SVG que permite incrustar contenido HTML dentro de un documento SVG.
+            foreignObj.setAttribute("x", coordenadas.x - 20); // Ajustar la posición segun el tamaño del círculo y el texto
             foreignObj.setAttribute("y", coordenadas.y - 20);
             foreignObj.setAttribute("width", 40); // Ajustar el ancho y el alto según el tamaño del círculo y el texto
             foreignObj.setAttribute("height", 40);
             foreignObj.classList.add('foreignObj');
             
-            // Crear el contenido dentro del foreignObject
+            // Crear el contenido dentro del foreignObject. donde le estamos diciendo al navegador que cree elementos SVG(circle,osea el nodo) en lugar de elementos HTML regulares
             let contenido = `
                 <div class="d-flex justify-content-center align-items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" style="border: none;">
-                        <circle cx="20" cy="20" r="20" id="${nodo}" class="circle"/>
+                        <circle cx="20" cy="20" r="20" id="${nodo}" class="circle"/> 
                     </svg>
                     <span class="txtnodoSpan" style="position: absolute; top: 9px; cursor: pointer;">${nodo}</span>
                 </div>
-            `;
-            foreignObj.innerHTML = contenido;
-            svgGrafo.appendChild(foreignObj); // Agregar el foreignObject al SVG
+            `; // // La URL(linea 108) es un espacio de nombres (namespace) que se utiliza en XMLySVG para identificar los elementos y atributos específicos de SVG. 
+            foreignObj.innerHTML = contenido; // añadir el contenido al foreignObj
+            svgGrafo.appendChild(foreignObj); // Agregar el foreignObject al SVG en el html
     }
 }
 
