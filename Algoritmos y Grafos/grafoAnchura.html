@@ -240,6 +240,53 @@
                                 para asegurarte de no volver a ellos.</p>
 
 
+                                <h5 id="ejemploImplementacion">Ejemplo de Implementación</h5>
+                              <pre class="bg-dark mb-4 rounded" style="border-radius: 5px;">
+                                <code class="text-white">    
+    const grafo = {
+        'A': ['B', 'C'],
+        'B': ['A', 'D', 'E'],
+        'C': ['A', 'F'],
+        'D': ['B'],
+        'E': ['B'],
+        'F': ['C']
+    };
+
+    dfs(grafo, 'D'); // Comienza el recorrido desde el nodo 'D'
+
+    function bfs(grafo, vInicial) 
+    {
+        let visitados = {}; // Objeto para almacenar los nodos visitados
+        let cola = [vInicial]; // Cola para el recorrido en anchura
+    
+        
+        while (cola.length > 0)  // Mientras haya nodos en la cola
+        { 
+            let verticeActual = cola[0]; // Primer nodo de la cola
+            cola = cola.slice(1); // Eliminamos el primer elemento de la cola
+            
+            if (!visitados[verticeActual]) // Si el nodo actual no ha sido visitado
+            { 
+                // Marcamos el nodo como visitado
+                visitados[verticeActual] = true;
+
+                // Mostramos el nodo actual 
+                console.log(verticeActual);
+
+                // Obtenemos los nodos adyacentes al nodo actual
+                let adyacentes = grafo[verticeActual];
+
+                // Agregamos los nodos adyacentes a la cola (si no han sido visitados)
+                adyacentes.forEach(adyacente => {
+                    if (!visitados[adyacente]) {
+                        cola.push(adyacente);
+                    }
+                });
+            }
+        }
+    }
+                    </code>
+                </pre>
                         </section>
 
                         <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BFS-->
