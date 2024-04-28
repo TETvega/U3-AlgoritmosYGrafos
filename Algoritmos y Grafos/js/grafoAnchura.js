@@ -146,6 +146,7 @@ function dibujarGrafo() { // Función para dibujar el grafo
 
 
 function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));} //pausar la ejecucion del codigo durante un periodo de tiempo detrminado
+   // funcion sleep proviniente de: https://www.campusmvp.es/recursos/post/como-hacer-un-sleep-en-javascript-detener-la-ejecucion-durante-un-tiempo.aspx
    
   async function cambiarColorNodo(nodoId) { // Funcion (cambiarColorNodo) para cambiar el color de un nodo en el SVG
     let nodo = document.getElementById(nodoId);
