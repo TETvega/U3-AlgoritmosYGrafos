@@ -1,9 +1,12 @@
+// Botones
 const btnCopiarLinalUnica = document.getElementById("btn_CopiarLinealUnica")
+const btnLimpiar = document.getElementById('btn_limpiar');
 
 function busquedaPorSaltos(lista, elementoBuscado) {
 
     const numero = lista.length;
     let paso = Math.floor(Math.sqrt(numero));// Tamaño del salto inicial
+    console.log(`${paso}`);
     console.log(paso);
     let previo = 0;
 
@@ -19,7 +22,7 @@ function busquedaPorSaltos(lista, elementoBuscado) {
     // Realiza una búsqueda lineal en la sublista
     while (lista[previo] < elementoBuscado) {
         previo++;
-        if (previo === Math.min(paso, n)) {
+        if (previo === Math.min(paso, numero)) {
             return -1; // El elemento no está en la lista
         }
     }
@@ -41,8 +44,18 @@ function busquedaPorSaltos(lista, elementoBuscado) {
         // console.log(codigo);
         alert('Codigo copiado al Portapapeles')  
     }
+    
     btnCopiarLinalUnica.addEventListener('click' , copiarUnica)
+    btnLimpiar.addEventListener('click' , limpiarTextos)
 
+    function limpiarTextos(e) {
+        e.preventDefault()
+        // console.log('Adiso');
+    
+        numero_Buscado.value = ""
+        lista_Numeros.value = ""
+    }
+    
 
 document.addEventListener("DOMContentLoaded", function() {
     const btnBuscar = document.getElementById("btn_buscar");
@@ -52,12 +65,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const listaNumeros = document.getElementById("lista_Numeros").value.split(",").map(item => parseInt(item.trim()));
 
         const resultado = busquedaPorSaltos(listaNumeros, numeroBuscado);
-        const resultadoLineal = document.getElementById("ResultadoLineal");
+        const resultadoSaltos = document.getElementById("ResultadoSaltos");
 
         if (resultado !== -1) {
-            resultadoLineal.textContent = `El elemento ${numeroBuscado} se encuentra en el índice ${resultado}.`;
+            resultadoSaltos.textContent = `El elemento ${numeroBuscado} se encuentra en el índice ${resultado}.`;
         } else {
-            resultadoLineal.textContent =` El elemento ${numeroBuscado} no se encontró en la lista.`;
+            resultadoSaltos.textContent =` El elemento ${numeroBuscado} no se encontró en la lista.`;
         }
+        return;
     });
 });
