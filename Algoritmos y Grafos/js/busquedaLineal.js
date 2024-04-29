@@ -51,13 +51,14 @@ function buscarNumero(e) {
     
     const tipoBuqueda = seleccionarBusqueda.value // estoy llamando directamente por el ID al tipo de seleecion , obtiente el valor excato 
     const numeroABuscar = leerNumeroX()
-
+    console.log(numeroABuscar);
     if (numeroABuscar===-1) {
         return
     }
 
     
     const arrayNumeros = leerArrayNumeros()
+    console.log(arrayNumeros);
     if (arrayNumeros.length == 0) {
         mandarResultado('ERROR : Imposible la lista no contiene ningun numero valido!!!!')
         return
@@ -137,10 +138,8 @@ function leerNumeroX() {
 function leerArrayNumeros() {
     // console.log(impt_ArrayNumeros)
     const arrayenTexto= impt_ArrayNumeros.value
-    // console.log(arrayenTexto);
 
     const array = arrayenTexto.split(',')
-    // console.log(array);
 
     const arrayNumeros = []
     
