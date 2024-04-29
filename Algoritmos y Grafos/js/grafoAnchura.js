@@ -1,4 +1,8 @@
 const svgGrafo = document.getElementById('graphSVG'); // Llamar al contenedor svg
+// contendeores de los resultados
+const mostrarRecorrido = document.querySelector('.mostrarRecorrido')
+const inicioFinDiv = document.querySelector('.inicioFinDiv');
+
 let bandera=false
 let nodoInicial = null; // Almacenar el nodo inicial seleccionado por el usuario
 let nodoDestino = null; // Almacenar el nodo destino seleccionado por el usuario
@@ -8,11 +12,11 @@ document.addEventListener('DOMContentLoaded',async () => {
     
         svgGrafo.addEventListener('click', async(e) =>  // Evento de clic para iniciar el recorrido BFS desde el nodo presionado (y nodo destino)
         {   
-            if (!bandera) 
+            if (!bandera) // Si la bandera es falsa
             {  bandera=true;
                 mostrarRecorrido.innerHTML = '';
                 inicioFinDiv.innerHTML = '';
-                        if (!nodoInicial) // Si aún no se ha seleccionado el nodo inicial
+                        if (!nodoInicial) // Si aún no se ha seleccionado el nodo inicial ( si nodoInicial es null)
                         { 
                             if (e.target.classList.contains('txtnodoSpan')) 
                             {   nodoInicial = e.target.textContent;
@@ -35,7 +39,7 @@ document.addEventListener('DOMContentLoaded',async () => {
                                 
                             }
                             alert('Ahora presione el nodo final.')
-                        } else if (!nodoDestino) // Si ya se seleccionó el nodo inicial pero no el destino
+                        } else if (!nodoDestino) // Si ya se seleccionó el nodo inicial pero no el destino (nodoInicial ya no es null, pero nodoDestino si es null)
                             { 
                                 if (e.target.classList.contains('txtnodoSpan')) 
                                 {   nodoDestino = e.target.textContent;
@@ -146,7 +150,8 @@ function dibujarGrafo() { // Función para dibujar el grafo
 
 
 function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));} //pausar la ejecucion del codigo durante un periodo de tiempo detrminado
-   
+   // funcion sleep proviniente de: https://www.campusmvp.es/recursos/post/como-hacer-un-sleep-en-javascript-detener-la-ejecucion-durante-un-tiempo.aspx
+
   async function cambiarColorNodo(nodoId) { // Funcion (cambiarColorNodo) para cambiar el color de un nodo en el SVG
     let nodo = document.getElementById(nodoId);
     if (nodo) // si no es null
@@ -155,6 +160,7 @@ function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));} //p
                     return;
                 }
         nodo.classList.add('nodoEnProceso');
+        // el operador 'await' se usa para esperar a una Promesa.
         await sleep(800);
         nodo.classList.remove('nodoEnProceso');
         nodo.classList.add('visitado');
@@ -163,10 +169,6 @@ function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));} //p
         console.log(`Nodo ${nodoId} no encontrado`);
     }
 }
-
-// contendeores de los resultados
-const mostrarRecorrido = document.querySelector('.mostrarRecorrido')
-const inicioFinDiv = document.querySelector('.inicioFinDiv');
 
 async function ejecutarBFS(grafo, nodoInicial)  // Funcion para ejecutar el recorrido BFS 
 {   
