@@ -116,28 +116,14 @@
                             <p>Sabemos que la búsqueda binaria siempre elige la mitad del espacio de búsqueda restante, descartando una mitad u otra según el resultado de la comparación entre el valor 
                                 medio y el valor objetivo. El espacio de búsqueda restante se reduce a la parte anterior o posterior a la posición intermedia.</p>  
                                 
-                            <ul>
-                                <li>
-                                    <p>
-                                        En comparación, en cada paso de búsqueda, la búsqueda de interpolación calcula en qué espacio de búsqueda restante podría estar presente el objetivo, en función 
-                                        de los valores alto y bajo del espacio de búsqueda y el valor del objetivo. El valor encontrado en esta posición estimada se compara luego con el valor objetivo. 
-                                        Si no es igual, el espacio de búsqueda restante se reduce a la parte anterior o posterior a la posición estimada según la comparación. Este método solo funcionará 
-                                        si los cálculos sobre el tamaño de las diferencias entre los valores objetivo son sensatos.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>
-                                        <strong>Búsqueda Binaria (Binary Search):</strong>  Este algoritmo solo funciona en conjuntos de datos ordenados. Divide repetidamente 
-                                        el conjunto de datos por la mitad y compara el elemento buscado con el elemento en la posición media. De esta manera, 
-                                        reduce la búsqueda a la mitad en cada iteración, lo que lo hace muy eficiente para conjuntos de datos grandes
-                                    </p>
-                                </li>
-                            </ul>
-
-                            <p class="mt-4">
-                                Estos son solo algunos ejemplos de algoritmos de búsqueda. Cada uno tiene sus propias ventajas y desventajas, y la elección del 
-                                algoritmo adecuado depende del problema específico que se esté abordando y las características de los datos involucrados.
-                            </p>
+                            
+                                
+                             <p>
+                                En comparación, en cada paso de búsqueda, la búsqueda de interpolación calcula en qué espacio de búsqueda restante podría estar presente el objetivo, en función 
+                                de los valores alto y bajo del espacio de búsqueda y el valor del objetivo. El valor encontrado en esta posición estimada se compara luego con el valor objetivo. 
+                                Si no es igual, el espacio de búsqueda restante se reduce a la parte anterior o posterior a la posición estimada según la comparación. Este método solo funcionará 
+                                si los cálculos sobre el tamaño de las diferencias entre los valores objetivo son sensatos.
+                             </p>
                         </section>
                         <!-- TERMINA BLOQUE DE QUE ES UN ALGORITMO DE BUSQUEDA s -->
 
@@ -191,10 +177,12 @@
                             <!-- Empieza la secion del muestra de codigo ----------------------   -->
                         </section>
                         <section class="mt-4 mb-4 ">
-                            <h2 class="mb-4 lick-EstaSeccion" id="CodigoAlgoritmos" >Código de la función de búsqueda de Saltos para JS</h2>
+                            <h2 class="mb-4 lick-EstaSeccion" id="CodigoAlgoritmos" >Código de la función de búsqueda Interpolada para JS</h2>
                             <p>Codigo utilizado para  <span class="text-warning">JS</span></p>
                             <p>Dada una array de enteros ordenados y un objetivo, determine si el objetivo existe en la array o no utilizando un algoritmo de búsqueda de interpolación. </p>
                             <p>Si el objetivo existe en la array, devuelve el índice de la misma.</p>
+                            <p>Input:  <br> arr[] = [2, 3, 5, 7, 9] <br> target = 7  <br>Output: Element found at index 3</p>
+
                             <div class="row justify-content-end mx-2">
                                 <div class="col-1">
                                     <button type="button" id="btn_CopiarLinealUnica" class="btn btn-outline-primary mb-2">Copy</button>
@@ -202,34 +190,31 @@
                             </div>
                             <pre class="bg-dark mb-4" style="border-radius: 5px;">
                             <code class="text-white" id="codigoBusquedaUnica">
-                                function busquedaInterpolada(arr, x) {
-                                    let lo = 0;
-                                    let hi = (arr.length - 1);
-                                
-                                    while (lo <= hi && x >= arr[lo] && x <= arr[hi]) {
-                                        if (lo === hi) {
-                                            if (arr[lo] === x) return lo;
-                                            return -1;
-                                        }
-                                        // Estimar la posición usando la fórmula de interpolación
-                                        let pos = lo + Math.floor(((hi - lo) / (arr[hi] - arr[lo])) * (x - arr[lo]));
-                                
-                                        // Si encontramos el elemento, retornamos la posición
-                                        if (arr[pos] === x) {
-                                            return pos;
-                                        }
-                                
-                                        // Si el elemento es más grande, x está en la parte superior
-                                        if (arr[pos] < x) {
-                                            lo = pos + 1;
-                                        }
-                                        // Si el elemento es más pequeño, x está en la parte inferior
-                                        else {
-                                            hi = pos - 1;
-                                        }
+                                function busquedaInterpolada(arreglo, numeroBuscado) {
+                                    if (arreglo.length === 0) {
+                                      return -1;
                                     }
-                                    return -1; // Elemento no encontrado
-                                }
+                                    let limiteInferior = 0;
+                                    let limiteSuperior = arreglo.length - 1;
+                                    let mid;
+                                  
+                                    while (arreglo[limiteSuperior] !== arreglo[limiteInferior] && numeroBuscado >= arreglo[limiteInferior] && numeroBuscado <= arreglo[limiteSuperior]) {
+                                      mid = limiteInferior + Math.floor(((numeroBuscado - arreglo[limiteInferior]) * (limiteSuperior - limiteInferior)) / (arreglo[limiteSuperior] - arreglo[limiteInferior]));
+                                  
+                                      if (numeroBuscado === arreglo[mid]) {
+                                        return mid;
+                                      }
+                                      if (numeroBuscado < arreglo[mid]) {
+                                        limiteSuperior = mid - 1;
+                                      } else {
+                                        limiteInferior = mid + 1;
+                                      }
+                                    }
+                                    if (numeroBuscado === arreglo[limiteInferior]) {
+                                      return limiteInferior;
+                                    }
+                                    return -1;
+                                  }
                                 </code>
                             </pre>
                         </section> 
