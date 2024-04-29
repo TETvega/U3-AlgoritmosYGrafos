@@ -190,31 +190,47 @@
                             </div>
                             <pre class="bg-dark mb-4" style="border-radius: 5px;">
                             <code class="text-white" id="codigoBusquedaUnica">
-                                function busquedaInterpolada(arreglo, numeroBuscado) {
-                                    if (arreglo.length === 0) {
-                                      return -1;
-                                    }
-                                    let limiteInferior = 0;
-                                    let limiteSuperior = arreglo.length - 1;
-                                    let mid;
-                                  
-                                    while (arreglo[limiteSuperior] !== arreglo[limiteInferior] && numeroBuscado >= arreglo[limiteInferior] && numeroBuscado <= arreglo[limiteSuperior]) {
-                                      mid = limiteInferior + Math.floor(((numeroBuscado - arreglo[limiteInferior]) * (limiteSuperior - limiteInferior)) / (arreglo[limiteSuperior] - arreglo[limiteInferior]));
-                                  
-                                      if (numeroBuscado === arreglo[mid]) {
-                                        return mid;
-                                      }
-                                      if (numeroBuscado < arreglo[mid]) {
-                                        limiteSuperior = mid - 1;
-                                      } else {
-                                        limiteInferior = mid + 1;
-                                      }
-                                    }
-                                    if (numeroBuscado === arreglo[limiteInferior]) {
-                                      return limiteInferior;
-                                    }
-                                    return -1;
-                                  }
+function busquedaInterpolada(arreglo, numeroBuscado) {
+    // Base case
+    if (arreglo.length === 0) {
+      return -1;
+    }
+// El espacio de búsqueda es A[bajo...alto]
+    let limiteInferior = 0;
+    let limiteSuperior = arreglo.length - 1;
+    let mid;
+  
+    while (arreglo[limiteSuperior] !== arreglo[limiteInferior] && 
+    numeroBuscado >= arreglo[limiteInferior] && numeroBuscado <= arreglo[limiteSuperior]) {
+
+      // Estimar la mitad usando la fórmula de interpolación
+      mid = limiteInferior + Math.floor(((numeroBuscado - arreglo[limiteInferior]) * 
+      (limiteSuperior - limiteInferior)) / (arreglo[limiteSuperior] - arreglo[limiteInferior]));
+  
+      // Se encuentra el valor objetivo
+      if (numeroBuscado === arreglo[mid]) {
+        return mid;
+      }
+  
+      // Descarta todos los elementos en el espacio de búsqueda derecho, 
+      incluido el elemento del medio
+      if (numeroBuscado < arreglo[mid]) {
+        limiteSuperior = mid - 1;
+      } else {
+        // Descarta todos los elementos en el espacio de búsqueda de la 
+        izquierda, incluido el elemento del medio
+        limiteInferior = mid + 1;
+      }
+    }
+  
+    // Si el objetivo se encuentra en el índice bajo después del ciclo
+    if (numeroBuscado === arreglo[limiteInferior]) {
+      return limiteInferior;
+    }
+  
+    // El objetivo no existe en la matriz
+    return -1;
+  }
                                 </code>
                             </pre>
                         </section> 

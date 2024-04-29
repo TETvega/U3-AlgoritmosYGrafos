@@ -6,8 +6,6 @@ function busquedaPorSaltos(lista, elementoBuscado) {
 
     const numero = lista.length;
     let paso = Math.floor(Math.sqrt(numero));// Tamaño del salto inicial
-    console.log(`${paso}`);
-    console.log(paso);
     let previo = 0;
 
     // Realiza saltos en la lista

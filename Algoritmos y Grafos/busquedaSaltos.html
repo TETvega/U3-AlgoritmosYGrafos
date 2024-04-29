@@ -200,29 +200,36 @@
                         </div>
                         <pre class="bg-dark mb-4" style="border-radius: 5px;">
                         <code class="text-white" id="codigoBusquedaUnica">
-                            function busquedaPorSaltos(arreglo, valorBuscado) {
-                                const longitud = arreglo.length;
-                                let salto = Math.floor(Math.sqrt(longitud));
-                                let previo = 0;
-                              
-                                while (arreglo[Math.min(salto, longitud) - 1] < valorBuscado) {
-                                    previo = salto;
-                                    salto += Math.floor(Math.sqrt(longitud));
-                                        if (previo >= longitud) {
-                                            return -1; // El elemento no está en el array
-                                        }
-                                    }
-                                 while (arreglo[previo] < valorBuscado) {
-                                    previo++;
-                                    if (previo == Math.min(salto, longitud)) {
-                                        return -1;
-                                    }
-                                }
-                                    if (arreglo[previo] === valorBuscado) {
-                                        return previo;
-                                    }
-                                    return -1; 
-                                  }
+function busquedaPorSaltos(lista, elementoBuscado) {
+
+    const numero = lista.length;
+    let paso = Math.floor(Math.sqrt(numero));// Tamaño del salto inicial
+    let previo = 0;
+
+    // Realiza saltos en la lista
+    while (lista[Math.min(paso, numero) - 1] < elementoBuscado) {
+        previo = paso;
+        paso += Math.floor(Math.sqrt(numero));
+        if (previo >= numero) {
+            return -1; // El elemento no está en la lista
+        }
+    }
+
+    // Realiza una búsqueda lineal en la sublista
+    while (lista[previo] < elementoBuscado) {
+        previo++;
+        if (previo === Math.min(paso, numero)) {
+            return -1; // El elemento no está en la lista
+        }
+    }
+
+    // Si encuentra el elemento, retornamos el índice
+    if (lista[previo] === elementoBuscado) {
+        return previo;
+    }
+
+    return -1; // El elemento no está en la lista
+}
                             </code>
                         </pre>
                     </section>    
